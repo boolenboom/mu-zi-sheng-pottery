@@ -3,19 +3,19 @@
         <div class='background'>
             <div class="comp">
                 <div class='Rect-01'>
-                    
+                    <img src="../assets/studioIntro/studio02@2x.jpg" alt="">
                 </div>
                 <div class='Rect-02'>
-                    
+                    <img src="../assets/studioIntro/studio05.jpg" alt="">
                 </div>
                 <div class='Rect-03'>
-                    
+                    <img src="../assets/studioIntro/studio04@2x.jpg" alt="">
                 </div>
                 <div class='Rect-04'>
-                    
+                    <img src="../assets/studioIntro/studio03@2x.jpg" alt="">
                 </div>
                 <div class='Rect-05'>
-                    
+                    <img src="../assets/studioIntro/studio01@2x.jpg" alt="">
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@ export default {
             // outline: 1px solid #000;
             overflow: hidden;
             img {
-                transform: rotate(-45deg) scale(2);
+                transform: rotate(-45deg);
             }
         }
         [class*='-01'] {
@@ -52,8 +52,8 @@ export default {
             height: 50%;
             img {
                 position: relative;
-                top: 15%;
-                left: -3%;
+                top:20%;
+                left: -10%;
             }
         }
         [class*='-02'] {
@@ -62,7 +62,8 @@ export default {
             height: 25%;
             img {
                 position: relative;
-                top: -5%;
+                top: -10%;
+                left: -5%;
             }
         }
         [class*='-03'] {
@@ -72,8 +73,8 @@ export default {
             height: 25%;
             img {
                 position: relative;
-                top: -15%;
-                left: -10%;
+                top: -75%;
+                left: -20%;
             }
         }
         [class*='-04'] {
@@ -82,8 +83,8 @@ export default {
             height: 25%;
             img {
                 position: relative;
-                top: 80%;
-                left: -50%;
+                top: -90%;
+                left: -20%;
             }
         }
         [class*='-05'] {
@@ -93,8 +94,8 @@ export default {
             height: 50%;
             img {
                 position: relative;
-                top: -15%;
-                left: -100%;
+                top:-40%;
+                left: -30%;
             }
         }
     }
