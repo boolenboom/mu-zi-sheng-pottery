@@ -1,18 +1,24 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <studioIntro msg="Welcome to Your Vue.js App" />
+    <mainlayout/>
+    <studiointro/>
+    <potterylist/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import studioIntro from "@/components/studioIntro.vue";
+import mainlayout from '../components/main.vue';
+import studiointro from "@/components/studioIntro.vue";
+import potterylist from '../components/potteryList.vue';
 
 export default {
   name: "Home",
   components: {
-    studioIntro,
+    mainlayout,
+    studiointro,
+    potterylist,
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="section studioIntro">
+    <div id='studioIntro' class="section">
         <div class='background'>
             <div class="comp">
                 <div class='Rect-01'>
@@ -30,7 +30,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.studioIntro {
+#studioIntro {
     height: auto;
     .comp {
         position: absolute;
