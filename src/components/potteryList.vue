@@ -10,9 +10,6 @@
 <script>
 export default {
     name:'potteryList',
-    data(){
-        return null;
-    }
 }
 </script>
 <style lang="scss" scoped>

@@ -23,10 +23,7 @@
 </template>
 <script>
 export default {
-    name:'main',
-    data(){
-        return null;
-    }
+    name:'mainlayout',
 }
 </script>
 <style lang="scss" scoped>

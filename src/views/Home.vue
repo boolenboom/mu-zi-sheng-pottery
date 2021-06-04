@@ -1,15 +1,15 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <mainlayout/>
-    <studiointro/>
-    <potterylist/>
+    <mainlayout />
+    <studiointro />
+    <potterylist />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import mainlayout from '../components/main.vue';
+import mainlayout from '../components/mainlayout.vue';
 import studiointro from "@/components/studioIntro.vue";
 import potterylist from '../components/potteryList.vue';
 
@@ -23,9 +23,9 @@ export default {
 };
 </script>
 <style lang="scss">
-$pc:1440px;
-$table:768px;
-$mobile:360px;
+$pc: 1440px;
+$table: 768px;
+$mobile: 360px;
 body {
     height: 100%;
 }
