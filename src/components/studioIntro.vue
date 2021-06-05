@@ -1,14 +1,23 @@
 <template>
     <div id='studioIntro' class="section">
         <div class="content">
-            <div class="Intro">intro</div>
             <h3>
-                Lorem ipsum dolor sit amet consectetur est.
+                Studio
             </h3>
+            <div class="detailimg">
+                <img v-for="item,index of IntroImg" 
+                v-show="index === currBG" 
+                :src="item.path" 
+                :key="item.id" alt="">
+            </div>
         </div>
         <div class='background'>
             <div class="comp">
-                <div v-for='item of IntroImg' class="Rect" :key="item.id" :style="item.style">
+                <div v-for='item,index of IntroImg' 
+                :key="item.id" 
+                :style="item.style" 
+                @mouseenter="changeBG(index)" 
+                class="Rect" >
                     <img :id='`img` + item.id' :src="item.path" alt="">
                 </div>
                 <!-- <div class='Rect-01'>
@@ -19,7 +28,7 @@
                 </div> -->
                 <div class="subtitle">
                     <h2 class="txt">
-                        Studio
+                        {{subtitletext}}
                     </h2>
                 </div>
                 <!-- <div class='Rect-03'>
@@ -39,12 +48,17 @@
 const 
 imgdata = require('../assets/data/studioIntro/contentSet.json'),
 dataSet = [...imgdata.set];
-let path = 'assets/studioIntro';
+let path = 'assets/studioIntro',
+subtitle = dataSet.slice(1).map(e=>e.subtitle);
 console.log(dataSet);
 export default {
     name:'studioIntro',
     data(){
-        return {imgpath:[require('../assets/studioIntro/studio02@2x.jpg')]};
+        return {
+            // imgpath:[require('../assets/studioIntro/studio02@2x.jpg')],
+            currBG:0,
+            subtitletext:'initial'
+            };
     },
     computed:{
         IntroImg:function(){
@@ -52,12 +66,11 @@ export default {
             set = dataSet.slice(1),
             widthratio = 100 / global.widthGrid,
             heightratio = 100 / global.heightGrid;
-            console.log(global);
             let item = set.map(function(obj){ //目前因資料獨立所以不做填空白的功能
                     let top = (obj.pos.y - 1) * heightratio,
                     left = (obj.pos.x - 1) * widthratio,
                     width = obj.size.width * widthratio,
-                    height = obj.size.height * heightratio
+                    height = obj.size.height * heightratio;
                     return {
                         id:obj.id,
                         style:`top:${top}%;
@@ -68,7 +81,14 @@ export default {
                         };
             });
             console.log(item);
+            console.log(this.subtitlename);
             return item;
+        }
+    },
+    methods:{
+        changeBG(index){
+            this.currBG = index;
+            this.subtitletext = subtitle[index];
         }
     }
 }
@@ -78,15 +98,27 @@ export default {
     height: auto;
     .content{
         position: absolute;
-        width: 30%;
+        width: 100%;
         height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
         // background-color: rgba($color: #364286, $alpha: .3);
         h3{
-            font-size: 48px;
-            position: relative;
-            bottom: 0;
+            width: 30%;
+            font-size: 96px;
+            letter-spacing: 24px;
+        }
+        .detailimg{
+            width: 70%;
+            img{
+                filter: blur(30px) grayscale(.8);
+                margin: 0 auto;
+                width: 80%;
+            }
         }
     }
+    .background{
     .comp {
         position: absolute;
         width: 98.4375%;
@@ -112,8 +144,8 @@ export default {
         }
         #img02{
             position: relative;
-                top: -10%;
-                left: -5%;
+                top: -50%;
+                left: -30%;
         }
         #img03{
             position: relative;
@@ -199,6 +231,7 @@ export default {
         //         left: -30%;
         //     }
         // }
+    }
     }
 }
 </style>
