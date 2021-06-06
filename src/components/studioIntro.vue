@@ -4,19 +4,20 @@
             <h3>
                 Studio
             </h3>
-            <div class="detailimg">
+            <transition-group tag="div" class="detailimg" name='fadeout-opacity'>
                 <img v-for="item,index of IntroImg" 
                 v-show="index === currBG" 
                 :src="item.path" 
                 :key="item.id" alt="">
-            </div>
+            </transition-group>
         </div>
-        <div class='background'>
+        <div class='background' :class="{show:show}">
             <div class="comp">
                 <div v-for='item,index of IntroImg' 
                 :key="item.id" 
                 :style="item.style" 
                 @mouseenter="changeBG(index)" 
+                @click="detailshow(index)"
                 class="Rect" >
                     <img :id='`img` + item.id' :src="item.path" alt="">
                 </div>
@@ -26,11 +27,14 @@
                 <div class='Rect-02'>
                     <img src="../assets/studioIntro/studio05.jpg" alt="">
                 </div> -->
-                <div class="subtitle">
-                    <h2 class="txt">
-                        {{subtitletext}}
+                <transition-group tag="div" class="subtitle" name='fadeout-opacity'>
+                    <h2 v-for="item,index of Subtitle" 
+                    :key="index" 
+                    v-show="index === currBG" 
+                    class="txt">
+                        {{item}}
                     </h2>
-                </div>
+                </transition-group>
                 <!-- <div class='Rect-03'>
                     <img src="../assets/studioIntro/studio04@2x.jpg" alt="">
                 </div>
@@ -48,8 +52,7 @@
 const 
 imgdata = require('../assets/data/studioIntro/contentSet.json'),
 dataSet = [...imgdata.set];
-let path = 'assets/studioIntro',
-subtitle = dataSet.slice(1).map(e=>e.subtitle);
+let path = 'assets/studioIntro';
 console.log(dataSet);
 export default {
     name:'studioIntro',
@@ -57,7 +60,8 @@ export default {
         return {
             // imgpath:[require('../assets/studioIntro/studio02@2x.jpg')],
             currBG:0,
-            subtitletext:'initial'
+            mouseEventPermission:true,
+            show:false
             };
     },
     computed:{
@@ -83,12 +87,20 @@ export default {
             console.log(item);
             console.log(this.subtitlename);
             return item;
+        },
+        Subtitle:function(){
+            return dataSet.slice(1).map(e=>e.subtitle);
         }
     },
     methods:{
         changeBG(index){
-            this.currBG = index;
-            this.subtitletext = subtitle[index];
+            if(this.mouseEventPermission) this.currBG = index;
+        },
+        detailshow(index){
+            if(!this.mouseEventPermission) return 0;
+            this.changeBG(index);
+            this.mouseEventPermission = false;
+            this.show = true;
         }
     }
 }
@@ -96,6 +108,7 @@ export default {
 <style lang="scss" scoped>
 #studioIntro {
     height: auto;
+    background-color: #77c;
     .content{
         position: absolute;
         width: 100%;
@@ -111,14 +124,20 @@ export default {
         }
         .detailimg{
             width: 70%;
+            height: 100%;
+            position: relative;
             img{
+                position: absolute;
                 filter: blur(30px) grayscale(.8);
+                left: 0;
+                right: 0;
                 margin: 0 auto;
                 width: 80%;
             }
         }
     }
     .background{
+        transition: transform 1.2s cubic-bezier(.61,-0.25,.26,1);
     .comp {
         position: absolute;
         width: 98.4375%;
@@ -136,6 +155,9 @@ export default {
             img {
                 transform: rotate(-45deg);
             }
+        }
+        [id*='img0']:hover{
+            cursor: pointer;
         }
         #img01{
             position: relative;
@@ -173,9 +195,10 @@ export default {
             // width: 25%;
             // height: 25%; //layout ver.
             .txt{
-                position: relative;
+                position: absolute;
                 transform: translateY(-50%) rotate(-45deg);
                 top:50%;
+                width: 100%;
                 font-size: 56px;
             }
         }
@@ -232,6 +255,18 @@ export default {
         //     }
         // }
     }
+    }
+    .fadeout-opacity-enter-active{
+        transition: opacity .3s;
+    }
+    .fadeout-opacity-leave-active{
+        transition: opacity .3s;
+    }
+    .fadeout-opacity-enter,.fadeout-opacity-leave-to{
+        opacity: 0;
+    }
+    .show{
+        transform: translateX(100%);
     }
 }
 </style>
