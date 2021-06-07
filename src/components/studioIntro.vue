@@ -1,15 +1,30 @@
 <template>
     <div id='studioIntro' class="section">
         <div class="content">
-            <h3>
-                Studio
-            </h3>
-            <transition-group tag="div" class="detailimg" name='fadeout-opacity'>
-                <img v-for="item,index of IntroImg" 
-                v-show="index === currBG" 
-                :src="item.path" 
-                :key="item.id" alt="">
-            </transition-group>
+            <div class="txt">
+                <h3 class="title" :class="{leftmove:show}">Studio</h3>
+                <div class="intro" :class="{leftmove:!show}">
+                    <h3>次標題</h3>
+                    <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Ad quos eum quidem vitae hic, ut recusandae praesentium 
+                    at rem dolore provident ipsam harum inventore assumenda 
+                    excepturi perferendis modi nemo ipsa.
+                    </p>
+                </div>
+            </div>
+            <div class="image-section">
+                <transition-group tag="div" class="detailimg" name='fadeout-opacity' :class="{filterblur:!show}">
+                    <img v-for="item,index of IntroImg" 
+                    v-show="index === currBG" 
+                    :src="item.path" 
+                    :key="item.id" 
+                    alt="">
+                </transition-group>
+                <div v-show="show" class="back">
+                    <div class="icon" @click="eventEnd()"></div>
+                </div>
+            </div>
         </div>
         <div class='background' :class="{show:show}">
             <div class="comp">
@@ -23,9 +38,6 @@
                 </div>
                 <!-- <div class='Rect-01'>
                     <img src="../assets/studioIntro/studio02@2x.jpg" alt="">
-                </div>
-                <div class='Rect-02'>
-                    <img src="../assets/studioIntro/studio05.jpg" alt="">
                 </div> -->
                 <transition-group tag="div" class="subtitle" name='fadeout-opacity'>
                     <h2 v-for="item,index of Subtitle" 
@@ -35,15 +47,6 @@
                         {{item}}
                     </h2>
                 </transition-group>
-                <!-- <div class='Rect-03'>
-                    <img src="../assets/studioIntro/studio04@2x.jpg" alt="">
-                </div>
-                <div class='Rect-04'>
-                    <img src="../assets/studioIntro/studio03@2x.jpg" alt="">
-                </div>
-                <div class='Rect-05'>
-                    <img src="../assets/studioIntro/studio01@2x.jpg" alt="">
-                </div> -->
             </div>
         </div>
     </div>
@@ -101,6 +104,10 @@ export default {
             this.changeBG(index);
             this.mouseEventPermission = false;
             this.show = true;
+        },
+        eventEnd(){
+            this.show = false;
+            this.mouseEventPermission = true;
         }
     }
 }
@@ -115,26 +122,52 @@ export default {
         height: 100%;
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-end;
         // background-color: rgba($color: #364286, $alpha: .3);
-        h3{
+        .txt{
             width: 30%;
-            font-size: 96px;
-            letter-spacing: 24px;
-        }
-        .detailimg{
-            width: 70%;
-            height: 100%;
-            position: relative;
-            img{
+            .title{
+                font-size: 96px;
+                letter-spacing: 24px;
+                margin-bottom: 10%;
+                transition: transform .3s .1s ease;
+            }
+            .intro{
                 position: absolute;
-                filter: blur(30px) grayscale(.8);
-                left: 0;
-                right: 0;
-                margin: 0 auto;
-                width: 80%;
+                width: 30%;
+                top: 10%;
+                font-size: 36px;
+                line-height: 2;
+                transition: transform .4s .6s ease;
             }
         }
+        .image-section{
+            width: 70%;
+            height: 100%;
+            .detailimg{
+                position: relative;
+                transition: filter .4s 0.8s ease;
+                img{
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    margin: 0 auto;
+                    width: 80%;
+                }
+            }
+            .back{
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 10;
+                .icon{
+                    width: 24px;
+                    height: 24px;
+                    background-color: #fff;
+                }
+            }
+        }
+        
     }
     .background{
         transition: transform 1.2s cubic-bezier(.61,-0.25,.26,1);
@@ -256,10 +289,7 @@ export default {
         // }
     }
     }
-    .fadeout-opacity-enter-active{
-        transition: opacity .3s;
-    }
-    .fadeout-opacity-leave-active{
+    .fadeout-opacity-enter-active,.fadeout-opacity-leave-active{
         transition: opacity .3s;
     }
     .fadeout-opacity-enter,.fadeout-opacity-leave-to{
@@ -267,6 +297,12 @@ export default {
     }
     .show{
         transform: translateX(100%);
+    }
+    .filterblur{
+        filter: blur(30px) grayscale(.8);
+    }
+    .leftmove{
+        transform: translateX(-100%);
     }
 }
 </style>
