@@ -5,14 +5,24 @@
             <div class="carousel">
                 <div class="big-img"></div>
                 <div class="text">
-                    <h1>Lorem Pormesa</h1>
-                    <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem, quos </h3>
+                    <transition-group :name='fadeoutmove'>
+                        <div
+                        class="set" 
+                        v-for="item,index of carouselContent" 
+                        v-show="groupNum == index"
+                        :key="`group`+item.id">
+                            <h1 :key="`title`+item.id">{{item.text.title}}</h1>
+                            <h3 :key="`subtitle`+item.id">{{item.text.subtitle}}</h3>
+                        </div>
+                    </transition-group>
                 </div>
             </div>
             <div class="indicators">
-                <div class="item curr"></div>
-                <div class="item"></div>
-                <div class="item"></div>
+                <div 
+                v-for="item,index of carouselContent"
+                :key="item.id"
+                class="item" :class="{curr:groupNum == index}"
+                @click="groupNum = index"></div>
             </div>
         </div>
         <div class='background'>
@@ -22,8 +32,27 @@
     </div>
 </template>
 <script>
+const dataSet = require('../assets/data/attractSection/contentSet.json');
+console.log('attractSection:');
+console.log(dataSet);
 export default {
     name:'mainlayout',
+    data(){
+        return {
+            groupNum:0,
+            fadeoutmove:'fadeout-rightmove'
+        }
+    },
+    computed:{
+        carouselContent:function(){
+            return dataSet;
+        }
+    },
+    watcher:{
+        groupNum:function(newVal,oldVal){
+            this.fadeoutmove = newVal > oldVal ? 'fadeout-rightmove' : 'fadeout-leftmove';
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -59,12 +88,17 @@ export default {
                 position: relative;
                 width: 63.425vh;
                 right: 10vh;
-                h1 {
+                .set{
+                    position: absolute;
+                    transform: translateY(-50%);
+                    h1 {
                     font-size: 6rem;
+                    }
+                    h3 {
+                        font-size: 2.25rem;
+                    }
                 }
-                h3 {
-                    font-size: 2.25rem;
-                }
+                
             }
         }
         .indicators {
@@ -109,6 +143,29 @@ export default {
             height: 100%;
             background-color: var(--BG-color);
         }
+    }
+    .fadeout-rightmove-enter-active,
+    .fadeout-rightmove-leave-active,
+    .fadeout-leftmove-enter-active,
+    .fadeout-leftmove-leave-active{
+        transition: transform .4s ease,opacity .3s ease;
+    }
+    .fadeout-rightmove-enter,
+    .fadeout-leftmove-leave-to{
+        transform: translateX(-50%);
+        opacity: 0;
+    }
+    .fadeout-rightmove-enter-to,
+    .fadeout-rightmove-leave,
+    .fadeout-leftmove-enter-to,
+    .fadeout-leftmove-leave{
+        transform: translateX(0);
+        opacity: 1;
+    }
+    .fadeout-rightmove-leave-to,
+    .fadeout-leftmove-enter{
+        transform: translateX(50%);
+        opacity: 0;
     }
 }
 </style>
