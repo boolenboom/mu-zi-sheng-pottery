@@ -118,21 +118,19 @@ export default {
                 width: 55vh;
                 height: 55vh;
                 border-radius: 50%;
-                background-color: rgba($color: #9f9f9f, $alpha: 0.6);
+                // background-color: rgba($color: #9f9f9f, $alpha: 0.6);
                 img{
                     position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    right: 0;
-                    left: 0;
-                    margin: auto;
+                    top: -25%;
+                    left: -25%;
+                    height: 150%;
                 }
             }
             .text {
                 position: relative;
                 width: 63.425vh;
                 height: 40vh;
-                right: 20vh;
+                right: 10vh;
                 .set{
                     height: 100%;
                     position: absolute;
@@ -154,6 +152,7 @@ export default {
             flex-direction: row;
             justify-content: center;
             .item {
+                z-index: 50;
                 width: 24px;
                 height: 24px;
                 border-radius: 50%;
@@ -192,13 +191,11 @@ export default {
             background-color: var(--BG-color);
         }
     }
+    .fadeout-rightmove-leave-active,
+    .fadeout-leftmove-enter-active,
     .fadeout-leftmove-leave-active,
     .fadeout-rightmove-enter-active{
-        transition: transform 1s ease,opacity 1s ease;
-    }
-    .fadeout-rightmove-leave-active,
-    .fadeout-leftmove-enter-active{
-        transition: transform 1s ease,opacity 1s ease;
+        transition: transform .8s ease,opacity .8s ease;
     }
     .fadeout-rightmove-enter,
     .fadeout-leftmove-leave-to{
