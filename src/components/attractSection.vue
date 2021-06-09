@@ -3,9 +3,15 @@
         <!-- <div class="test-baseline"></div> -->
         <div class="contents">
             <div class="carousel">
-                <div class="big-img"></div>
+                <transition-group :name="fadeoutmove" tag="div" class="big-img">
+                    <img v-for="item,index of carouselImg" 
+                    :key='`img`+item.id' 
+                    :src="item.path"
+                    v-show="groupNum == index"
+                    alt="">
+                </transition-group>
                 <div class="text">
-                    <transition-group :name='fadeoutmove'>
+                    <transition-group :name='fadeoutmove' class="control">
                         <div
                         class="set" 
                         v-for="item,index of carouselContent" 
@@ -35,23 +41,50 @@
 const dataSet = require('../assets/data/attractSection/contentSet.json');
 console.log('attractSection:');
 console.log(dataSet);
+let timeNum = 5;
 export default {
     name:'mainlayout',
     data(){
         return {
             groupNum:0,
-            fadeoutmove:'fadeout-rightmove'
+            fadeoutmove:'fadeout-rightmove',
+            timer:null,
+            time:timeNum
+        }
+    },
+    methods:{
+        countdown(){
+            this.time--;
+            if(this.time == 0){
+                this.groupNum = 
+                this.groupNum == dataSet.length - 1 ? 0 : this.groupNum + 1;
+            }
         }
     },
     computed:{
         carouselContent:function(){
             return dataSet;
+        },
+        carouselImg:function(){
+            return dataSet.map(function(obj){
+                return{
+                    id:obj.id,
+                    path:require(`../assets/attractSection/${obj.filename}`)
+                };
+            })
         }
     },
-    watcher:{
+    watch:{
         groupNum:function(newVal,oldVal){
             this.fadeoutmove = newVal > oldVal ? 'fadeout-rightmove' : 'fadeout-leftmove';
+            this.time = timeNum;
         }
+    },
+    mounted() {
+        this.timer=setInterval(this.countdown, 1000);
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     }
 }
 </script>
@@ -71,28 +104,43 @@ export default {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-45%, -40%);
+        transform: translate(-45%, -50%);
         .carousel {
-            background-color: rgba($color: #fde067, $alpha: 0.3);
+            // background-color: rgba($color: #fde067, $alpha: 0.3);
             display: flex;
             flex-direction: row;
             align-items: center;
             .big-img {
                 // float: left;
-                width: 47.04vh;
-                height: 47.04vh;
+                // width: 47.04vh;
+                // height: 47.04vh;
+                position: relative;
+                width: 55vh;
+                height: 55vh;
                 border-radius: 50%;
                 background-color: rgba($color: #9f9f9f, $alpha: 0.6);
+                img{
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    right: 0;
+                    left: 0;
+                    margin: auto;
+                }
             }
             .text {
                 position: relative;
                 width: 63.425vh;
-                right: 10vh;
+                height: 40vh;
+                right: 20vh;
                 .set{
+                    height: 100%;
                     position: absolute;
-                    transform: translateY(-50%);
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
                     h1 {
-                    font-size: 6rem;
+                        font-size: 6rem;
                     }
                     h3 {
                         font-size: 2.25rem;
@@ -144,15 +192,17 @@ export default {
             background-color: var(--BG-color);
         }
     }
-    .fadeout-rightmove-enter-active,
+    .fadeout-leftmove-leave-active,
+    .fadeout-rightmove-enter-active{
+        transition: transform 1s ease,opacity 1s ease;
+    }
     .fadeout-rightmove-leave-active,
-    .fadeout-leftmove-enter-active,
-    .fadeout-leftmove-leave-active{
-        transition: transform .4s ease,opacity .3s ease;
+    .fadeout-leftmove-enter-active{
+        transition: transform 1s ease,opacity 1s ease;
     }
     .fadeout-rightmove-enter,
     .fadeout-leftmove-leave-to{
-        transform: translateX(-50%);
+        transform: translateX(-25%);
         opacity: 0;
     }
     .fadeout-rightmove-enter-to,
@@ -164,7 +214,7 @@ export default {
     }
     .fadeout-rightmove-leave-to,
     .fadeout-leftmove-enter{
-        transform: translateX(50%);
+        transform: translateX(25%);
         opacity: 0;
     }
 }
