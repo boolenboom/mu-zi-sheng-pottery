@@ -187,8 +187,12 @@ export default {
                 left: calc((100vw - 177.778vh) / -2);
                 width: 100vw;
             }
-            height: 100%;
-            background-color: var(--BG-color);
+            height: 120%;
+            background-image: url('../assets/BG.jpg');
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
         }
     }
     .fadeout-rightmove-leave-active,

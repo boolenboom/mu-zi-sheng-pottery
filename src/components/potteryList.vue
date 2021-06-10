@@ -42,8 +42,12 @@ export default {
             width: 100vw;
         }
         width: 100%;
-        height: 100%;
-        background-color: var(--BG-color);
+        height: 120%;
+            background-image: url('../assets/BG.jpg');
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
     }
 }
 </style>
