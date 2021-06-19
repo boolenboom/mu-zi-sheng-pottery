@@ -14,8 +14,8 @@
             </div>
             <div class="content">
                 <div class="scrolltext top">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga deserunt, quos corporis harum cumque obcaecati hic! Eum ratione distinctio dignissimos quisquam quia possimus, vitae quae corrupti, facilis excepturi quod modi!
+                    <p v-for="i of 9" :key="i" :id='i'>
+                        / Art·Handicrafts·Practice /
                     </p>
                 </div>
                 <transition-group :name="fadeoutmove" tag="div" class="big-img">
@@ -27,7 +27,10 @@
                 </transition-group>
                 <div class="scrolltext bottom">
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis illo alias quisquam cum ab ad deserunt perferendis culpa. Amet esse, ipsam similique excepturi pariatur dignissimos sunt fugiat cupiditate aliquam eum.
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga deserunt, quos corporis harum cumque obcaecati hic! Eum ratione distinctio dignissimos quisquam quia possimus, vitae quae corrupti, facilis excepturi quod modi!
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga deserunt, quos corporis harum cumque obcaecati hic! Eum ratione distinctio dignissimos quisquam quia possimus, vitae quae corrupti, facilis excepturi quod modi!
                     </p>
                 </div>
             </div>
@@ -160,10 +163,13 @@ export default {
             .scrolltext{
                 position: absolute;
                 font-size: 24px;
+                width: 100%;
                 border-top: 1px solid #000;
                 border-bottom: 1px solid #000;
                 padding: 8px 0;
                 overflow-x: hidden;
+                display: flex;
+                flex-flow: row nowrap;
                 &.top{
                     transform: translateY(calc(-100% - 24px));
                 }
@@ -171,8 +177,21 @@ export default {
                     transform: translateY(24px);
                 }
                 p{
-                    display: block;
-                    width: 150vw;
+                    flex: 1 0 20vw;
+                    // animation: scrolling 10s linear infinite;
+                }
+                @keyframes scrolling {
+                    from{
+                        transform: translateX(200%);
+                    }
+                    to{
+                        transform: translateX(-100%);
+                    }
+                }
+                @keyframes scrolling-back {
+                    to{
+                        transform: translateX(-300%);
+                    }
                 }
             }
             .big-img{
