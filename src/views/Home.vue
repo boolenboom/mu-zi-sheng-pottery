@@ -26,9 +26,6 @@ export default {
 $pc: 1440px;
 $table: 768px;
 $mobile: 360px;
-body {
-    height: 100%;
-}
 
 * {
     padding: 0;
@@ -40,11 +37,12 @@ body {
     --BG-color: #C4C4C4;
 }
 
-.section {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    text-align: center;
+section {
+  // scroll-snap-align: start;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  text-align: center;
 }
 
 .background {

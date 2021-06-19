@@ -1,5 +1,5 @@
 <template>
-    <div id='studioIntro' class="section">
+    <section id='studioIntro'>
         <div class="content">
             <div class="txt">
                 <h3 class="title" :class="{leftmove:show}">Studio</h3>
@@ -49,7 +49,7 @@
                 </transition-group>
             </div>
         </div>
-    </div>
+    </section>
 </template>
 <script>
 const 
@@ -115,7 +115,7 @@ export default {
 <style lang="scss" scoped>
 #studioIntro {
     height: auto;
-    background-color: #77c;
+    background-color: #85B8CB;
     .content{
         position: absolute;
         width: 100%;

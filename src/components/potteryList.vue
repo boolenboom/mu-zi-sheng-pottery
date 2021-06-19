@@ -1,11 +1,11 @@
 <template>
-    <div id="potteryList" class="section">
+    <section id="potteryList" class="section">
         <div class='background'>
             <div class="Rect-07"></div>
             <div class="Rect-08"></div>
             <div class="full"></div>
         </div>
-    </div>
+    </section>
 </template>
 <script>
 export default {
