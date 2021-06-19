@@ -1,11 +1,11 @@
 <template>
-    <div id="potteryList" class="section">
+    <section id="potteryList" class="section">
         <div class='background'>
             <div class="Rect-07"></div>
             <div class="Rect-08"></div>
             <div class="full"></div>
         </div>
-    </div>
+    </section>
 </template>
 <script>
 export default {
@@ -42,8 +42,12 @@ export default {
             width: 100vw;
         }
         width: 100%;
-        height: 100%;
-        background-color: var(--BG-color);
+        height: 120%;
+            background-image: url('../assets/BG.jpg');
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
     }
 }
 </style>

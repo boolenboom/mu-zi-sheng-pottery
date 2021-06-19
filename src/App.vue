@@ -9,6 +9,19 @@
 </template>
 
 <style lang="scss">
+html{
+  overflow-x: hidden;
+}
+body{
+  overflow: hidden;
+}
+html,body{
+  height: 300vh;
+}
+// html{
+//   scroll-snap-type: y mandatory;
+// }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
