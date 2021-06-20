@@ -14,8 +14,8 @@
             </div>
             <div class="content">
                 <div class="scrolltext top">
-                    <p v-for="i of 9" :key="i" :id='i'>
-                        / Art·Handicrafts·Practice /
+                    <p v-for="i of 6" :key="i" :id='i'>
+                        / Art·Handicrafts·Practical /
                     </p>
                 </div>
                 <transition-group :name="fadeoutmove" tag="div" class="big-img">
@@ -26,11 +26,8 @@
                     alt="">
                 </transition-group>
                 <div class="scrolltext bottom">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga deserunt, quos corporis harum cumque obcaecati hic! Eum ratione distinctio dignissimos quisquam quia possimus, vitae quae corrupti, facilis excepturi quod modi!
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga deserunt, quos corporis harum cumque obcaecati hic! Eum ratione distinctio dignissimos quisquam quia possimus, vitae quae corrupti, facilis excepturi quod modi!
+                    <p v-for="i of 6" :key="i" :id='i'>
+                        / Art·Handicrafts·Practical /
                     </p>
                 </div>
             </div>
@@ -121,9 +118,9 @@ export default {
             this.time = timeNum;
         }
     },
-    // mounted() {
-    //     this.timer=setInterval(this.countdown, 1000);
-    // },
+    mounted() {
+        this.timer=setInterval(this.countdown, 1000);
+    },
     beforeDestroy() {
         clearInterval(this.timer);
     }
@@ -177,20 +174,12 @@ export default {
                     transform: translateY(24px);
                 }
                 p{
-                    flex: 1 0 20vw;
-                    // animation: scrolling 10s linear infinite;
+                    flex: 1 0 25rem;
+                    animation: marquee-left 8s linear infinite;
                 }
-                @keyframes scrolling {
-                    from{
-                        transform: translateX(200%);
-                    }
+                @keyframes marquee-left {
                     to{
                         transform: translateX(-100%);
-                    }
-                }
-                @keyframes scrolling-back {
-                    to{
-                        transform: translateX(-300%);
                     }
                 }
             }
