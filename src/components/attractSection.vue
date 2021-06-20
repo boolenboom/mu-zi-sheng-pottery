@@ -14,8 +14,8 @@
             </div>
             <div class="content">
                 <div class="scrolltext top">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga deserunt, quos corporis harum cumque obcaecati hic! Eum ratione distinctio dignissimos quisquam quia possimus, vitae quae corrupti, facilis excepturi quod modi!
+                    <p v-for="i of 6" :key="i" :id='i'>
+                        / Art·Handicrafts·Practical /
                     </p>
                 </div>
                 <transition-group :name="fadeoutmove" tag="div" class="big-img">
@@ -26,8 +26,8 @@
                     alt="">
                 </transition-group>
                 <div class="scrolltext bottom">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis illo alias quisquam cum ab ad deserunt perferendis culpa. Amet esse, ipsam similique excepturi pariatur dignissimos sunt fugiat cupiditate aliquam eum.
+                    <p v-for="i of 6" :key="i" :id='i'>
+                        / Art·Handicrafts·Practical /
                     </p>
                 </div>
             </div>
@@ -118,9 +118,9 @@ export default {
             this.time = timeNum;
         }
     },
-    // mounted() {
-    //     this.timer=setInterval(this.countdown, 1000);
-    // },
+    mounted() {
+        this.timer=setInterval(this.countdown, 1000);
+    },
     beforeDestroy() {
         clearInterval(this.timer);
     }
@@ -160,10 +160,13 @@ export default {
             .scrolltext{
                 position: absolute;
                 font-size: 24px;
+                width: 100%;
                 border-top: 1px solid #000;
                 border-bottom: 1px solid #000;
                 padding: 8px 0;
                 overflow-x: hidden;
+                display: flex;
+                flex-flow: row nowrap;
                 &.top{
                     transform: translateY(calc(-100% - 24px));
                 }
@@ -171,8 +174,13 @@ export default {
                     transform: translateY(24px);
                 }
                 p{
-                    display: block;
-                    width: 150vw;
+                    flex: 1 0 25rem;
+                    animation: marquee-left 8s linear infinite;
+                }
+                @keyframes marquee-left {
+                    to{
+                        transform: translateX(-100%);
+                    }
                 }
             }
             .big-img{
