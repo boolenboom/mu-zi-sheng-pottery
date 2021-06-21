@@ -1,8 +1,16 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/" class="LOGO">
+        M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
+      </router-link> |
+      <menu>
+        <div class="trigger">MENU</div>
+        <div class="option">
+          <div class="trigger">CLOSE</div>
+          <router-link to="/about">About</router-link>
+        </div>
+      </menu>
     </div>
     <router-view />
   </div>
@@ -43,11 +51,45 @@ html,body{
     font-weight: bold;
     color: #2c3e50;
 
-    &:nth-child(1){
-      margin-right: 80%;
-    }
     &.router-link-exact-active {
       color: #42b983;
+    }
+  }
+  .LOGO{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    .halftext{
+      display: flex;
+      flex-flow: column;
+      span{
+        flex: 1 0 0;
+        height: 40%;
+        font-size: 1rem;
+        &:nth-child(2){
+          margin-top: -0.5rem;
+        }
+      }
+    }
+    margin-right: 80%;
+  }
+  menu{
+    --menuVisible: hidden;
+    .trigger{
+      z-index: 901;
+      &:focus{
+        color: #42b983;
+      }
+    }
+    .option{
+      position: fixed;
+      top:0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 900;
+      background-color: #fff;
+      visibility: var(--menuVisible);
     }
   }
 }
