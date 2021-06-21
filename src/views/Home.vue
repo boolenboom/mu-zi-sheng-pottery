@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <attractSection />
+    <keyVision />
     <studiointro />
     <potterylist />
   </div>
@@ -9,14 +9,14 @@
 
 <script>
 // @ is an alias to /src
-import attractSection from '../components/attractSection.vue';
+import keyVision from '../components/keyVision.vue';
 import studiointro from "@/components/studioIntro.vue";
 import potterylist from '../components/potteryList.vue';
 
 export default {
   name: "Home",
   components: {
-    attractSection,
+    keyVision,
     studiointro,
     potterylist,
   },
