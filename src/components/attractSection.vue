@@ -39,40 +39,6 @@
                 @click="groupNum = index"></div>
             </div>
         </div>
-        <!-- <div class="contents">
-            <div class="carousel">
-                <transition-group :name="fadeoutmove" tag="div" class="big-img">
-                    <img v-for="item,index of carouselImg" 
-                    :key='`img`+item.id' 
-                    :src="item.path"
-                    v-show="groupNum == index"
-                    alt="">
-                </transition-group>
-                <div class="text">
-                    <transition-group :name='fadeoutmove' class="control">
-                        <div
-                        class="set" 
-                        v-for="item,index of carouselContent" 
-                        v-show="groupNum == index"
-                        :key="`group`+item.id">
-                            <h1 :key="`title`+item.id">{{item.text.title}}</h1>
-                            <h3 :key="`subtitle`+item.id">{{item.text.subtitle}}</h3>
-                        </div>
-                    </transition-group>
-                </div>
-            </div>
-            <div class="indicators">
-                <div 
-                v-for="item,index of carouselContent"
-                :key="item.id"
-                class="item" :class="{curr:groupNum == index}"
-                @click="groupNum = index"></div>
-            </div>
-        </div>
-        <div class='background'>
-            <div class="Rect-01"></div>
-            <div class="full"></div>
-        </div> -->
     </section>
 </template>
 <script>
@@ -230,80 +196,6 @@ export default {
         left: 586px;
         outline: solid 1px #000;
     }
-    // .contents {
-    //     z-index: 10;
-    //     position: absolute;
-    //     top: 50%;
-    //     left: 50%;
-    //     transform: translate(-45%, -50%);
-    //     .carousel {
-    //         // background-color: rgba($color: #fde067, $alpha: 0.3);
-    //         display: flex;
-    //         flex-direction: row;
-    //         align-items: center;
-    //         .big-img {
-    //             // float: left;
-    //             // width: 47.04vh;
-    //             // height: 47.04vh;
-    //             position: relative;
-    //             width: 55vh;
-    //             height: 55vh;
-    //             border-radius: 50%;
-    //             // background-color: rgba($color: #9f9f9f, $alpha: 0.6);
-    //             img{
-    //                 position: absolute;
-    //                 top: -25%;
-    //                 left: -25%;
-    //                 height: 150%;
-    //             }
-    //         }
-    //         .text {
-    //             position: relative;
-    //             width: 63.425vh;
-    //             height: 40vh;
-    //             right: 10vh;
-    //             .set{
-    //                 height: 100%;
-    //                 position: absolute;
-    //                 display: flex;
-    //                 flex-direction: column;
-    //                 justify-content: center;
-    //                 h1 {
-    //                     font-size: 6rem;
-    //                 }
-    //                 h3 {
-    //                     font-size: 2.25rem;
-    //                 }
-    //             }
-                
-    //         }
-    //     }
-    // }
-    // .background {
-    //     [class*='-01'] {
-    //         z-index: 1;
-    //         width: 73.4375%;
-    //         height: 87.037%;
-    //         transform: rotate(45deg) translateX(-17.6%) translateY(-20%);
-    //     }
-    //     .full {
-    //         position: absolute;
-    //         z-index: -1;
-    //         top: 0;
-    //         left: 0;
-    //         width: 100%;
-    //         @media (min-width: 177vh) {
-    //             left: calc((100vw - 177.778vh) / -2);
-    //             width: 100vw;
-    //         }
-    //         height: 120%;
-    //         background-image: url('../assets/BG.jpg');
-    //         background-position: top center;
-    //         background-repeat: no-repeat;
-    //         background-size: cover;
-    //         background-attachment: fixed;
-    //     }
-    // }
     .fadeout-rightmove-leave-active,
     .fadeout-leftmove-enter-active,
     .fadeout-leftmove-leave-active,
