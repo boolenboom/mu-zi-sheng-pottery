@@ -1,5 +1,5 @@
 <template>
-  <div class="home" data='123456' slot="pageoffset" @wheel="scrollhandler($event)" :style="`transform:translateY(${pageoffset}px);`">
+  <div class="home" data='123456' slot="pageoffset" @wheel="scrollhandler($event)" @transitionend.self='snap($event)' :style="`transform:translateY(${pageoffset}px);`">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <keyVision />
     <studiointro />
@@ -27,9 +27,14 @@ export default {
   },
   methods:{
     scrollhandler(e){
-      console.log(window.innerHeight);
-      this.pageoffset -= e.deltaY;
+      console.log(e);
+      this.pageoffset -= e.deltaY / 100 * window.innerHeight * 0.2;
       this.pageoffset = this.pageoffset > 0 ? 0 : -this.pageoffset > window.innerHeight * 2 ?  -window.innerHeight * 2 : this.pageoffset;
+    },
+    snap(e){
+      console.log(e)
+      if(this.pageoffset % window.innerHeight === 0)return 0;
+      this.pageoffset = Math.round(this.pageoffset / window.innerHeight) * window.innerHeight;
     }
   }
 };
@@ -58,7 +63,7 @@ section {
 }
 
 .home{
-  transition: transform .5s cubic-bezier(0,.5,.5,1);
+  transition: transform .5s cubic-bezier(.3,.4,.7,.9);
 }
 
 .background {
