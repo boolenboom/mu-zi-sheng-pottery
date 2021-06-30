@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" data='123456' slot="pageoffset" @wheel="scrollhandler($event)" :style="`transform:translateY(${pageoffset}px);`">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <keyVision />
     <studiointro />
@@ -9,9 +9,9 @@
 
 <script>
 // @ is an alias to /src
-import keyVision from '../components/keyVision.vue';
+import keyVision from '@/components/keyVision.vue';
 import studiointro from "@/components/studioIntro.vue";
-import potterylist from '../components/potteryList.vue';
+import potterylist from '@/components/potteryList.vue';
 
 export default {
   name: "Home",
@@ -20,6 +20,18 @@ export default {
     studiointro,
     potterylist,
   },
+  data(){
+    return{
+      pageoffset:0
+    }
+  },
+  methods:{
+    scrollhandler(e){
+      console.log(window.innerHeight);
+      this.pageoffset -= e.deltaY;
+      this.pageoffset = this.pageoffset > 0 ? 0 : -this.pageoffset > window.innerHeight * 2 ?  -window.innerHeight * 2 : this.pageoffset;
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -43,6 +55,10 @@ section {
   height: 100vh;
   position: relative;
   text-align: center;
+}
+
+.home{
+  transition: transform .5s cubic-bezier(0,.5,.5,1);
 }
 
 .background {

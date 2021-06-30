@@ -12,19 +12,25 @@
         </div>
       </menu>
     </div>
-    <router-view />
+    <router-view :pageoffset="pageoffset" />
   </div>
 </template>
 
+// <script>
+// export default {
+//   name:'app',
+// }
+// </script>
+
+
 <style lang="scss">
 html{
+  height: 100vh;
   overflow-x: hidden;
 }
 body{
+  height: 100vh;
   overflow: hidden;
-}
-html,body{
-  height: 300vh;
 }
 // html{
 //   scroll-snap-type: y mandatory;
