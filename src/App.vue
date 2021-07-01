@@ -12,7 +12,7 @@
         </div>
       </menu>
     </div>
-    <router-view :pageoffset="pageoffset" />
+    <router-view/>
   </div>
 </template>
 

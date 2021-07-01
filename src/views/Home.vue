@@ -1,5 +1,5 @@
 <template>
-  <div class="home" data='123456' slot="pageoffset" @wheel="scrollhandler($event)" :style="`transform:translateY(${pageoffset}px);`">
+  <div class="home" data='123456' slot="pageoffset" @wheel="scrollhandler($event)" @transitionend.self='snap($event)' :style="`transform:translateY(${pageoffset}px);`">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <keyVision />
     <studiointro />
@@ -12,6 +12,11 @@
 import keyVision from '@/components/keyVision.vue';
 import studiointro from "@/components/studioIntro.vue";
 import potterylist from '@/components/potteryList.vue';
+
+const parent = document.querySelector('.home');
+console.log(parent.childNodes);
+const childNum = parent.childNodes.length;
+let scrollratio = 0.2;
 
 export default {
   name: "Home",
@@ -27,9 +32,17 @@ export default {
   },
   methods:{
     scrollhandler(e){
-      console.log(window.innerHeight);
-      this.pageoffset -= e.deltaY;
-      this.pageoffset = this.pageoffset > 0 ? 0 : -this.pageoffset > window.innerHeight * 2 ?  -window.innerHeight * 2 : this.pageoffset;
+      console.log(e);
+      let delta = e.deltaY,
+          viewheight = window.innerHeight;
+      this.pageoffset -= delta / 100 * viewheight* scrollratio;
+      this.pageoffset = this.pageoffset > 0 ? 0 : -this.pageoffset > viewheight* (childNum - 1) ?  -viewheight* (childNum - 1) : this.pageoffset;
+    },
+    snap(e){
+      console.log(e);
+      let viewheight = window.innerHeight;
+      if(this.pageoffset % viewheight=== 0)return 0;
+      this.pageoffset = Math.round(this.pageoffset / viewheight) * viewheight;
     }
   }
 };
@@ -58,7 +71,7 @@ section {
 }
 
 .home{
-  transition: transform .5s cubic-bezier(0,.5,.5,1);
+  transition: transform .5s cubic-bezier(.3,.4,.7,.9);
 }
 
 .background {
