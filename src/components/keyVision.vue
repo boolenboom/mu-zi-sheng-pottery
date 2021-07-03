@@ -49,7 +49,6 @@ let timeNum = 5;
 let classlist = {
     ready:'fadeactive fade',
     run:'fadeactive',
-    on:'',
     leave:'fadeactive fade'
 }
 export default {
@@ -62,6 +61,12 @@ export default {
             time:timeNum,
             state: 'ready',
             orderdelay:1.2
+        }
+    },
+    props:{
+        timetoleave:{
+            type:Boolean,
+            default:false
         }
     },
     methods:{
@@ -88,10 +93,8 @@ export default {
                 };
             })
         },
-        animationList:{
-            get(){
-                return classlist[this.state];
-            }
+        animationList:function(){
+            return classlist[this.state];
         }
     },
     watch:{
@@ -136,6 +139,7 @@ export default {
             }
         }
         .content{
+            background-color: #fff;
             position: relative;
             width: 73.4375%;
             height: 87.037%;
@@ -172,7 +176,6 @@ export default {
             }
             .big-img{
                 position: relative;
-                background-color: #fff;
                 height: 100%;
                 overflow: hidden;
                 img{
