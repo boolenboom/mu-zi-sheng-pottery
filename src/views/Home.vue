@@ -45,7 +45,6 @@ export default {
   },
   mounted(){
     const parent = document.querySelector('.home');
-    console.log(parent.childNodes);
     this.childNum = parent.childNodes.length;
   }
 };
