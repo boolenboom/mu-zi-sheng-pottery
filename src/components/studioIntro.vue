@@ -52,9 +52,8 @@
     </section>
 </template>
 <script>
-const 
-imgdata = require('../assets/data/studioIntro/contentSet.json'),
-dataSet = [...imgdata.set];
+const imgdata = require('../assets/data/studioIntro/contentSet.json'),
+        dataSet = [...imgdata.set];
 let path = 'assets/studioIntro';
 console.log(dataSet);
 export default {
@@ -171,123 +170,71 @@ export default {
     }
     .background{
         transition: transform 1.2s cubic-bezier(.61,-0.25,.26,1);
-    .comp {
-        position: absolute;
-        width: 98.4375%;
-        height: 175%;
-        transform: rotate(45deg) translate(7%, -24.35%);
-        // width: 78.75%;
-        // height: 140%;
-        // transform: rotate(45deg) translate(10%,-19.7%);  //layout ver.
-        z-index: 1;
-        [class*='Rect'] {
-            background-color: var(--BG-color);
-            // outline: 1px solid #000;
-            overflow: hidden;
+        .comp {
             position: absolute;
-            img {
-                transform: rotate(-45deg);
-            }
-        }
-        [id*='img0']:hover{
-            cursor: pointer;
-        }
-        #img01{
-            position: relative;
-                top:15%;
-                left: -5%;
-        }
-        #img02{
-            position: relative;
-                top: -50%;
-                left: -30%;
-        }
-        #img03{
-            position: relative;
-                top: -75%;
-                left: -20%;
-        }
-        #img04{
-        position: relative;
-                top: -90%;
-                left: -20%;
-        }
-        #img05{
-            position: relative;
-                top:-40%;
-                left: -30%;
-        }
-        .subtitle{
-            position: absolute;
-            top: 40%;
-            left: 20%;
-            width: 20%;
-            height: 20%;
-            // top: 25%;
-            // left: 25%;
-            // width: 25%;
-            // height: 25%; //layout ver.
-            .txt{
+            width: 98.4375%;
+            height: 175%;
+            transform: rotate(45deg) translate(7%, -24.35%);
+            // width: 78.75%;
+            // height: 140%;
+            // transform: rotate(45deg) translate(10%,-19.7%);  //layout ver.
+            z-index: 1;
+            [class*='Rect'] {
+                background-color: var(--BG-color);
+                // outline: 1px solid #000;
+                overflow: hidden;
                 position: absolute;
-                transform: translateY(-50%) rotate(-45deg);
-                top:50%;
-                width: 100%;
-                font-size: 56px;
+                img {
+                    transform: rotate(-45deg);
+                }
+            }
+            [id*='img0']:hover{
+                cursor: pointer;
+            }
+            #img01{
+                position: relative;
+                    top:15%;
+                    left: -5%;
+            }
+            #img02{
+                position: relative;
+                    top: -50%;
+                    left: -30%;
+            }
+            #img03{
+                position: relative;
+                    top: -75%;
+                    left: -20%;
+            }
+            #img04{
+            position: relative;
+                    top: -90%;
+                    left: -20%;
+            }
+            #img05{
+                position: relative;
+                    top:-40%;
+                    left: -30%;
+            }
+            .subtitle{
+                position: absolute;
+                top: 40%;
+                left: 20%;
+                width: 20%;
+                height: 20%;
+                // top: 25%;
+                // left: 25%;
+                // width: 25%;
+                // height: 25%; //layout ver.
+                .txt{
+                    position: absolute;
+                    transform: translateY(-50%) rotate(-45deg);
+                    top:50%;
+                    width: 100%;
+                    font-size: 56px;
+                }
             }
         }
-        // [class*='-01'] {
-        //     top: -25%;
-        //     width: 150%;
-        //     height: 50%;
-        //     img {
-        //         position: relative;
-        //         top:20%;
-        //         left: -10%;
-        //     }
-        // }
-        // [class*='-02'] {
-        //     top: 25%;
-        //     width: 25%;
-        //     height: 25%;
-        //     img {
-        //         position: relative;
-        //         top: -10%;
-        //         left: -5%;
-        //     }
-        // }
-        // [class*='-03'] {
-        //     top: 25%;
-        //     left: 50%;
-        //     width: 100%;
-        //     height: 25%;
-        //     img {
-        //         position: relative;
-        //         top: -75%;
-        //         left: -20%;
-        //     }
-        // }
-        // [class*='-04'] {
-        //     bottom: 25%;
-        //     width: 50%;
-        //     height: 25%;
-        //     img {
-        //         position: relative;
-        //         top: -90%;
-        //         left: -20%;
-        //     }
-        // }
-        // [class*='-05'] {
-        //     bottom: 0;
-        //     left: 50%;
-        //     width: 25%;
-        //     height: 50%;
-        //     img {
-        //         position: relative;
-        //         top:-40%;
-        //         left: -30%;
-        //     }
-        // }
-    }
     }
     .fadeout-opacity-enter-active,.fadeout-opacity-leave-active{
         transition: opacity .3s;

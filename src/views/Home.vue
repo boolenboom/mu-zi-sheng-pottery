@@ -13,9 +13,6 @@ import keyVision from '@/components/keyVision.vue';
 import studiointro from "@/components/studioIntro.vue";
 import potterylist from '@/components/potteryList.vue';
 
-const parent = document.querySelector('.home');
-console.log(parent.childNodes);
-const childNum = parent.childNodes.length;
 let scrollratio = 0.2;
 
 export default {
@@ -27,7 +24,8 @@ export default {
   },
   data(){
     return{
-      pageoffset:0
+      pageoffset:0,
+      childNum:0
     }
   },
   methods:{
@@ -36,7 +34,7 @@ export default {
       let delta = e.deltaY,
           viewheight = window.innerHeight;
       this.pageoffset -= delta / 100 * viewheight* scrollratio;
-      this.pageoffset = this.pageoffset > 0 ? 0 : -this.pageoffset > viewheight* (childNum - 1) ?  -viewheight* (childNum - 1) : this.pageoffset;
+      this.pageoffset = this.pageoffset > 0 ? 0 : -this.pageoffset > viewheight* (this.childNum - 1) ?  -viewheight* (this.childNum - 1) : this.pageoffset;
     },
     snap(e){
       console.log(e);
@@ -44,6 +42,11 @@ export default {
       if(this.pageoffset % viewheight=== 0)return 0;
       this.pageoffset = Math.round(this.pageoffset / viewheight) * viewheight;
     }
+  },
+  mounted(){
+    const parent = document.querySelector('.home');
+    console.log(parent.childNodes);
+    this.childNum = parent.childNodes.length;
   }
 };
 </script>

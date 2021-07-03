@@ -1,7 +1,7 @@
 <template>
     <section id='main'>
         <!-- <div class="test-baseline"></div> -->
-        <div class="wrapper">
+        <div class="wrapper" >
             <div class="title">
                 <transition-group :name='fadeoutmove' class="control">
                     <h1 
@@ -12,8 +12,8 @@
                     </h1>
                 </transition-group>
             </div>
-            <div class="content">
-                <div class="scrolltext top">
+            <div class="content" :class="{readystate:!isReady}">
+                <div class="marquee top">
                     <p v-for="i of 6" :key="i" :id='i'>
                         / Art·Handicrafts·Practical /
                     </p>
@@ -25,7 +25,7 @@
                     v-show="groupNum == index"
                     alt="">
                 </transition-group>
-                <div class="scrolltext bottom">
+                <div class="marquee bottom">
                     <p v-for="i of 6" :key="i" :id='i'>
                         / Art·Handicrafts·Practical /
                     </p>
@@ -53,7 +53,8 @@ export default {
             groupNum:0,
             fadeoutmove:'fadeout-rightmove',
             timer:null,
-            time:timeNum
+            time:timeNum,
+            isReady: false
         }
     },
     methods:{
@@ -86,6 +87,7 @@ export default {
     },
     mounted() {
         this.timer=setInterval(this.countdown, 1000);
+        this.isReady=true;
     },
     beforeDestroy() {
         clearInterval(this.timer);
@@ -123,7 +125,11 @@ export default {
             width: 73.4375%;
             height: 87.037%;
             transform: rotate(45deg) translateX(-17.6%) translateY(-20%);
-            .scrolltext{
+            transition: transform 1.2s ease-in-out ;
+            &.readystate{
+                transform: rotate(45deg) translateX(-100%) translateY(-20%);
+            }
+            .marquee{
                 position: absolute;
                 font-size: 24px;
                 width: 100%;
