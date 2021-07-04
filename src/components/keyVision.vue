@@ -3,7 +3,7 @@
         <!-- <div class="test-baseline"></div> -->
         <div class="wrapper" :style="`--order-delay:${orderdelay}s;`">
             <div class="title">
-                <transition-group :name='fadeoutmove' class="control" :class="animationList" @change='changestate($event)'>
+                <transition-group :name='fadeoutmove' class="control" :class="animationList" @update='changestate($event)'>
                     <h1 
                     v-for="item,index of carouselContent" 
                     v-show="groupNum == index"
@@ -64,9 +64,9 @@ export default {
         }
     },
     props:{
-        timetoleave:{
-            type:Boolean,
-            default:false
+        viewon:{
+            type:Number,
+            default:1
         }
     },
     methods:{
@@ -101,6 +101,10 @@ export default {
         groupNum:function(newVal,oldVal){
             this.fadeoutmove = newVal > oldVal ? 'fadeout-rightmove' : 'fadeout-leftmove';
             this.time = timeNum;
+        },
+        viewon:function(newVal){
+            this.orderdelay = 0;
+            this.state = newVal !== 1 ? 'leave' : 'run';
         }
     },
     mounted() {
