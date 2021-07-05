@@ -2,7 +2,7 @@
   <div class="home" data='123456' slot="pageoffset" @wheel="scrollhandler($event)" @transitionend.self='snap($event)' :style="`transform:translateY(${pageoffset}px);`">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <keyVision :viewon='currView'/>
-    <studiointro :viewon='currView'/>
+    <studiointro :viewon='currView' :offset='pageoffset'/>
     <potterylist :viewon='currView'/>
   </div>
 </template>
