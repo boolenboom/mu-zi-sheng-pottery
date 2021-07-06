@@ -54,7 +54,7 @@
         <!-- <div class='Rect-01'>
                     <img src="../assets/studioIntro/studio02@2x.jpg" alt="">
                 </div> -->
-        <transition-group tag="div" class="subtitle" name="fadeout-opacity">
+        <transition-group tag="div" class="subtitle" name="fadeout-opacity" :class="animationList">
           <h2
             v-for="(item, index) of Subtitle"
             :key="index"
@@ -270,6 +270,7 @@ export default {
         // left: 25%;
         // width: 25%;
         // height: 25%; //layout ver.
+        transition: opacity 0.3s;
         .txt {
           position: absolute;
           transform: translateY(-50%) rotate(-45deg);
