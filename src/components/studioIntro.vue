@@ -39,7 +39,7 @@
           class="Rect"
           v-for="(item, index) of IntroImg"
           :key="item.id"
-          :style="item.style"
+          :style="item.style + animationSetting"
           :class="[item.class ,timing]"
           @mouseenter="changeBG(index)"
           @click="detailshow(index)"
@@ -81,6 +81,7 @@ export default {
       currBG: 0,
       mouseEventPermission: true,
       show: false,
+      scrollDir:'down'
     };
   },
   props: {
@@ -101,18 +102,16 @@ export default {
           height = obj.size.height * heightratio;
         return {
           id: obj.id,
-          style: `--order:${obj.id - 1};
-                  --duration:0.3s;
+          style: `--id:${obj.id};
                   top:${top}%;
                   left:${left}%;
                   width:${width}%;
                   height:${height}%;`,
-					class:`${height > width ? 'up-down':'left-right'}`,
+					class:`${width > height ?'left-right' :'up-down'}`,
           path: require(`../${path}/${obj.filename}`),
         };
       });
       console.log(item);
-      console.log(this.subtitlename);
       return item;
     },
     Subtitle: function () {
@@ -123,7 +122,11 @@ export default {
     },
 		timing:function(){
 			return this.viewon===1?' slide':'';
-		}
+		},
+    animationSetting: function(){
+      return `--order:${this.scrollDir === 'down' ? 'calc(var(--id) - 1)' : 'calc(5 - var(--id))'};
+              --duration:0.2s;`;
+    }
   },
   methods: {
     changeBG(index) {
@@ -138,8 +141,13 @@ export default {
     eventEnd() {
       this.show = false;
       this.mouseEventPermission = true;
-    },
+    }
   },
+  watch:{
+    viewon:function(newVal,oldVal){
+      this.scrollDir = newVal > oldVal ? 'down' : 'up';
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -226,26 +234,31 @@ export default {
         position: relative;
         top: 15%;
         left: -5%;
+        transition: opacity 0.3s;
       }
       #img02 {
         position: relative;
         top: -50%;
         left: -30%;
+        transition: opacity 0.3s;
       }
       #img03 {
         position: relative;
         top: -75%;
         left: -20%;
+        transition: opacity 0.3s;
       }
       #img04 {
         position: relative;
         top: -90%;
         left: -20%;
+        transition: opacity 0.3s;
       }
       #img05 {
         position: relative;
         top: -40%;
         left: -30%;
+        transition: opacity 0.3s;
       }
       .subtitle {
         position: absolute;
@@ -284,15 +297,17 @@ export default {
   .leftmove {
     transform: translateX(-100%);
   }
-  .slide {
-    width: 0 !important;
-    height: 0 !important;
+  .up-down.slide {
+    height: 0% !important;
+  }
+  .left-right.slide{
+    width: 0% !important;
   }
   .up-down {
-    transition: height var(--duration) calc(var(--oredr) * var(--duration)) ease;
+    transition: height var(--duration) calc(var(--order) * 0.9 * var(--duration)) ease;
   }
   .left-right {
-    transition: width var(--duration) calc(var(--oredr) * var(--duration)) ease;
+    transition: width var(--duration) calc(var(--order) * 0.9 * var(--duration)) ease;
   }
 }
 </style>
