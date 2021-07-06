@@ -125,7 +125,8 @@ export default {
 		},
     animationSetting: function(){
       return `--order:${this.scrollDir === 'down' ? 'calc(var(--id) - 1)' : 'calc(5 - var(--id))'};
-              --duration:0.2s;`;
+              --duration:0.2s;
+              --image-delay:${this.scrollDir === 'down' ? '0.8' : '0'}s;`;
     }
   },
   methods: {
@@ -144,8 +145,8 @@ export default {
     }
   },
   watch:{
-    viewon:function(newVal,oldVal){
-      this.scrollDir = newVal > oldVal ? 'down' : 'up';
+    offset:function(newVal,oldVal){
+      this.scrollDir = Math.abs(newVal) > Math.abs(oldVal) ? 'down' : 'up';
     }
   }
 };
@@ -224,41 +225,36 @@ export default {
         position: absolute;
         img {
           transform: rotate(-45deg);
+          transition: opacity 0.3s var(--image-delay);
         }
       }
       [id*="img0"]:hover {
         cursor: pointer;
-        transition: opacity 0.3s;
       }
       #img01 {
         position: relative;
         top: 15%;
         left: -5%;
-        transition: opacity 0.3s;
       }
       #img02 {
         position: relative;
         top: -50%;
         left: -30%;
-        transition: opacity 0.3s;
       }
       #img03 {
         position: relative;
         top: -75%;
         left: -20%;
-        transition: opacity 0.3s;
       }
       #img04 {
         position: relative;
         top: -90%;
         left: -20%;
-        transition: opacity 0.3s;
       }
       #img05 {
         position: relative;
         top: -40%;
         left: -30%;
-        transition: opacity 0.3s;
       }
       .subtitle {
         position: absolute;
