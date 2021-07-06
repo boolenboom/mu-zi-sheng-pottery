@@ -1,9 +1,9 @@
 <template>
   <div class="home" data='123456' slot="pageoffset" @wheel="scrollhandler($event)" @transitionend.self='snap($event)' :style="`transform:translateY(${pageoffset}px);`">
     <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <keyVision />
-    <studiointro />
-    <potterylist />
+    <keyVision :viewon='currView'/>
+    <studiointro :viewon='currView' :offset='pageoffset'/>
+    <potterylist :viewon='currView'/>
   </div>
 </template>
 
@@ -13,9 +13,6 @@ import keyVision from '@/components/keyVision.vue';
 import studiointro from "@/components/studioIntro.vue";
 import potterylist from '@/components/potteryList.vue';
 
-const parent = document.querySelector('.home');
-console.log(parent.childNodes);
-const childNum = parent.childNodes.length;
 let scrollratio = 0.2;
 
 export default {
@@ -27,26 +24,42 @@ export default {
   },
   data(){
     return{
-      pageoffset:0
+      pageoffset:0,
+      childNum:0,
+      viewheight:window.innerHeight
     }
   },
   methods:{
     scrollhandler(e){
-      console.log(e);
       let delta = e.deltaY,
-          viewheight = window.innerHeight;
-      this.pageoffset -= delta / 100 * viewheight* scrollratio;
-      this.pageoffset = this.pageoffset > 0 ? 0 : -this.pageoffset > viewheight* (childNum - 1) ?  -viewheight* (childNum - 1) : this.pageoffset;
+          viewH = this.viewheight;
+      this.pageoffset -= delta / 100 * viewH * scrollratio;
+      this.pageoffset = this.pageoffset > 0 ? 
+        0 : -this.pageoffset > viewH* (this.childNum - 1) ?
+        -viewH* (this.childNum - 1) : this.pageoffset;//限制範圍
+      
     },
     snap(e){
-      console.log(e);
-      let viewheight = window.innerHeight;
-      if(this.pageoffset % viewheight=== 0)return 0;
-      this.pageoffset = Math.round(this.pageoffset / viewheight) * viewheight;
+      console.log(e.type);
+      let viewH = this.viewheight;
+      if(this.pageoffset % viewH=== 0)return 0;
+      this.pageoffset = Math.round(this.pageoffset / viewH) * viewH;
     }
+  },
+  computed:{
+    currView:function(){
+      let viewscope = [0.5*this.viewheight,1.5*this.viewheight],
+      curr = viewscope[0] > -this.pageoffset ? 1 : viewscope[1] > -this.pageoffset ? 2 : 3;
+      return curr;
+    }
+  },
+  mounted(){
+    const parent = document.querySelector('.home');
+    this.childNum = parent.childNodes.length;
   }
 };
 </script>
+
 <style lang="scss">
 $pc: 1440px;
 $table: 768px;
