@@ -41,9 +41,9 @@ export default {
     },
     snap(e){
       console.log(e.type);
-      let viewH = this.viewheight;
-      if(this.pageoffset % viewH=== 0)return 0;
-      this.pageoffset = Math.round(this.pageoffset / viewH) * viewH;
+      // let viewH = this.viewheight;
+      // if(this.pageoffset % viewH=== 0)return 0;
+      // this.pageoffset = Math.round(this.pageoffset / viewH) * viewH;
     }
   },
   computed:{
@@ -84,7 +84,7 @@ section {
 }
 
 .home{
-  transition: transform .5s cubic-bezier(.3,.4,.7,.9);
+  transition: transform 1.5s cubic-bezier(.2,.4,.7,.9);
 }
 
 .background {
