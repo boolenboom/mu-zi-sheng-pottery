@@ -72,7 +72,7 @@ $mobile: 360px;
 }
 
  :root {
-    --BG-color: #C4C4C4;
+    --BG-color: #fff;
 }
 
 section {

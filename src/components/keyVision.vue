@@ -143,7 +143,7 @@ export default {
             }
         }
         .content{
-            background-color: #fff;
+            background-color: var(--BG-color);
             position: relative;
             width: 73.4375%;
             height: 87.037%;
