@@ -166,9 +166,10 @@ export default {
     .txt {
       width: 30%;
       .title {
-        font-size: 96px;
-        letter-spacing: 24px;
-        margin-bottom: 10%;
+        font-size: 10rem;
+        letter-spacing: 1.5rem;
+        writing-mode: vertical-lr;
+        margin: 0 auto;
         transition: transform 0.3s 0.1s ease;
       }
       .intro {
