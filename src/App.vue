@@ -5,13 +5,13 @@
         M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
       </router-link>|
       <div type="button" class="trigger" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'CLOSE' : 'MENU'}`}}</div>
-      <menu :style="`--menuVisible:${isActive ? '1' : '0'}`">
+      <menu :class="{'menuHidden':!isActive}">
         <div class="maincontainer row">
           <div class="option col-6">
             <ul>
-              <li><a href="#" class="link">Home</a></li>
-              <li><a href="#" class="link">Studio</a></li>
-              <li><a href="#" class="link">Pottery</a></li>
+              <li><a href="#Home" class="link">Home</a></li>
+              <li><a href="#studioIntro" class="link">Studio</a></li>
+              <li><a href="#potteryList" class="link">Pottery</a></li>
               <li><a href="#" class="link">Contact</a></li>
             </ul>
             <!-- <router-link to="/about">About</router-link> -->
@@ -22,7 +22,7 @@
             </picture>
           </div>
         </div>
-        <div class="background animation-active-enter" :class="{'animation-ready-pour':!isActive}"></div>
+        <div class="background animation-active" :class="{'animation-ready-pour':!isActive}"></div>
       </menu>
       <!-- <div class="ruler"></div> -->
     </div>
@@ -126,19 +126,25 @@ body{
     }
   }
   .trigger{
-      z-index: 901;
-      &:focus{
-        color: #42b983;
-      }
-      cursor: pointer;
+    z-index: 901;
+    &:focus{
+      color: #42b983;
     }
+    cursor: pointer;
+  }
+  .menuHidden{
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s linear,visibility 0s .4s linear;
+  }
   menu{
     position: fixed;
       top:0;
       left: 0;
     width: 100%;
-    height: 100vh;
-    opacity: var(--menuVisible);
+    height: 0vh;
+    opacity: 1;
+    visibility: visible;
     transition: opacity .4s linear;
     .option{
       position: relative;
@@ -178,19 +184,17 @@ body{
       width: 100vh;
       height: 100vh;
       position: fixed;
-        top: 50%;
-        left: 50%;
+        top: 0%;
+        right: 0%;
       z-index: -1;
-      transform: rotate(45deg) translate(-70.71%,0%) scale(2.3);
-      border-bottom-right-radius: 50%;
-      border-bottom-left-radius: 50%;
+      transform: translateY(-50%) translateX(50%) scale(5);
+      border-radius: 50%;
     }
-    .animation-active-enter{
-      transition: transform .5s linear, border-radius .3s .1s linear;
+    .animation-active{
+      transition: transform .5s linear;
     }
     .animation-ready-pour{
-      transform: rotate(45deg) translate(-70.70%,-160%) scale(1) ;
-      border-radius: 0% ;
+      transform: translateY(-50%) translateX(50%) scale(.1) ;
     }
   }
 }
