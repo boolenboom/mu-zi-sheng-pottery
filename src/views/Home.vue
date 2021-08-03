@@ -61,40 +61,9 @@ export default {
 </script>
 
 <style lang="scss">
-$pc: 1440px;
-$table: 768px;
-$mobile: 360px;
-
-* {
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-}
-
- :root {
-    --BG-color: #fff;
-}
-
-section {
-  // scroll-snap-align: start;
-  width: 100%;
-  height: 100vh;
-  position: relative;
-  text-align: center;
-}
 
 .home{
   transition: transform 1.5s cubic-bezier(.2,.4,.7,.9);
-}
-
-.background {
-    position: relative;
-    margin: 0 auto;
-    height: 100vh;
-    width: 177.778vh;
-    @media (max-width: 177vh) {
-        margin: 0 calc((100% - 177.778vh) / 2);
-    }
 }
 
 [class*='Rect-'] {

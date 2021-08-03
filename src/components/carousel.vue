@@ -129,7 +129,6 @@ export default {
         top: 10%;
         left: -2%;
         // font-size: 10rem;
-        writing-mode: vertical-lr;
         position: absolute;
     }
     .button{

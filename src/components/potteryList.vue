@@ -1,11 +1,13 @@
 <template>
-  <section id="potteryList" class="section">
-    <div class="background">
+  <section id="potteryList">
+    <div class="spring-container">
+      <carousel sectiontitle="Featured" :quantity='9'/>
+    </div>
+    <div class="fixed-container">
       <div class="Rect-07"></div>
       <div class="Rect-08"></div>
-      <carousel sectiontitle="Featured" :quantity='9'/>
-      <div class="full"></div>
     </div>
+      <div class="full"></div>
   </section>
 </template>
 <script>
@@ -22,6 +24,10 @@ export default {
 #potteryList {
   z-index: 2;
 	overflow: hidden;
+  .spring-container{
+    position: absolute;
+    height: 100%;
+  }
   [class*="-07"] {
     width: 19.5%;
     height: 150%;
@@ -40,12 +46,8 @@ export default {
     z-index: -1;
     top: 0;
     left: 0;
-    @media (min-width: 177vh) {
-      left: calc((100vw - 177.778vh) / -2);
-      width: 100vw;
-    }
     width: 100%;
-    height: 120%;
+    height: 100%;
     background: #85b8cb;
   }
 }

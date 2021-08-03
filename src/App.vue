@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <div id="nav" class="maincontainer">
+    <div id="nav" class="spring-container">
       <router-link to="/" class="LOGO fz-s">
         M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
       </router-link>
-      <div type="button" class="trigger fz-s" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'Close' : 'Menu'}`}}</div>
+      <div type="button" class="trigger fz-s" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'Close' : 'MENU'}`}}</div>
       <menu :class="{'menuHidden':!isActive}">
-        <div class="maincontainer row">
+        <div class="spring-container row">
           <div class="option col-6">
             <ul>
               <li><a href="#Home" class="link fz-m">Home</a></li>
@@ -43,6 +43,50 @@ export default {
 
 
 <style lang="scss">
+$pc: 1440px;
+$table: 768px;
+$mobile: 360px;
+
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    --Indentation: 4vw;
+    --fz-xl:calc(5rem + 4vw);
+    --fz-m:calc(3rem + 3vh);
+    --fz-s:calc(1rem + 1.5vh);
+}
+
+ :root {
+    --BG-color: #fff;
+}
+
+section {
+  // scroll-snap-align: start;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  text-align: center;
+}
+.spring-container{
+  padding-left: var(--Indentation);
+  padding-right: var(--Indentation);
+  width: 100%;
+  max-width: 177.778vh;
+  margin: 0 auto;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+.fixed-container {
+    position: relative;
+    margin: 0 auto;
+    height: 100vh;
+    width: 177.778vh;
+    @media (max-width: 177.77vh) {
+        margin: 0 calc((100% - 177.778vh) / 2);
+    }
+}
 html{
   height: 100vh;
   overflow-x: hidden;
@@ -56,16 +100,16 @@ body{
 // }
 
 .fz-xl{
-  font-size: calc(5rem + 4vw);
+  font-size: var(--fz-xl);
 }
 .veritcal-write{
   writing-mode: vertical-lr;
 }
 .fz-m{
-  font-size: calc(3rem + 3vh);
+  font-size: var(--fz-m);
 }
 .fz-s{
-  font-size: calc(1rem + 1.5vh);
+  font-size: var(--fz-s);
 }
 
 #app {
@@ -75,12 +119,7 @@ body{
   text-align: center;
   color: #2c3e50;
 }
-.maincontainer{
-  padding-left: 4vw;
-  padding-right: 4vw;
-  width: 100%;
-  box-sizing: border-box;
-}
+
 .row{
   display: flex;
   flex-direction: row;
