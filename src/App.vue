@@ -3,8 +3,8 @@
     <div id="nav" class="maincontainer">
       <router-link to="/" class="LOGO">
         M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
-      </router-link>|
-      <div type="button" class="trigger" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'CLOSE' : 'MENU'}`}}</div>
+      </router-link>
+      <div type="button" class="trigger" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'Close' : 'Menu'}`}}</div>
       <menu :class="{'menuHidden':!isActive}">
         <div class="maincontainer row">
           <div class="option col-6">
