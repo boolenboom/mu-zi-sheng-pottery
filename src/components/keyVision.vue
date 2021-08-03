@@ -52,7 +52,7 @@ let classlist = {
     leave:'fadeactive fade'
 }
 export default {
-    name:'mainlayout',
+    name:'keyVision',
     data(){
         return {
             groupNum:0,

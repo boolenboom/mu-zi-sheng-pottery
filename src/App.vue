@@ -5,13 +5,13 @@
         M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
       </router-link>|
       <div type="button" class="trigger" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'CLOSE' : 'MENU'}`}}</div>
-      <menu :style="`--menuVisible:${isActive ? 'visible' : 'hidden'}`">
+      <menu :class="{'menuHidden':!isActive}">
         <div class="maincontainer row">
           <div class="option col-6">
             <ul>
-              <li><a href="#" class="link">Home</a></li>
-              <li><a href="#" class="link">Studio</a></li>
-              <li><a href="#" class="link">Pottery</a></li>
+              <li><a href="#Home" class="link">Home</a></li>
+              <li><a href="#studioIntro" class="link">Studio</a></li>
+              <li><a href="#potteryList" class="link">Pottery</a></li>
               <li><a href="#" class="link">Contact</a></li>
             </ul>
             <!-- <router-link to="/about">About</router-link> -->
@@ -22,7 +22,9 @@
             </picture>
           </div>
         </div>
+        <div class="background animation-active" :class="{'animation-ready-pour':!isActive}"></div>
       </menu>
+      <!-- <div class="ruler"></div> -->
     </div>
     <router-view/>
   </div>
@@ -33,7 +35,7 @@ export default {
   name:'app',
   data(){
     return{
-      isActive:true,
+      isActive:false,
     }
   }
 }
@@ -75,6 +77,15 @@ body{
 .col-6{
   flex: 6 0 0;
 }
+.ruler{
+  position: absolute;
+  top:120px;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  outline: 1px solid #000;
+  z-index: 1001;
+}
 
 #nav {
   padding-top: 30px;
@@ -115,23 +126,30 @@ body{
     }
   }
   .trigger{
-      z-index: 901;
-      &:focus{
-        color: #42b983;
-      }
-      cursor: pointer;
+    z-index: 901;
+    &:focus{
+      color: #42b983;
     }
+    cursor: pointer;
+  }
+  .menuHidden{
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s linear,visibility 0s .4s linear;
+  }
   menu{
-    visibility: var(--menuVisible);
-    background-color: #fff;
     position: fixed;
       top:0;
       left: 0;
     width: 100%;
-    height: 100vh;
+    height: 0vh;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .4s linear;
     .option{
       position: relative;
       top: calc(60px + 2rem);
+      left: 0px;
       padding-top: 30px;
       ul{
         list-style-type: none;
@@ -148,9 +166,10 @@ body{
     }
     .randomobj{
       position: relative;
-      top: calc(60px + 2rem);
+      top: calc(60px + 2rem + 18px);
+      right: 0px;
       padding-top: 30px;
-      height: calc(100vh - 60px - 2rem);
+      height: calc(100vh - 60px - 2rem - 18px);
       padding-bottom: 30px;
       box-sizing: border-box;
       text-align: end;
@@ -159,6 +178,23 @@ body{
           height: 100%;
         }
       }
+    }
+    .background{
+      background-color: #000;
+      width: 100vh;
+      height: 100vh;
+      position: fixed;
+        top: 0%;
+        right: 0%;
+      z-index: -1;
+      transform: translateY(-50%) translateX(50%) scale(5);
+      border-radius: 50%;
+    }
+    .animation-active{
+      transition: transform .5s linear;
+    }
+    .animation-ready-pour{
+      transform: translateY(-50%) translateX(50%) scale(.1) ;
     }
   }
 }
