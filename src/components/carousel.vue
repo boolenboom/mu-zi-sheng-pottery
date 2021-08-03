@@ -1,7 +1,7 @@
 <template>
     <div class="carousel">
         <div class="warpper" @mousedown.prevent="controller($event)" @mousemove.prevent="controller($event)" @mouseup.prevent="controller($event)">
-            <div class="title fz-xl">{{sectiontitle}}</div>
+            <div class="title fz-xl veritcal-write">{{sectiontitle}}</div>
             <ul class="contents" :data-offset='offset' :style="`--offset:${offset}%;`">
                 <li v-for="i of quantity" class="item" :key="i" draggable="false">
                     <div class="pic">

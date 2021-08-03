@@ -57,6 +57,8 @@ body{
 
 .fz-xl{
   font-size: calc(5rem + 4vw);
+}
+.veritcal-write{
   writing-mode: vertical-lr;
 }
 .fz-m{

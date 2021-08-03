@@ -2,7 +2,7 @@
     <section id='main'>
         <!-- <div class="test-baseline"></div> -->
         <div class="wrapper" :style="`--order-delay:${orderdelay}s;`">
-            <div class="title fz-xl">
+            <div class="title fz-xl veritcal-write">
                 <transition-group :name='fadeoutmove' class="control" :class="animationList" @update='changestate($event)'>
                     <div 
                     v-for="item,index of carouselContent" 

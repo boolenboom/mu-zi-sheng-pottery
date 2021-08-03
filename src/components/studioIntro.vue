@@ -2,7 +2,7 @@
   <section id="studioIntro">
     <div class="content">
       <div class="txt">
-        <h3 class="title fz-xl" :class="{ leftmove: show }">Studio</h3>
+        <h3 class="title fz-xl veritcal-write" :class="{ leftmove: show }">Studio</h3>
         <div class="intro" :class="{ leftmove: !show }">
           <h3>次標題</h3>
           <p>
