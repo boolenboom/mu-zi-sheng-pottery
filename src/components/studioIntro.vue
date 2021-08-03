@@ -2,7 +2,7 @@
   <section id="studioIntro">
     <div class="content">
       <div class="txt">
-        <h3 class="title" :class="{ leftmove: show }">Studio</h3>
+        <h3 class="title fz-xl" :class="{ leftmove: show }">Studio</h3>
         <div class="intro" :class="{ leftmove: !show }">
           <h3>次標題</h3>
           <p>
@@ -166,9 +166,8 @@ export default {
     .txt {
       width: 30%;
       .title {
-        font-size: 10rem;
+        // font-size: 10rem;
         letter-spacing: 1.5rem;
-        writing-mode: vertical-lr;
         margin: 0 auto;
         transition: transform 0.3s 0.1s ease;
       }
@@ -176,7 +175,7 @@ export default {
         position: absolute;
         width: 30%;
         top: 10%;
-        font-size: 36px;
+        // font-size: 36px;
         line-height: 2;
         transition: transform 0.4s 0.6s ease;
       }
@@ -273,7 +272,7 @@ export default {
           transform: translateY(-50%) rotate(-45deg);
           top: 50%;
           width: 100%;
-          font-size: 56px;
+          // font-size: 56px;
         }
       }
     }

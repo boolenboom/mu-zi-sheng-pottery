@@ -1,18 +1,18 @@
 <template>
   <div id="app">
     <div id="nav" class="maincontainer">
-      <router-link to="/" class="LOGO">
+      <router-link to="/" class="LOGO fz-s">
         M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
       </router-link>
-      <div type="button" class="trigger" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'Close' : 'Menu'}`}}</div>
+      <div type="button" class="trigger fz-s" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'Close' : 'Menu'}`}}</div>
       <menu :class="{'menuHidden':!isActive}">
         <div class="maincontainer row">
           <div class="option col-6">
             <ul>
-              <li><a href="#Home" class="link">Home</a></li>
-              <li><a href="#studioIntro" class="link">Studio</a></li>
-              <li><a href="#potteryList" class="link">Pottery</a></li>
-              <li><a href="#" class="link">Contact</a></li>
+              <li><a href="#Home" class="link fz-m">Home</a></li>
+              <li><a href="#studioIntro" class="link fz-m">Studio</a></li>
+              <li><a href="#potteryList" class="link fz-m">Pottery</a></li>
+              <li><a href="#" class="link fz-m">Contact</a></li>
             </ul>
             <!-- <router-link to="/about">About</router-link> -->
           </div>
@@ -54,6 +54,17 @@ body{
 // html{
 //   scroll-snap-type: y mandatory;
 // }
+
+.fz-xl{
+  font-size: calc(5rem + 4vw);
+  writing-mode: vertical-lr;
+}
+.fz-m{
+  font-size: calc(3rem + 3vh);
+}
+.fz-s{
+  font-size: calc(1rem + 1.5vh);
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -98,7 +109,6 @@ body{
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: flex-start;
-  font-size: 2rem;
   a {
     flex: 0 0 0;
     font-weight: bold;
@@ -112,13 +122,14 @@ body{
     display: flex;
     flex-flow: row nowrap;
     z-index: 901;
+    font-size: 2em;
     .halftext{
       display: flex;
       flex-flow: column;
+      font-size: 0.5em;
       span{
         flex: 1 0 0;
         height: 40%;
-        font-size: 1rem;
         &:nth-child(2){
           margin-top: -0.5rem;
         }
@@ -156,7 +167,7 @@ body{
         // width: 30%;
         li{
           text-align: start;
-          font-size: 6rem;
+          // font-size: 6rem;
           height: calc(6rem - 6px);
           &:not(:first-child){
             margin-top: 5vh;

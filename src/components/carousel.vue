@@ -1,16 +1,16 @@
 <template>
     <div class="carousel">
         <div class="warpper" @mousedown.prevent="controller($event)" @mousemove.prevent="controller($event)" @mouseup.prevent="controller($event)">
-            <div class="title">{{sectiontitle}}</div>
+            <div class="title fz-xl">{{sectiontitle}}</div>
             <ul class="contents" :data-offset='offset' :style="`--offset:${offset}%;`">
                 <li v-for="i of quantity" class="item" :key="i" draggable="false">
                     <div class="pic">
                         <!-- <img src="#" alt="" class="pic"> -->
                     </div>
-                    <p class="itemname">Card name</p>
+                    <p class="itemname fz-s">Card name</p>
                 </li>
             </ul>
-            <a href="#" class="button">All</a>
+            <a href="#" class="button fz-m">All</a>
         </div>
         <!-- <div class="ruler"></div> -->
     </div>
@@ -123,17 +123,17 @@ export default {
     position: relative;
     z-index: 30;
     width: 100%;
-    font-size: 1.5rem;
+    // font-size: 1.5rem;
     overflow-x: hidden;
     .title{
         top: 10%;
         left: -2%;
-        font-size: 10rem;
+        // font-size: 10rem;
         writing-mode: vertical-lr;
         position: absolute;
     }
     .button{
-        font-size: 4rem;
+        // font-size: 4rem;
         position: absolute;
         top: 10%;
         right: 0;

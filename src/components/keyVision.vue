@@ -2,18 +2,18 @@
     <section id='main'>
         <!-- <div class="test-baseline"></div> -->
         <div class="wrapper" :style="`--order-delay:${orderdelay}s;`">
-            <div class="title">
+            <div class="title fz-xl">
                 <transition-group :name='fadeoutmove' class="control" :class="animationList" @update='changestate($event)'>
-                    <h1 
+                    <div 
                     v-for="item,index of carouselContent" 
                     v-show="groupNum == index"
                     :key="`title`+item.id">
                         {{item.text.title}}
-                    </h1>
+                    </div>
                 </transition-group>
             </div>
             <div class="content" :class="{slidein:(state==='ready')}">
-                <div class="marquee top">
+                <div class="marquee top fz-s">
                     <p v-for="i of 6" :key="i" :id='i' :class="animationList">
                         / Art·Handicrafts·Practical /
                     </p>
@@ -25,7 +25,7 @@
                     v-show="groupNum == index"
                     alt="">
                 </transition-group>
-                <div class="marquee bottom">
+                <div class="marquee bottom fz-s">
                     <p v-for="i of 6" :key="i" :id='i' :class="animationList">
                         / Art·Handicrafts·Practical /
                     </p>
@@ -135,11 +135,10 @@ export default {
                 right:30%;
             }
             // transform: translate(50%,-50%);
-            h1{
+            div{
                 position: absolute;
-                height: 90vh;
-                writing-mode: vertical-lr;
-                font-size: 9rem;
+                height: 100vh;
+                // font-size: 9rem;
             }
         }
         .content{
@@ -154,7 +153,7 @@ export default {
             }
             .marquee{
                 position: absolute;
-                font-size: 24px;
+                // font-size: 24px;
                 width: 100%;
                 border-top: 1px solid #000;
                 border-bottom: 1px solid #000;
