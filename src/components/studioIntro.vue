@@ -59,7 +59,7 @@
             v-for="(item, index) of Subtitle"
             :key="index"
             v-show="index === currBG"
-            class="txt"
+            class="txt fz-m"
           >
             {{ item }}
           </h2>
@@ -194,7 +194,7 @@ export default {
       }
       .back {
         position: absolute;
-        top: 0;
+        top: 10%;
         right: 0;
         z-index: 10;
         .icon {
