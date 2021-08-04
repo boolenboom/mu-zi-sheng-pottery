@@ -32,6 +32,12 @@ export default {
     studiointro,
     potterylist,
   },
+  props:{
+    componentIndex:{
+      type:Number,
+      default:1,
+    }
+  },
   data(){
     return{
       pageoffset:0,
@@ -64,6 +70,11 @@ export default {
       }
       curr = count;
       return curr;
+    }
+  },
+  watch:{
+    componentIndex(newVal){
+      this.pageoffset = (newVal - 1) * this.viewheight * -1;
     }
   },
   mounted(){

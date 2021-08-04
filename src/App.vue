@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav" class="spring-container">
-      <router-link to="/" class="LOGO fz-s">
+      <router-link to="/" class="LOGO fz-s" @mouseup.self.native='updateScrollOffset(1),isActive = false'>
         M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
       </router-link>
       <div type="button" class="trigger fz-s" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'Close' : 'MENU'}`}}</div>
@@ -9,9 +9,9 @@
         <div class="spring-container row">
           <div class="option col-6">
             <ul>
-              <li><a href="#Home" class="link fz-m">Home</a></li>
-              <li><a href="#studioIntro" class="link fz-m">Studio</a></li>
-              <li><a href="#potteryList" class="link fz-m">Pottery</a></li>
+              <li><router-link to="/#main" class="link fz-m" @mouseup.self.native='updateScrollOffset(1),isActive = !isActive'>Home</router-link></li>
+              <li><router-link to="/#main" class="link fz-m" @mouseup.self.native='updateScrollOffset(2),isActive = !isActive'>Studio</router-link></li>
+              <li><router-link to="/#main" class="link fz-m" @mouseup.self.native='updateScrollOffset(3),isActive = !isActive'>Pottery</router-link></li>
               <li><a href="#" class="link fz-m">Contact</a></li>
             </ul>
             <!-- <router-link to="/about">About</router-link> -->
@@ -26,7 +26,7 @@
       </menu>
       <!-- <div class="ruler"></div> -->
     </div>
-    <router-view/>
+    <router-view :componentIndex='componentIndex'/>
   </div>
 </template>
 
@@ -36,6 +36,13 @@ export default {
   data(){
     return{
       isActive:false,
+      componentIndex:1,
+    }
+  },
+  methods:{
+    updateScrollOffset(val){
+      console.log('updateIndex');
+      this.componentIndex = val;
     }
   }
 }
