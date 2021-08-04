@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav" class="maincontainer">
-      <router-link to="/" class="LOGO">
+    <div id="nav" class="spring-container">
+      <router-link to="/" class="LOGO fz-s">
         M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
-      </router-link>|
-      <div type="button" class="trigger" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'CLOSE' : 'MENU'}`}}</div>
+      </router-link>
+      <div type="button" class="trigger fz-s" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'Close' : 'MENU'}`}}</div>
       <menu :class="{'menuHidden':!isActive}">
-        <div class="maincontainer row">
+        <div class="spring-container row">
           <div class="option col-6">
             <ul>
-              <li><a href="#Home" class="link">Home</a></li>
-              <li><a href="#studioIntro" class="link">Studio</a></li>
-              <li><a href="#potteryList" class="link">Pottery</a></li>
-              <li><a href="#" class="link">Contact</a></li>
+              <li><a href="#Home" class="link fz-m">Home</a></li>
+              <li><a href="#studioIntro" class="link fz-m">Studio</a></li>
+              <li><a href="#potteryList" class="link fz-m">Pottery</a></li>
+              <li><a href="#" class="link fz-m">Contact</a></li>
             </ul>
             <!-- <router-link to="/about">About</router-link> -->
           </div>
@@ -43,6 +43,50 @@ export default {
 
 
 <style lang="scss">
+$pc: 1440px;
+$table: 768px;
+$mobile: 360px;
+
+* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    --Indentation: 4vw;
+    --fz-xl:calc(5rem + 4vw);
+    --fz-m:calc(3rem + 3vh);
+    --fz-s:calc(1rem + 1.5vh);
+}
+
+ :root {
+    --BG-color: #fff;
+}
+
+section {
+  // scroll-snap-align: start;
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  text-align: center;
+}
+.spring-container{
+  padding-left: var(--Indentation);
+  padding-right: var(--Indentation);
+  width: 100%;
+  max-width: 177.778vh;
+  margin: 0 auto;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+.fixed-container {
+    position: relative;
+    margin: 0 auto;
+    height: 100vh;
+    width: 177.778vh;
+    @media (max-width: 177.77vh) {
+        margin: 0 calc((100% - 177.778vh) / 2);
+    }
+}
 html{
   height: 100vh;
   overflow-x: hidden;
@@ -55,6 +99,19 @@ body{
 //   scroll-snap-type: y mandatory;
 // }
 
+.fz-xl{
+  font-size: var(--fz-xl);
+}
+.veritcal-write{
+  writing-mode: vertical-lr;
+}
+.fz-m{
+  font-size: var(--fz-m);
+}
+.fz-s{
+  font-size: var(--fz-s);
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -62,12 +119,7 @@ body{
   text-align: center;
   color: #2c3e50;
 }
-.maincontainer{
-  padding-left: 4vw;
-  padding-right: 4vw;
-  width: 100%;
-  box-sizing: border-box;
-}
+
 .row{
   display: flex;
   flex-direction: row;
@@ -98,7 +150,6 @@ body{
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: flex-start;
-  font-size: 2rem;
   a {
     flex: 0 0 0;
     font-weight: bold;
@@ -112,13 +163,14 @@ body{
     display: flex;
     flex-flow: row nowrap;
     z-index: 901;
+    font-size: 2em;
     .halftext{
       display: flex;
       flex-flow: column;
+      font-size: 0.5em;
       span{
         flex: 1 0 0;
         height: 40%;
-        font-size: 1rem;
         &:nth-child(2){
           margin-top: -0.5rem;
         }
@@ -156,7 +208,7 @@ body{
         // width: 30%;
         li{
           text-align: start;
-          font-size: 6rem;
+          // font-size: 6rem;
           height: calc(6rem - 6px);
           &:not(:first-child){
             margin-top: 5vh;

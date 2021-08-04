@@ -1,19 +1,21 @@
 <template>
     <section id='main'>
-        <!-- <div class="test-baseline"></div> -->
-        <div class="wrapper" :style="`--order-delay:${orderdelay}s;`">
-            <div class="title">
-                <transition-group :name='fadeoutmove' class="control" :class="animationList" @update='changestate($event)'>
-                    <h1 
+        <div class="spring-container">
+            <div class="title fz-xl veritcal-write"> <!--標題文字-->
+                <transition-group :name='fadeoutmove' :class="animationList" @update='changestate($event)'>
+                    <div 
                     v-for="item,index of carouselContent" 
                     v-show="groupNum == index"
                     :key="`title`+item.id">
                         {{item.text.title}}
-                    </h1>
+                    </div>
                 </transition-group>
             </div>
-            <div class="content" :class="{slidein:(state==='ready')}">
-                <div class="marquee top">
+        </div>
+        <div class="fixed-container" :style="`--order-delay:${orderdelay}s;`">
+            
+            <div class="content" :class="{slidein:(state==='ready')}"><!--中央圖片&跑馬燈-->
+                <div class="marquee top fz-s">
                     <p v-for="i of 6" :key="i" :id='i' :class="animationList">
                         / Art·Handicrafts·Practical /
                     </p>
@@ -25,13 +27,13 @@
                     v-show="groupNum == index"
                     alt="">
                 </transition-group>
-                <div class="marquee bottom">
+                <div class="marquee bottom fz-s">
                     <p v-for="i of 6" :key="i" :id='i' :class="animationList">
                         / Art·Handicrafts·Practical /
                     </p>
                 </div>
             </div>
-            <div class="indicators" :class="animationList">
+            <div class="indicators" :class="animationList"><!--指標器-->
                 <div 
                 v-for="item,index of carouselContent"
                 :key="item.id"
@@ -119,29 +121,22 @@ export default {
 <style lang="scss" scoped>
 #main {
     background: #85B8CB;
-    .wrapper{
-        position: relative;
-        margin: 0 auto;
-        height: 100vh;
-        width: 177.778vh;
-        @media (max-width: 177vh) {
-            margin: 0 calc((100% - 177.778vh) / 2);
-        }
+    .spring-container{
+        position: absolute;
+        height: 100%;
         .title{
             position: absolute;
-            top: 20%;
-            right: 10%;
-            @media (max-width: 177vh) {
-                right:30%;
-            }
-            // transform: translate(50%,-50%);
-            h1{
+            height: 100%;
+            right: var(--Indentation);
+            padding-right: var(--fz-xl);
+            box-sizing: border-box;
+            div{
                 position: absolute;
-                height: 90vh;
-                writing-mode: vertical-lr;
-                font-size: 9rem;
+                height: 100vh;
             }
         }
+    }
+    .fixed-container{
         .content{
             background-color: var(--BG-color);
             position: relative;
@@ -154,7 +149,7 @@ export default {
             }
             .marquee{
                 position: absolute;
-                font-size: 24px;
+                // font-size: 24px;
                 width: 100%;
                 border-top: 1px solid #000;
                 border-bottom: 1px solid #000;
@@ -214,15 +209,6 @@ export default {
                 background-color: #939393;
             }
         }
-    }
-    .test-baseline {
-        z-index: 20;
-        position: absolute;
-        height: 664px;
-        width: 665px;
-        top: 330px;
-        left: 586px;
-        outline: solid 1px #000;
     }
     .fadeout-rightmove-leave-active,
     .fadeout-leftmove-enter-active,

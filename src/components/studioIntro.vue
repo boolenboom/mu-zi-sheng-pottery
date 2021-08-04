@@ -1,9 +1,9 @@
 <template>
   <section id="studioIntro">
-    <div class="content">
+    <div class="spring-container">
       <div class="txt">
-        <h3 class="title" :class="{ leftmove: show }">Studio</h3>
-        <div class="intro" :class="{ leftmove: !show }">
+        <div class="title fz-xl veritcal-write" :class="{ leftmove: show }">Studio</div>
+        <!-- <div class="intro" :class="{ leftmove: !show }">
           <h3>次標題</h3>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad quos eum
@@ -11,7 +11,7 @@
             ipsam harum inventore assumenda excepturi perferendis modi nemo
             ipsa.
           </p>
-        </div>
+        </div> -->
       </div>
       <div class="image-section" :class="animationList">
         <transition-group
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div class="background" :class="{ show: show }">
+    <div class="fixed-container" :class="{ show: show }">
       <div class="comp">
         <div
           class="Rect"
@@ -59,7 +59,7 @@
             v-for="(item, index) of Subtitle"
             :key="index"
             v-show="index === currBG"
-            class="txt"
+            class="txt fz-m"
           >
             {{ item }}
           </h2>
@@ -155,28 +155,25 @@ export default {
 #studioIntro {
   height: auto;
   background-color: #85b8cb;
-  .content {
+  .spring-container {
     position: absolute;
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    height: 100%;
     // background-color: rgba($color: #364286, $alpha: .3);
     .txt {
-      width: 30%;
+      width: var(--fz-xl);
       .title {
-        font-size: 10rem;
+        position: absolute;
+        bottom: 0;
+        z-index: 201;
+        left: 3%;
         letter-spacing: 1.5rem;
-        writing-mode: vertical-lr;
-        margin: 0 auto;
         transition: transform 0.3s 0.1s ease;
       }
       .intro {
+        // font-size: 36px;
         position: absolute;
-        width: 30%;
-        top: 10%;
-        font-size: 36px;
         line-height: 2;
         transition: transform 0.4s 0.6s ease;
       }
@@ -197,7 +194,7 @@ export default {
       }
       .back {
         position: absolute;
-        top: 0;
+        top: 10%;
         right: 0;
         z-index: 10;
         .icon {
@@ -208,7 +205,7 @@ export default {
       }
     }
   }
-  .background {
+  .fixed-container {
     transition: transform 1.2s cubic-bezier(0.61, -0.25, 0.26, 1);
     .comp {
       position: absolute;
@@ -273,7 +270,7 @@ export default {
           transform: translateY(-50%) rotate(-45deg);
           top: 50%;
           width: 100%;
-          font-size: 56px;
+          // font-size: 56px;
         }
       }
     }
