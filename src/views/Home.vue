@@ -90,9 +90,4 @@ export default {
 .home{
   transition: transform 1s cubic-bezier(.2,.4,.7,.9);
 }
-
-[class*='Rect-'] {
-    position: absolute;
-    background-color: #fff;
-}
 </style>

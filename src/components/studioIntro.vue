@@ -95,7 +95,6 @@ export default {
         widthratio = 100 / global.widthGrid,
         heightratio = 100 / global.heightGrid;
       let item = set.map(function (obj) {
-        //目前因資料獨立所以不做填空白的功能
         let top = (obj.pos.y - 1) * heightratio,
           left = (obj.pos.x - 1) * widthratio,
           width = obj.size.width * widthratio,
@@ -103,10 +102,10 @@ export default {
         return {
           id: obj.id,
           style: `--id:${obj.id};
-                  top:${top}%;
-                  left:${left}%;
-                  width:${width}%;
-                  height:${height}%;`,
+                  --rect-top:${top};
+                  --rect-left:${left};
+                  --rect-width:${width};
+                  --rect-height:${height};`,
 					class:`${width > height ?'left-right' :'up-down'}`,
           path: require(`../${path}/${obj.filename}`),
         };
@@ -218,41 +217,24 @@ export default {
       z-index: 1;
       [class*="Rect"] {
         background-color: var(--BG-color);
+        position: absolute;
+        top: calc(var(--rect-top) * 1%) ;
+        left: calc(var(--rect-left) * 1%) ;
+        width: calc(var(--rect-width) * 1%) ;
+        height: calc(var(--rect-height) * 1%) ;
         // outline: 1px solid #000;
         overflow: hidden;
-        position: absolute;
         img {
-          transform: rotate(-45deg);
+          width: 100%;
+          height: 100%;
+          transform: rotate(-45deg) 
+          scaleX(calc((1 + var(--rect-height) / var(--rect-width)) / 1.414)) 
+          scaleY(calc((1 + var(--rect-width) / var(--rect-height)) / 1.414));
           transition: opacity 0.3s var(--image-delay);
         }
       }
       [id*="img0"]:hover {
         cursor: pointer;
-      }
-      #img01 {
-        position: relative;
-        top: 15%;
-        left: -5%;
-      }
-      #img02 {
-        position: relative;
-        top: -50%;
-        left: -30%;
-      }
-      #img03 {
-        position: relative;
-        top: -75%;
-        left: -20%;
-      }
-      #img04 {
-        position: relative;
-        top: -90%;
-        left: -20%;
-      }
-      #img05 {
-        position: relative;
-        top: -40%;
-        left: -30%;
       }
       .subtitle {
         position: absolute;
