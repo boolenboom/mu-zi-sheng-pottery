@@ -16,22 +16,11 @@
     </div>
 </template>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js' integrity='sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ==' crossorigin='anonymous'></script>
 <script>
-// function debounce(func, wait = 100, immediate = true) {
-//         var timeout;
-//         return function() {
-//             var context = this, args = arguments;
-//             var later = function() {
-//                 timeout = null;
-//                 if (!immediate) func.apply(context, args);
-//             };
-//             var callNow = immediate && !timeout;
-//             clearTimeout(timeout);
-//             timeout = setTimeout(later, wait);
-//             if (callNow) func.apply(context, args);
-//         };
-//     };
-function createStatus(){
+let path = 'assets/pottery';
+let settingFile = 'list.txt';
+function scrollhandler(){
     let on = false;
     let speed = 0.8;
     let startpoint = 0;
@@ -67,9 +56,9 @@ function createStatus(){
             offset = clamp(min,offset,max);
             offset = snap(offset);
             console.log('slide event end ,end point:',val);
-            console.log(this.getstate());
+            console.log(this.getStatus());
         },
-        getstate:function(){
+        getStatus:function(){
             return [on,offset,startpoint,currentoffset,initoffset];
         },
         getoffset:function(){
@@ -92,8 +81,9 @@ export default {
     },
     data(){
         return{
-            UIcontroller:createStatus(),
-            offset:0
+            UIcontroller:scrollhandler(),
+            offset:0,
+            dataSrc:[],
         }
     },
     methods:{
@@ -101,9 +91,32 @@ export default {
             // console.log(e,this.moveOffset);
             this.UIcontroller[e.type](-e.x);
             this.offset = this.UIcontroller.getoffset();
+        },
+        fetchData(){
+            let fetchPath = path + '/' + settingFile;
+            console.log('ready fetch, path:',fetchPath);
+            axios.get(fetchPath).then(function(res){
+                console.log('success', res.data.results);
+            }).catch(function(err){
+                console.log('fetch fail, error msg:', err);
+            });
         }
     },
-    mounted:function(){
+    computed:{
+        showImage(){
+            let result = [];
+            let temp = [...this.dataSrc];
+            let count = 0;
+            if(this.quantity > this.dataSrc.length){result = this.dataSrc; return result;}
+            while(result.length < this.quantity){
+                if(this.quantity - result.length === temp.length) return [...result,...temp];
+                if(Math.random() > 0.5) result.push(temp.splice(count,1));
+                count++;
+            }
+            return result;
+        }
+    },
+    mounted(){
         let setting={
             initoffset:-120,
             min:0,
@@ -112,7 +125,8 @@ export default {
         }
         this.UIcontroller.initial(setting);
         this.offset = this.UIcontroller.getoffset();
-        console.log('mounted');
+        this.fetchData();
+        console.log('carousel mounted');
     }
 };
 </script>
