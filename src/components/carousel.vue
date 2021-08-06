@@ -3,11 +3,11 @@
         <div class="warpper" @mousedown.prevent="controller($event)" @mousemove.prevent="controller($event)" @mouseup.prevent="controller($event)">
             <div class="title fz-xl veritcal-write">{{sectiontitle}}</div>
             <ul class="contents" :data-offset='offset' :style="`--offset:${offset}%;`">
-                <li v-for="i of quantity" class="item" :key="i" draggable="false">
+                <li v-for="i of quantity" class="item" :key="`card${i}`" draggable="false">
                     <div class="pic">
                         <!-- <img src="#" alt="" class="pic"> -->
                     </div>
-                    <p class="itemname fz-s">Card name</p>
+                    <p class="itemname fz-s">Card {{i}}</p>
                 </li>
             </ul>
             <a href="#" class="button fz-m">All</a>
@@ -108,7 +108,7 @@ export default {
             initoffset:-120,
             min:0,
             max:(this.quantity - 1) * 140,
-            onecycle:140
+            onecycle:140,
         }
         this.UIcontroller.initial(setting);
         this.offset = this.UIcontroller.getoffset();
@@ -121,7 +121,7 @@ export default {
 
 .carousel{
     position: relative;
-    z-index: 30;
+    z-index: 101;
     width: 100%;
     // font-size: 1.5rem;
     overflow-x: hidden;
@@ -138,7 +138,7 @@ export default {
         right: 0;
     }
     .contents{
-        margin-top: 10rem;
+        margin-top: calc(var(--fz-m) * 2);
         width: 100%;
         display: flex;
         flex-flow: row nowrap;
@@ -148,7 +148,7 @@ export default {
             list-style-type: none;
             flex:50% 0 0;
             // height: calc(20vh + 300px);
-            outline: 1px solid #000;
+            background-color: #000;
             padding: 16px;
             display: flex;
             flex-flow: column nowrap;
@@ -162,7 +162,7 @@ export default {
                 width: 100%;
                 height: 600px;
                 border-radius: 12px;
-                background-color: var(--main-color);
+                background-color: #000;
             }
             .itmename{
                 width: 100%;

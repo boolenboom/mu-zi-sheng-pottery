@@ -120,7 +120,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 #main {
-    background: #85B8CB;
+    background: var(--main-color);//#85B8CB;
     .spring-container{
         position: absolute;
         height: 100%;
@@ -138,7 +138,7 @@ export default {
     }
     .fixed-container{
         .content{
-            background-color: var(--BG-color);
+            background-color: var(--secondary-color);
             position: relative;
             width: 73.4375%;
             height: 87.037%;
@@ -176,14 +176,14 @@ export default {
             .big-img{
                 position: relative;
                 height: 100%;
-                overflow: hidden;
+                // overflow: hidden;
                 img{
-                    transform: rotate(-45deg);
+                    transform: translate(-2%,3%) rotate(-45deg);
                     position: absolute;
                     width: 90vh;
                     height: 90vh;
-                    top: 15%;
-                    left: 45%;
+                    // box-shadow: 0px 0px 20px rgba($color: #000000, $alpha: .8);
+                    filter: drop-shadow(10px 20px 20px rgba($color: #000000, $alpha: .8));
                 }
             }
         }

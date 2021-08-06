@@ -153,7 +153,7 @@ export default {
 <style lang="scss" scoped>
 #studioIntro {
   height: auto;
-  background-color: #85b8cb;
+  background-color: var(--main-color);
   .spring-container {
     position: absolute;
     display: flex;
@@ -216,8 +216,6 @@ export default {
       // transform: rotate(45deg) translate(10%,-19.7%);  //layout ver.
       z-index: 1;
       [class*="Rect"] {
-        background-color: var(--BG-color);
-        position: absolute;
         top: calc(var(--rect-top) * 1%) ;
         left: calc(var(--rect-left) * 1%) ;
         width: calc(var(--rect-width) * 1%) ;

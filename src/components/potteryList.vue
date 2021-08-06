@@ -29,17 +29,15 @@ export default {
     height: 100%;
   }
   [class*="-07"] {
-    width: 19.5%;
+    width: 19.6%;
     height: 150%;
-    background-color: var(--BG-color);
-    transform: rotate(45deg) translate(0%, -32.4%);
+    transform: translate(107%, -25%) rotate(45deg);
   }
   [class*="-08"] {
     right: 0;
     height: 160%;
-    width: 19.5%;
-    background-color: var(--BG-color);
-    transform: rotate(-45deg) translate(162.5%, -8%);
+    width: 19.6%;
+    transform: translate(114.5%, -25%) rotate(-45deg);
   }
   .full {
     position: absolute;
@@ -48,7 +46,7 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #85b8cb;
+    background: var(--main-color);
   }
 }
 </style>

@@ -66,8 +66,17 @@ $mobile: 360px;
 
  :root {
     --BG-color: #fff;
+    --main-color: #200; 
+    --secondary-color: #c28842;
 }
-
+html{
+  height: 100vh;
+  overflow-x: hidden;
+}
+body{
+  height: 100vh;
+  overflow: hidden;
+}
 section {
   // scroll-snap-align: start;
   width: 100%;
@@ -94,13 +103,9 @@ section {
         margin: 0 calc((100% - 177.778vh) / 2);
     }
 }
-html{
-  height: 100vh;
-  overflow-x: hidden;
-}
-body{
-  height: 100vh;
-  overflow: hidden;
+[class*="Rect"] {
+        background-color: var(--secondary-color);
+        position: absolute;
 }
 // html{
 //   scroll-snap-type: y mandatory;
@@ -239,7 +244,7 @@ body{
       }
     }
     .background{
-      background-color: #000;
+      background-color: var(--secondary-color);
       width: 100vh;
       height: 100vh;
       position: fixed;
