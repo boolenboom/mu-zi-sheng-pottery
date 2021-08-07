@@ -117,7 +117,7 @@ export default {
           path: require(`../${path}/${obj.filename}`),
         };
       });
-      console.log(item);
+      console.log('WTF', item);
       return item;
     },
     Subtitle: function () {

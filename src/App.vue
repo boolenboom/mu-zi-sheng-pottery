@@ -97,6 +97,10 @@ $phones-media: 359px;
   text-decoration: none;
   box-sizing: border-box;
 }
+img{
+  max-width: 100%;
+  height: auto;
+}
 
 :root {
   --BG-color: #fff;

@@ -12,16 +12,11 @@
         :data-offset="offset"
         :style="`--offset:${offset}%;`"
       >
-        <li
-          v-for="i of quantity"
-          class="item"
-          :key="`card${i}`"
-          draggable="false"
-        >
+        <li v-for="(item,index) of showImage" class="item" :key="`card${index}`" draggable="false">
           <div class="pic">
-            <!-- <img src="#" alt="" class="pic"> -->
+            <img :src="item.filePath" alt="這是精心製作的陶器">
           </div>
-          <p class="itemname text-s">Card {{ i }}</p>
+          <p class="itemname text-s">card {{ index + 1}}</p>
         </li>
       </ul>
       <a href="#" class="button text-base">All</a>
@@ -29,18 +24,10 @@
     <!-- <div class="ruler"></div> -->
   </div>
 </template>
-
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"
-  integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ=="
-  crossorigin="anonymous"
-></script>
 <script>
 let path = "assets/pottery";
-let settingFile = "list.json";
 
-let result = require('../assets/pottery/list.json');
-console.log(result);
+let setting = require('../assets/pottery/list.json');
 function scrollhandler() {
   let on = false;
   let speed = 0.8;
@@ -80,7 +67,6 @@ function scrollhandler() {
       offset = clamp(min, offset, max);
       offset = snap(offset);
       console.log("slide event end ,end point:", val);
-      console.log(this.getStatus());
     },
     getStatus: function () {
       return [on, offset, startpoint, currentoffset, initoffset];
@@ -117,6 +103,12 @@ export default {
       this.offset = this.UIcontroller.getoffset();
     },
     fetchData() {
+      console.log(setting.__fileNumber);
+      
+      for(let i = 1; i < setting.__fileNumber + 1; i++){
+        this.dataSrc.push(`${i / 9 > 1 ? i : '0' + i}.jpg`);
+      };
+      console.log(this.dataSrc);
       // let fetchPath = '../assets/pottery/list.json';
       // console.log("ready fetch, path:", fetchPath);
       // axios
@@ -133,18 +125,26 @@ export default {
     showImage() {
       let result = [];
       let temp = [...this.dataSrc];
-      let count = 0;
       if (this.quantity > this.dataSrc.length) {
         result = this.dataSrc;
         return result;
-      }
+      };
       while (result.length < this.quantity) {
-        if (this.quantity - result.length === temp.length)
-          return [...result, ...temp];
-        if (Math.random() > 0.5) result.push(temp.splice(count, 1));
-        count++;
-      }
-      return result;
+        if (this.quantity - result.length === temp.length){
+          result.push(...temp);
+          break;
+        };
+        if (Math.random() > 0.5) result.push(temp.shift());
+        temp.shift();
+      };
+      console.log('carousel img:',result);
+      return result.map(element => {
+        console.log(element);
+        let obj = {
+          filePath:require(`@/${path}/${setting.__fileNameFormat}${element}`),
+        };
+        return obj;
+      });
     },
   },
   mounted() {
@@ -201,7 +201,6 @@ export default {
       .pic {
         min-width: 192px;
         width: 100%;
-        height: 600px;
         border-radius: 12px;
         background-color: #000;
       }
