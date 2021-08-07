@@ -1,8 +1,10 @@
 <template>
   <section id="studioIntro">
-    <div class="spring-container">
+    <div class="spring-container h-100">
       <div class="txt">
-        <div class="title fz-xl veritcal-write" :class="{ leftmove: show }">Studio</div>
+        <div class="title text-l veritcal-write" :class="{ leftmove: show }">
+          Studio
+        </div>
         <!-- <div class="intro" :class="{ leftmove: !show }">
           <h3>次標題</h3>
           <p>
@@ -33,14 +35,14 @@
         </div>
       </div>
     </div>
-    <div class="fixed-container" :class="{ show: show }">
+    <div class="fixed-container vh-100" :class="{ show: show }">
       <div class="comp">
         <div
           class="Rect"
           v-for="(item, index) of IntroImg"
           :key="item.id"
           :style="item.style + animationSetting"
-          :class="[item.class ,timing]"
+          :class="[item.class, timing]"
           @mouseenter="changeBG(index)"
           @click="detailshow(index)"
         >
@@ -54,12 +56,17 @@
         <!-- <div class='Rect-01'>
                     <img src="../assets/studioIntro/studio02@2x.jpg" alt="">
                 </div> -->
-        <transition-group tag="div" class="subtitle" name="fadeout-opacity" :class="animationList">
+        <transition-group
+          tag="div"
+          class="subtitle"
+          name="fadeout-opacity"
+          :class="animationList"
+        >
           <h2
             v-for="(item, index) of Subtitle"
             :key="index"
             v-show="index === currBG"
-            class="txt fz-m"
+            class="txt text-base"
           >
             {{ item }}
           </h2>
@@ -81,12 +88,12 @@ export default {
       currBG: 0,
       mouseEventPermission: true,
       show: false,
-      scrollDir:'down'
+      scrollDir: "down",
     };
   },
   props: {
     viewon: { type: Number, default: 1 },
-    offset: { type: Number }
+    offset: { type: Number },
   },
   computed: {
     IntroImg: function () {
@@ -106,7 +113,7 @@ export default {
                   --rect-left:${left};
                   --rect-width:${width};
                   --rect-height:${height};`,
-					class:`${width > height ?'left-right' :'up-down'}`,
+          class: `${width > height ? "left-right" : "up-down"}`,
           path: require(`../${path}/${obj.filename}`),
         };
       });
@@ -117,16 +124,20 @@ export default {
       return dataSet.slice(1).map((e) => e.subtitle);
     },
     animationList: function () {
-      return this.offset !== -window.innerHeight ? "fadeout-opacity-enter" : '';
+      return this.offset !== -window.innerHeight ? "fadeout-opacity-enter" : "";
     },
-		timing:function(){
-			return this.viewon===1?' slide':'';
-		},
-    animationSetting: function(){
-      return `--order:${this.scrollDir === 'down' ? 'calc(var(--id) - 1)' : 'calc(5 - var(--id))'};
+    timing: function () {
+      return this.viewon === 1 ? " slide" : "";
+    },
+    animationSetting: function () {
+      return `--order:${
+        this.scrollDir === "down"
+          ? "calc(var(--id) - 1)"
+          : "calc(5 - var(--id))"
+      };
               --duration:0.2s;
-              --image-delay:${this.scrollDir === 'down' ? '0.8' : '0'}s;`;
-    }
+              --image-delay:${this.scrollDir === "down" ? "0.8" : "0"}s;`;
+    },
   },
   methods: {
     changeBG(index) {
@@ -141,13 +152,13 @@ export default {
     eventEnd() {
       this.show = false;
       this.mouseEventPermission = true;
-    }
+    },
   },
-  watch:{
-    offset:function(newVal,oldVal){
-      this.scrollDir = Math.abs(newVal) > Math.abs(oldVal) ? 'down' : 'up';
-    }
-  }
+  watch: {
+    offset: function (newVal, oldVal) {
+      this.scrollDir = Math.abs(newVal) > Math.abs(oldVal) ? "down" : "up";
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -155,13 +166,11 @@ export default {
   height: auto;
   background-color: var(--main-color);
   .spring-container {
-    position: absolute;
     display: flex;
     flex-direction: row;
-    height: 100%;
     // background-color: rgba($color: #364286, $alpha: .3);
     .txt {
-      width: var(--fz-xl);
+      width: var(--text-l);
       .title {
         position: absolute;
         bottom: 0;
@@ -216,18 +225,18 @@ export default {
       // transform: rotate(45deg) translate(10%,-19.7%);  //layout ver.
       z-index: 1;
       [class*="Rect"] {
-        top: calc(var(--rect-top) * 1%) ;
-        left: calc(var(--rect-left) * 1%) ;
-        width: calc(var(--rect-width) * 1%) ;
-        height: calc(var(--rect-height) * 1%) ;
+        top: calc(var(--rect-top) * 1%);
+        left: calc(var(--rect-left) * 1%);
+        width: calc(var(--rect-width) * 1%);
+        height: calc(var(--rect-height) * 1%);
         // outline: 1px solid #000;
         overflow: hidden;
         img {
           width: 100%;
           height: 100%;
-          transform: rotate(-45deg) 
-          scaleX(calc((1 + var(--rect-height) / var(--rect-width)) / 1.414)) 
-          scaleY(calc((1 + var(--rect-width) / var(--rect-height)) / 1.414));
+          transform: rotate(-45deg)
+            scaleX(calc((1 + var(--rect-height) / var(--rect-width)) / 1.414))
+            scaleY(calc((1 + var(--rect-width) / var(--rect-height)) / 1.414));
           transition: opacity 0.3s var(--image-delay);
         }
       }
@@ -275,14 +284,16 @@ export default {
   .up-down.slide {
     height: 0% !important;
   }
-  .left-right.slide{
+  .left-right.slide {
     width: 0% !important;
   }
   .up-down {
-    transition: height var(--duration) calc(var(--order) * 0.9 * var(--duration)) ease;
+    transition: height var(--duration)
+      calc(var(--order) * 0.9 * var(--duration)) ease;
   }
   .left-right {
-    transition: width var(--duration) calc(var(--order) * 0.9 * var(--duration)) ease;
+    transition: width var(--duration) calc(var(--order) * 0.9 * var(--duration))
+      ease;
   }
 }
 </style>

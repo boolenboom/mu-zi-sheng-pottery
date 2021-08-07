@@ -1,33 +1,29 @@
 <template>
   <section id="potteryList">
-    <div class="spring-container">
-      <carousel sectiontitle="Featured" :quantity='9'/>
+    <div class="spring-container h-100">
+      <carousel sectiontitle="Featured" :quantity="9" />
     </div>
-    <div class="fixed-container">
+    <div class="fixed-container vh-100">
       <div class="Rect-07"></div>
       <div class="Rect-08"></div>
     </div>
-      <div class="full"></div>
+    <div class="full"></div>
   </section>
 </template>
 <script>
-import carousel from './carousel.vue';
+import carousel from "./carousel.vue";
 
 export default {
   name: "potteryList",
-  components:{
+  components: {
     carousel,
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
 #potteryList {
   z-index: 2;
-	overflow: hidden;
-  .spring-container{
-    position: absolute;
-    height: 100%;
-  }
+  overflow: hidden;
   [class*="-07"] {
     width: 19.6%;
     height: 150%;

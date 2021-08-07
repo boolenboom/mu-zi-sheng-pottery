@@ -1,129 +1,210 @@
 <template>
   <div id="app">
-    <div id="nav" class="spring-container">
-      <router-link to="/" class="LOGO fz-s" @mouseup.self.native='updateScrollOffset(1),isActive = false'>
-        M <span class="halftext"><span>uzi</span><span>Sheng</span></span>
+    <div id="nav" class="nav spring-container">
+      <router-link to="/" class="nav-logo text-s" @mouseup.self.native="updateScrollOffset(1), (isActive = false)">
+        M <span class="nav-logo-half-text"><span>uzi</span><span>Sheng</span></span>
       </router-link>
-      <div type="button" class="trigger fz-s" @mouseup.prevent="isActive = !isActive">{{`${isActive ? 'Close' : 'MENU'}`}}</div>
-      <menu :class="{'menuHidden':!isActive}">
+      <div type="button" class="menu-trigger text-s" @mouseup.prevent="isActive = !isActive">
+        {{ `${isActive ? "Close" : "MENU"}` }}
+      </div>
+      <menu :class="{ 'menu-hidden': !isActive }">
         <div class="spring-container row">
           <div class="option col-6">
             <ul>
-              <li><router-link to="/#main" class="link fz-m" @mouseup.self.native='updateScrollOffset(1),isActive = !isActive'>Home</router-link></li>
-              <li><router-link to="/#main" class="link fz-m" @mouseup.self.native='updateScrollOffset(2),isActive = !isActive'>Studio</router-link></li>
-              <li><router-link to="/#main" class="link fz-m" @mouseup.self.native='updateScrollOffset(3),isActive = !isActive'>Pottery</router-link></li>
-              <li><a href="#" class="link fz-m">Contact</a></li>
+              <li>
+                <router-link
+                  to="/#main"
+                  class="link text-base"
+                  @mouseup.self.native="
+                    updateScrollOffset(1), (isActive = !isActive)
+                  "
+                  >Home</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/#main"
+                  class="link text-base"
+                  @mouseup.self.native="
+                    updateScrollOffset(2), (isActive = !isActive)
+                  "
+                  >Studio</router-link
+                >
+              </li>
+              <li>
+                <router-link
+                  to="/#main"
+                  class="link text-base"
+                  @mouseup.self.native="
+                    updateScrollOffset(3), (isActive = !isActive)
+                  "
+                  >Pottery</router-link
+                >
+              </li>
+              <li><a href="#" class="link text-base">Contact</a></li>
             </ul>
             <!-- <router-link to="/about">About</router-link> -->
           </div>
-          <div class="randomobj col-6">
+          <div class="random-obj col-6">
             <picture>
-              <img src="./assets/pottery/pottery_01.jpg" alt="這是一件精心製作的作品">
+              <img
+                src="./assets/pottery/pottery_01.jpg"
+                alt="這是一件精心製作的作品"
+              />
             </picture>
           </div>
         </div>
-        <div class="background animation-active" :class="{'animation-ready-pour':!isActive}"></div>
+        <div
+          class="background animation-active"
+          :class="{ 'animation-ready-pour': !isActive }"
+        ></div>
       </menu>
       <!-- <div class="ruler"></div> -->
     </div>
-    <router-view :componentIndex='componentIndex'/>
+    <router-view :componentIndex="componentIndex" />
   </div>
 </template>
 
 <script>
 export default {
-  name:'app',
-  data(){
-    return{
-      isActive:false,
-      componentIndex:1,
-    }
+  name: "app",
+  data() {
+    return {
+      isActive: false,
+      componentIndex: 1,
+    };
   },
-  methods:{
-    updateScrollOffset(val){
-      console.log('updateIndex');
+  methods: {
+    updateScrollOffset(val) {
+      console.log("updateIndex");
       this.componentIndex = val;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-
 <style lang="scss">
-$pc: 1440px;
-$table: 768px;
-$mobile: 360px;
+$pcs-media: 960px;
+$pc-media: 959px;
+$pad-media: 768px;
+$pads-media: 767px;
+$phone-media: 360px;
+$phones-media: 359px;
 
-* {
-    padding: 0;
-    margin: 0;
-    text-decoration: none;
-    --Indentation: 4vw;
-    --fz-xl:calc(5rem + 4vw);
-    --fz-m:calc(3rem + 3vh);
-    --fz-s:calc(1rem + 1.5vh);
+*,*::before,*::after {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
- :root {
-    --BG-color: #fff;
-    --main-color: #200; 
-    --secondary-color: #c28842;
+:root {
+  --BG-color: #fff;
+  --main-color: #200;
+  --secondary-color: #c28842;
+  --Indentation: 4vw;
+  //電腦
+  @mixin pc-width() {
+    @media all and (min-width: $pc-media) {
+      @content;
+    }
+  }
+  //平板
+  @mixin pad-width() {
+    @media all and (min-width: $pad-media) and (max-width: $pcs-media) {
+      @content;
+    }
+  }
+  //小平板
+  @mixin small-pad-width() {
+    @media all and (min-width: $phone-media) and (max-width: $pads-media) {
+      @content;
+    }
+  }
+  //手機
+  @mixin phone-width() {
+    @media all and (max-width: $phones-media) {
+      @content;
+    }
+  }
+  @include pc-width {
+    --text-l: 8rem;
+    --text-base: 4rem;
+    --text-s: 2rem;
+  };
+  @include pad-width {
+    --text-l: 6rem;
+    --text-base: 3.5rem;
+    --text-s: 1.5rem;
+  };
+  @include small-pad-width {
+    --text-l: 4.5rem;
+    --text-base: 2.5rem;
+    --text-s: 1rem;
+  };
+  @include phone-width {
+    --text-l: 4rem;
+    --text-base: 2rem;
+    --text-s: 1rem;
+  };
 }
-html{
+//common height class
+.h-100{
+  height: 100%;
+}
+.vh-100{
+  height: 100vh;
+}
+//tag
+html {
   height: 100vh;
   overflow-x: hidden;
 }
-body{
+body {
   height: 100vh;
   overflow: hidden;
 }
 section {
-  // scroll-snap-align: start;
-  width: 100%;
-  height: 100vh;
   position: relative;
   text-align: center;
 }
-.spring-container{
+//common container class
+.spring-container {
   padding-left: var(--Indentation);
   padding-right: var(--Indentation);
+  position: absolute;
   width: 100%;
   max-width: 177.778vh;
   margin: 0 auto;
   right: 0;
   left: 0;
-  box-sizing: border-box;
 }
 .fixed-container {
-    position: relative;
-    margin: 0 auto;
-    height: 100vh;
-    width: 177.778vh;
-    @media (max-width: 177.77vh) {
-        margin: 0 calc((100% - 177.778vh) / 2);
-    }
+  position: relative;
+  margin: 0 auto;
+  width: 177.778vh;
+  @media (max-width: 177.77vh) {
+    margin: 0 calc((100% - 177.778vh) / 2);
+  }
 }
+//common tool
 [class*="Rect"] {
-        background-color: var(--secondary-color);
-        position: absolute;
+  background-color: var(--secondary-color);
+  position: absolute;
 }
-// html{
-//   scroll-snap-type: y mandatory;
-// }
-
-.fz-xl{
-  font-size: var(--fz-xl);
+//common text size
+.text-l {
+  font-size: var(--text-l);
 }
-.veritcal-write{
+.text-base {
+  font-size: var(--text-base);
+}
+.text-s {
+  font-size: var(--text-s);
+}
+.veritcal-write {
   writing-mode: vertical-lr;
 }
-.fz-m{
-  font-size: var(--fz-m);
-}
-.fz-s{
-  font-size: var(--fz-s);
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -132,26 +213,17 @@ section {
   color: #2c3e50;
 }
 
-.row{
+.row {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
 }
-.col-6{
+.col-6 {
   flex: 6 0 0;
 }
-.ruler{
-  position: absolute;
-  top:120px;
-  left: 0;
-  width: 100%;
-  height: 0px;
-  outline: 1px solid #000;
-  z-index: 1001;
-}
 
-#nav {
+.nav {
   padding-top: 30px;
   padding-bottom: 30px;
   position: fixed;
@@ -171,64 +243,62 @@ section {
       color: #42b983;
     }
   }
-  .LOGO{
+  .nav-logo {
     display: flex;
     flex-flow: row nowrap;
     z-index: 901;
     font-size: 2em;
-    .halftext{
+    .nav-logo-half-text {
       display: flex;
       flex-flow: column;
       font-size: 0.5em;
-      span{
+      span {
         flex: 1 0 0;
         height: 40%;
-        &:nth-child(2){
+        &:nth-child(2) {
           margin-top: -0.5rem;
         }
       }
     }
   }
-  .trigger{
+  .menu-trigger {
     z-index: 901;
-    &:focus{
+    &:focus {
       color: #42b983;
     }
     cursor: pointer;
   }
-  .menuHidden{
+  .menu-hidden {
     opacity: 0;
     visibility: hidden;
-    transition: opacity .4s linear,visibility 0s .4s linear;
+    transition: opacity 0.4s linear, visibility 0s 0.4s linear;
   }
-  menu{
+  menu {
     position: fixed;
-      top:0;
-      left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 0vh;
     opacity: 1;
     visibility: visible;
-    transition: opacity .4s linear;
-    .option{
+    transition: opacity 0.4s linear;
+    .option {
       position: relative;
       top: calc(60px + 2rem);
       left: 0px;
       padding-top: 30px;
-      ul{
+      ul {
         list-style-type: none;
-        // width: 30%;
-        li{
+        li {
           text-align: start;
-          // font-size: 6rem;
           height: calc(6rem - 6px);
-          &:not(:first-child){
+          &:not(:first-child) {
             margin-top: 5vh;
           }
         }
       }
     }
-    .randomobj{
+    .random-obj {
       position: relative;
       top: calc(60px + 2rem + 18px);
       right: 0px;
@@ -237,28 +307,28 @@ section {
       padding-bottom: 30px;
       box-sizing: border-box;
       text-align: end;
-      picture{
-        img{
+      picture {
+        img {
           height: 100%;
         }
       }
     }
-    .background{
+    .background {
       background-color: var(--secondary-color);
       width: 100vh;
       height: 100vh;
       position: fixed;
-        top: 0%;
-        right: 0%;
+      top: 0%;
+      right: 0%;
       z-index: -1;
       transform: translateY(-50%) translateX(50%) scale(5);
       border-radius: 50%;
     }
-    .animation-active{
-      transition: transform .5s linear;
+    .animation-active {
+      transition: transform 0.5s linear;
     }
-    .animation-ready-pour{
-      transform: translateY(-50%) translateX(50%) scale(.1) ;
+    .animation-ready-pour {
+      transform: translateY(-50%) translateX(50%) scale(0.1);
     }
   }
 }
