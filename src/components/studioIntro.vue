@@ -104,8 +104,8 @@ export default {
       let item = set.map(function (obj) {
         let top = (obj.pos.y - 1) * heightratio,
           left = (obj.pos.x - 1) * widthratio,
-          width = obj.size.width * widthratio,
-          height = obj.size.height * heightratio;
+          width = obj.size.width * widthratio + 0.1,
+          height = obj.size.height * heightratio + 0.1;
         return {
           id: obj.id,
           style: `--id:${obj.id};
@@ -219,17 +219,13 @@ export default {
       position: absolute;
       width: 98.4375%;
       height: 175%;
-      transform: rotate(45deg) translate(7%, -24.35%);
-      // width: 78.75%;
-      // height: 140%;
-      // transform: rotate(45deg) translate(10%,-19.7%);  //layout ver.
+      transform: translate(22.1%, -12.5%) rotate(45deg);
       z-index: 1;
       [class*="Rect"] {
         top: calc(var(--rect-top) * 1%);
         left: calc(var(--rect-left) * 1%);
         width: calc(var(--rect-width) * 1%);
         height: calc(var(--rect-height) * 1%);
-        // outline: 1px solid #000;
         overflow: hidden;
         img {
           width: 100%;
@@ -249,17 +245,12 @@ export default {
         left: 20%;
         width: 20%;
         height: 20%;
-        // top: 25%;
-        // left: 25%;
-        // width: 25%;
-        // height: 25%; //layout ver.
         transition: opacity 0.3s;
         .txt {
           position: absolute;
           transform: translateY(-50%) rotate(-45deg);
           top: 50%;
           width: 100%;
-          // font-size: 56px;
         }
       }
     }

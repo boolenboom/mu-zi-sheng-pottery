@@ -2,16 +2,10 @@
   <div class="carousel">
     <div
       class="warpper"
-      @mousedown.prevent="controller($event)"
-      @mousemove.prevent="controller($event)"
-      @mouseup.prevent="controller($event)"
-    >
+      @mousedown.prevent.stop="controller($event)" @mousemove.prevent.stop="controller($event)" @mouseup.prevent.stop="controller($event)">
       <div class="title text-l veritcal-write">{{ sectiontitle }}</div>
-      <ul
-        class="contents"
-        :data-offset="offset"
-        :style="`--offset:${offset}%;`"
-      >
+      <a href="#" class="button text-base">All</a>
+      <ul class="contents" :data-offset="offset" :style="`--offset:${offset}%;`">
         <li v-for="(item,index) of showImage" class="item" :key="`card${index}`" draggable="false">
           <div class="pic">
             <img :src="item.filePath" alt="這是精心製作的陶器">
@@ -19,7 +13,6 @@
           <p class="itemname text-s">card {{ index + 1}}</p>
         </li>
       </ul>
-      <a href="#" class="button text-base">All</a>
     </div>
     <!-- <div class="ruler"></div> -->
   </div>
@@ -127,15 +120,10 @@ export default {
       let temp = [...this.dataSrc];
       if (this.quantity > this.dataSrc.length) {
         result = this.dataSrc;
-        return result;
-      };
-      while (result.length < this.quantity) {
-        if (this.quantity - result.length === temp.length){
-          result.push(...temp);
-          break;
-        };
-        if (Math.random() > 0.5) result.push(temp.shift());
-        temp.shift();
+      }else{
+        for(let count = 1; count < this.quantity + 1; count++){
+          result.push(temp.splice(Math.floor(Math.random() * (setting.__fileNumber - count)),1));
+        }
       };
       console.log('carousel img:',result);
       return result.map(element => {
@@ -165,43 +153,42 @@ export default {
 <style lang="scss" scoped>
 .carousel {
   position: relative;
+  top:50%;
+  transform: translateY(-50%);
   z-index: 101;
   width: 100%;
   overflow-x: hidden;
   .title {
-    top: 10%;
-    left: -2%;
+    line-height: .75;
     position: absolute;
   }
   .button {
-    position: absolute;
-    top: 10%;
-    right: 0;
+    display: block;
+    text-align: end;
   }
   .contents {
-    margin-top: calc(var(--text-base) * 2);
+    // margin-top: calc(var(--text-base));
     width: 100%;
     display: flex;
-    flex-flow: row nowrap;
-    // margin-left: clamp(0px, calc(20% + 5% - 16px + var(--offset)), calc(20% + 5% - 16px)) ;
+    flex-wrap: nowrap;
     margin-left: calc(-1 * (50% - 15%));
     .item {
       list-style-type: none;
       flex: 50% 0 0;
-      // height: calc(20vh + 300px);
       background-color: #000;
       padding: 16px;
       display: flex;
       flex-flow: column nowrap;
       align-items: center;
       justify-content: center;
-      box-sizing: border-box;
       transform: translateX(var(--offset));
       transition: transform 0.3s cubic-bezier(0.1, 0.7, 0.5, 1);
       .pic {
         min-width: 192px;
+        max-height: 500px;
         width: 100%;
         border-radius: 12px;
+        overflow-y: hidden;
         background-color: #000;
       }
       .itmename {

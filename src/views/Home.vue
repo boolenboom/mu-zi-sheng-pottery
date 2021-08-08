@@ -91,5 +91,6 @@ export default {
 <style lang="scss">
 .home {
   transition: transform 1s cubic-bezier(0.2, 0.4, 0.7, 0.9);
+  background-color: var(--main-color);
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div id="nav" class="nav spring-container">
-      <router-link to="/" class="nav-logo text-s" @mouseup.self.native="updateScrollOffset(1), (isActive = false)">
+      <router-link to="/" class="nav-logo text-base" @mouseup.self.native="updateScrollOffset(1), (isActive = false)">
         M <span class="nav-logo-half-text"><span>uzi</span><span>Sheng</span></span>
       </router-link>
-      <div type="button" class="menu-trigger text-s" @mouseup.prevent="isActive = !isActive">
+      <div type="button" class="menu-trigger text-base" @mouseup.prevent="isActive = !isActive">
         {{ `${isActive ? "Close" : "MENU"}` }}
       </div>
       <menu :class="{ 'menu-hidden': !isActive }">
@@ -138,12 +138,12 @@ img{
   };
   @include pad-width {
     --text-l: 6rem;
-    --text-base: 3.5rem;
+    --text-base: 3rem;
     --text-s: 1.5rem;
   };
   @include small-pad-width {
-    --text-l: 4.5rem;
-    --text-base: 2.5rem;
+    --text-l: 4rem;
+    --text-base: 2rem;
     --text-s: 1rem;
   };
   @include phone-width {
@@ -170,7 +170,6 @@ body {
 }
 section {
   position: relative;
-  text-align: center;
 }
 //common container class
 .spring-container {
@@ -251,17 +250,11 @@ section {
     display: flex;
     flex-flow: row nowrap;
     z-index: 901;
-    font-size: 2em;
     .nav-logo-half-text {
-      display: flex;
-      flex-flow: column;
       font-size: 0.5em;
       span {
-        flex: 1 0 0;
-        height: 40%;
-        &:nth-child(2) {
-          margin-top: -0.5rem;
-        }
+        display: block;
+        line-height: 1;
       }
     }
   }
