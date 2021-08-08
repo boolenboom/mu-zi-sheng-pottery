@@ -1,18 +1,3 @@
-<template>
-  <div
-    id="Home"
-    class="home"
-    @wheel="scrollhandler($event)"
-    @transitionend.self="snap($event)"
-    :style="`transform:translateY(${pageoffset}px);`"
-  >
-    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <keyVision :viewon="currView" />
-    <studiointro :viewon="currView" :offset="pageoffset" />
-    <potterylist :viewon="currView" />
-  </div>
-</template>
-
 <script>
 // @ is an alias to /src
 import keyVision from "@/components/keyVision.vue";
@@ -88,7 +73,23 @@ export default {
 };
 </script>
 
+<template>
+  <div
+    id="Home"
+    class="home"
+    @wheel="scrollhandler($event)"
+    @transitionend.self="snap($event)"
+    :style="`transform:translateY(${pageoffset}px);`"
+  >
+    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
+    <keyVision :viewon="currView" />
+    <studiointro :viewon="currView" :offset="pageoffset" />
+    <potterylist :viewon="currView" />
+  </div>
+</template>
+
 <style lang="scss">
+
 .home {
   transition: transform 1s cubic-bezier(0.2, 0.4, 0.7, 0.9);
   background-color: var(--main-color);

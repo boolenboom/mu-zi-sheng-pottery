@@ -37,7 +37,7 @@
             :key="`img` + item.id"
             :src="item.path"
             v-show="groupNum == index"
-            alt=""
+            alt="hero image"
           />
         </transition-group>
         <div class="marquee bottom text-s">
@@ -136,6 +136,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~@/assets/scss/_variables.scss";
+@import "~@/assets/scss/_mixins.scss";
 #main {
   background: var(--main-color); //#85B8CB;
   .spring-container {
@@ -158,6 +160,12 @@ export default {
       width: 73.4375%;
       height: 87.037%;
       transform: rotate(45deg) translateX(-17.6%) translateY(-20%);
+      @include small-pad-width{
+        height: 70%;
+      }
+      @include phone-width{
+        height: 40%;
+      }
       transition: transform var(--order-delay) ease-in-out;
       &.slidein {
         transform: rotate(45deg) translateX(-100%) translateY(-20%);
@@ -193,10 +201,22 @@ export default {
         height: 100%;
         // overflow: hidden;
         img {
-          transform: translate(-2%, 3%) rotate(-45deg);
+          // transform: translate(-2%, 3%) rotate(-45deg);
           position: absolute;
-          width: 90vh;
-          height: 90vh;
+          bottom: 0;
+          right: 0;
+          max-width: 80vh;
+          max-height: 80vh;
+          width: 90vw;
+          height: 90vw;
+          @include small-pad-width-containFollowing{
+            height: 50vh;
+            width: 50vh;
+          }
+          @include small-pad-width-containFollowing{
+            height: 30vh;
+            width: 30vh;
+          }
           // box-shadow: 0px 0px 20px rgba($color: #000000, $alpha: .8);
           filter: drop-shadow(
             10px 20px 20px rgba($color: #000000, $alpha: 0.8)

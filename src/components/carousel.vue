@@ -1,22 +1,3 @@
-<template>
-  <div class="carousel">
-    <div
-      class="warpper"
-      @mousedown.prevent.stop="controller($event)" @mousemove.prevent.stop="controller($event)" @mouseup.prevent.stop="controller($event)">
-      <div class="title text-l veritcal-write">{{ sectiontitle }}</div>
-      <a href="#" class="button text-base">All</a>
-      <ul class="contents" :data-offset="offset" :style="`--offset:${offset}%;`">
-        <li v-for="(item,index) of showImage" class="item" :key="`card${index}`" draggable="false">
-          <div class="pic">
-            <img :src="item.filePath" alt="這是精心製作的陶器">
-          </div>
-          <p class="itemname text-s">card {{ index + 1}}</p>
-        </li>
-      </ul>
-    </div>
-    <!-- <div class="ruler"></div> -->
-  </div>
-</template>
 <script>
 let path = "assets/pottery";
 
@@ -149,6 +130,26 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div class="carousel">
+    <div
+      class="warpper"
+      @mousedown.prevent.stop="controller($event)" @mousemove.prevent.stop="controller($event)" @mouseup.prevent.stop="controller($event)">
+      <div class="title text-l veritcal-write">{{ sectiontitle }}</div>
+      <a href="#" class="button text-base">All</a>
+      <ul class="contents" :data-offset="offset" :style="`--offset:${offset}%;`">
+        <li v-for="(item,index) of showImage" class="item" :key="`card${index}`" draggable="false">
+          <div class="pic">
+            <img :src="item.filePath" alt="這是精心製作的陶器">
+          </div>
+          <p class="itemname text-s">card {{ index + 1}}</p>
+        </li>
+      </ul>
+    </div>
+    <!-- <div class="ruler"></div> -->
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .carousel {

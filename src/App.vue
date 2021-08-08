@@ -1,3 +1,21 @@
+<script>
+export default {
+  name: "app",
+  data() {
+    return {
+      isActive: false,
+      componentIndex: 1,
+    };
+  },
+  methods: {
+    updateScrollOffset(val) {
+      console.log("updateIndex");
+      this.componentIndex = val;
+    },
+  },
+};
+</script>
+
 <template>
   <div id="app">
     <div id="nav" class="nav spring-container">
@@ -65,72 +83,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "app",
-  data() {
-    return {
-      isActive: false,
-      componentIndex: 1,
-    };
-  },
-  methods: {
-    updateScrollOffset(val) {
-      console.log("updateIndex");
-      this.componentIndex = val;
-    },
-  },
-};
-</script>
-
 <style lang="scss">
-$pcs-media: 960px;
-$pc-media: 959px;
-$pad-media: 768px;
-$pads-media: 767px;
-$phone-media: 360px;
-$phones-media: 359px;
-
+@import "~@/assets/scss/_variables.scss";
+@import "~@/assets/scss/_mixins.scss";
 *,*::before,*::after {
   padding: 0;
   margin: 0;
   text-decoration: none;
   box-sizing: border-box;
 }
-img{
-  max-width: 100%;
-  height: auto;
-}
-
-:root {
-  --BG-color: #fff;
-  --main-color: #200;
-  --secondary-color: #c28842;
-  --Indentation: 4vw;
-  //電腦
-  @mixin pc-width() {
-    @media all and (min-width: $pc-media) {
-      @content;
-    }
-  }
-  //平板
-  @mixin pad-width() {
-    @media all and (min-width: $pad-media) and (max-width: $pcs-media) {
-      @content;
-    }
-  }
-  //小平板
-  @mixin small-pad-width() {
-    @media all and (min-width: $phone-media) and (max-width: $pads-media) {
-      @content;
-    }
-  }
-  //手機
-  @mixin phone-width() {
-    @media all and (max-width: $phones-media) {
-      @content;
-    }
-  }
+*{
   @include pc-width {
     --text-l: 8rem;
     --text-base: 4rem;
@@ -152,14 +114,20 @@ img{
     --text-s: 1rem;
   };
 }
-//common height class
-.h-100{
+:root {
+  --BG-color: #fff;
+  --main-color: #200;
+  --secondary-color: #c28842;
+  --Indentation: 4vw;
+}
+
+.h-100 {
   height: 100%;
 }
-.vh-100{
+.vh-100 {
   height: 100vh;
 }
-//tag
+
 html {
   height: 100vh;
   overflow-x: hidden;
@@ -171,7 +139,11 @@ body {
 section {
   position: relative;
 }
-//common container class
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 .spring-container {
   padding-left: var(--Indentation);
   padding-right: var(--Indentation);
@@ -186,16 +158,20 @@ section {
   position: relative;
   margin: 0 auto;
   width: 177.778vh;
-  @media (max-width: 177.77vh) {
+  @media all and (min-width: $pads-media) and (max-width: 177.77vh) {
     margin: 0 calc((100% - 177.778vh) / 2);
   }
+  @include small-pad-width{
+    margin-right: calc((100% - 177.778vh) * 0.4);
+    margin-left: calc((100% - 177.778vh) * 0.6);
+  }
 }
-//common tool
+
 [class*="Rect"] {
   background-color: var(--secondary-color);
   position: absolute;
 }
-//common text size
+
 .text-l {
   font-size: var(--text-l);
 }
@@ -208,6 +184,7 @@ section {
 .veritcal-write {
   writing-mode: vertical-lr;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -1,80 +1,3 @@
-<template>
-  <section id="studioIntro">
-    <div class="spring-container h-100">
-      <div class="txt">
-        <div class="title text-l veritcal-write" :class="{ leftmove: show }">
-          Studio
-        </div>
-        <!-- <div class="intro" :class="{ leftmove: !show }">
-          <h3>次標題</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad quos eum
-            quidem vitae hic, ut recusandae praesentium at rem dolore provident
-            ipsam harum inventore assumenda excepturi perferendis modi nemo
-            ipsa.
-          </p>
-        </div> -->
-      </div>
-      <div class="image-section" :class="animationList">
-        <transition-group
-          tag="div"
-          class="detailimg"
-          name="fadeout-opacity"
-          :class="{ filterblur: !show }"
-        >
-          <img
-            v-for="(item, index) of IntroImg"
-            v-show="index === currBG"
-            :src="item.path"
-            :key="item.id"
-            alt=""
-          />
-        </transition-group>
-        <div v-show="show" class="back">
-          <div class="icon" @click="eventEnd()"></div>
-        </div>
-      </div>
-    </div>
-    <div class="fixed-container vh-100" :class="{ show: show }">
-      <div class="comp">
-        <div
-          class="Rect"
-          v-for="(item, index) of IntroImg"
-          :key="item.id"
-          :style="item.style + animationSetting"
-          :class="[item.class, timing]"
-          @mouseenter="changeBG(index)"
-          @click="detailshow(index)"
-        >
-          <img
-            :id="`img` + item.id"
-            :src="item.path"
-            :class="animationList"
-            alt=""
-          />
-        </div>
-        <!-- <div class='Rect-01'>
-                    <img src="../assets/studioIntro/studio02@2x.jpg" alt="">
-                </div> -->
-        <transition-group
-          tag="div"
-          class="subtitle"
-          name="fadeout-opacity"
-          :class="animationList"
-        >
-          <h2
-            v-for="(item, index) of Subtitle"
-            :key="index"
-            v-show="index === currBG"
-            class="txt text-base"
-          >
-            {{ item }}
-          </h2>
-        </transition-group>
-      </div>
-    </div>
-  </section>
-</template>
 <script>
 const imgdata = require("../assets/data/studioIntro/contentSet.json"),
   dataSet = [...imgdata.set];
@@ -161,6 +84,85 @@ export default {
   },
 };
 </script>
+
+<template>
+  <section id="studioIntro">
+    <div class="spring-container h-100">
+      <div class="txt">
+        <div class="title text-l veritcal-write" :class="{ leftmove: show }">
+          Studio
+        </div>
+        <!-- <div class="intro" :class="{ leftmove: !show }">
+          <h3>次標題</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad quos eum
+            quidem vitae hic, ut recusandae praesentium at rem dolore provident
+            ipsam harum inventore assumenda excepturi perferendis modi nemo
+            ipsa.
+          </p>
+        </div> -->
+      </div>
+      <div class="image-section" :class="animationList">
+        <transition-group
+          tag="div"
+          class="detailimg"
+          name="fadeout-opacity"
+          :class="{ filterblur: !show }"
+        >
+          <img
+            v-for="(item, index) of IntroImg"
+            v-show="index === currBG"
+            :src="item.path"
+            :key="item.id"
+            alt=""
+          />
+        </transition-group>
+        <div v-show="show" class="back">
+          <div class="icon" @click="eventEnd()"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fixed-container vh-100" :class="{ show: show }">
+      <div class="comp">
+        <div
+          class="Rect"
+          v-for="(item, index) of IntroImg"
+          :key="item.id"
+          :style="item.style + animationSetting"
+          :class="[item.class, timing]"
+          @mouseenter="changeBG(index)"
+          @click="detailshow(index)"
+        >
+          <img
+            :id="`img` + item.id"
+            :src="item.path"
+            :class="animationList"
+            alt=""
+          />
+        </div>
+        <!-- <div class='Rect-01'>
+                    <img src="../assets/studioIntro/studio02@2x.jpg" alt="">
+                </div> -->
+        <transition-group
+          tag="div"
+          class="subtitle"
+          name="fadeout-opacity"
+          :class="animationList"
+        >
+          <h2
+            v-for="(item, index) of Subtitle"
+            :key="index"
+            v-show="index === currBG"
+            class="txt text-base"
+          >
+            {{ item }}
+          </h2>
+        </transition-group>
+      </div>
+    </div>
+  </section>
+</template>
+
 <style lang="scss" scoped>
 #studioIntro {
   height: auto;
