@@ -27,3 +27,12 @@
     @content;
   }
 }
+
+@mixin responsive-writeMode($pc,$pad){
+  @media all {
+    writing-mode: $pc;
+  }
+  @include small-pad-width-containFollowing(){
+    writing-mode: $pad;
+  }
+}

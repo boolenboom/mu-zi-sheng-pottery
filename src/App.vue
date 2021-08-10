@@ -94,21 +94,25 @@ export default {
 }
 *{
   @include pc-width {
+    --text-xl: 14rem;
     --text-l: 8rem;
     --text-base: 4rem;
     --text-s: 2rem;
   };
   @include pad-width {
+    --text-xl: 12rem;
     --text-l: 6rem;
     --text-base: 3rem;
     --text-s: 1.5rem;
   };
   @include small-pad-width {
+    --text-xl: 8rem;
     --text-l: 4rem;
     --text-base: 2rem;
     --text-s: 1rem;
   };
   @include phone-width {
+    --text-xl: 6rem;
     --text-l: 4rem;
     --text-base: 2rem;
     --text-s: 1rem;
@@ -118,7 +122,7 @@ export default {
   --BG-color: #fff;
   --main-color: #200;
   --secondary-color: #c28842;
-  --Indentation: 4vw;
+  --Indentation: 4%;
 }
 
 .h-100 {
@@ -158,12 +162,8 @@ img {
   position: relative;
   margin: 0 auto;
   width: 177.778vh;
-  @media all and (min-width: $pads-media) and (max-width: 177.77vh) {
+  @media all and (max-width: 177.77vh) {
     margin: 0 calc((100% - 177.778vh) / 2);
-  }
-  @include small-pad-width{
-    margin-right: calc((100% - 177.778vh) * 0.4);
-    margin-left: calc((100% - 177.778vh) * 0.6);
   }
 }
 
@@ -171,7 +171,9 @@ img {
   background-color: var(--secondary-color);
   position: absolute;
 }
-
+.text-xl {
+  font-size: var(--text-xl);
+}
 .text-l {
   font-size: var(--text-l);
 }
@@ -183,6 +185,9 @@ img {
 }
 .veritcal-write {
   writing-mode: vertical-lr;
+}
+.responsive-writeMode{
+  @include responsive-writeMode(vertical-lr,horizontal-tb);
 }
 
 #app {

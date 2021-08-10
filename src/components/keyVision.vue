@@ -1,64 +1,3 @@
-<template>
-  <section id="main">
-    <div class="spring-container h-100">
-      <div class="title text-l veritcal-write">
-        <!--標題文字-->
-        <transition-group
-          :name="fadeoutmove"
-          :class="animationList"
-          @update="changestate($event)"
-        >
-          <div
-            v-for="(item, index) of carouselContent"
-            v-show="groupNum == index"
-            :key="`title` + item.id"
-          >
-            {{ item.text.title }}
-          </div>
-        </transition-group>
-      </div>
-    </div>
-    <div class="fixed-container vh-100" :style="`--order-delay:${orderdelay}s;`">
-      <div class="content" :class="{ slidein: state === 'ready' }">
-        <!--中央圖片&跑馬燈-->
-        <div class="marquee top text-s">
-          <p v-for="i of 6" :key="i" :id="i" :class="animationList">
-            / Art·Handicrafts·Practical /
-          </p>
-        </div>
-        <transition-group
-          :name="fadeoutmove"
-          tag="div"
-          class="big-img"
-          :class="animationList"
-        >
-          <img
-            v-for="(item, index) of carouselImg"
-            :key="`img` + item.id"
-            :src="item.path"
-            v-show="groupNum == index"
-            alt="hero image"
-          />
-        </transition-group>
-        <div class="marquee bottom text-s">
-          <p v-for="i of 6" :key="i" :id="i" :class="animationList">
-            / Art·Handicrafts·Practical /
-          </p>
-        </div>
-      </div>
-      <div class="indicators" :class="animationList">
-        <!--指標器-->
-        <div
-          v-for="(item, index) of carouselContent"
-          :key="item.id"
-          class="item"
-          :class="{ curr: groupNum == index }"
-          @click="groupNum = index"
-        ></div>
-      </div>
-    </div>
-  </section>
-</template>
 <script>
 const dataSet = require("../assets/data/attractSection/contentSet.json");
 console.log("attractSection:");
@@ -74,7 +13,7 @@ export default {
   data() {
     return {
       groupNum: 0,
-      fadeoutmove: "fadeout-rightmove",
+      fadeoutDirection: "fadeout-rightmove",
       timer: null,
       time: timeNum,
       state: "ready",
@@ -117,7 +56,7 @@ export default {
   },
   watch: {
     groupNum: function (newVal, oldVal) {
-      this.fadeoutmove =
+      this.fadeoutDirection =
         newVal > oldVal ? "fadeout-rightmove" : "fadeout-leftmove";
       this.time = timeNum;
     },
@@ -127,7 +66,7 @@ export default {
     },
   },
   mounted() {
-    this.timer = setInterval(this.countdown, 1000);
+    this.timer = setInterval(this.countdown, 30000);
     setTimeout(() => (this.state = "run"), 100);
   },
   beforeDestroy() {
@@ -135,40 +74,119 @@ export default {
   },
 };
 </script>
+<template>
+  <section id="main">
+    <div class="spring-container h-100">
+      <div class="title text-xl responsive-writeMode">
+        <!--標題文字-->
+        <transition-group
+          :name="fadeoutDirection"
+          :class="animationList"
+          @update="changestate($event)"
+        >
+          <div
+            v-for="(item, index) of carouselContent"
+            v-show="groupNum == index"
+            :key="`title` + item.id"
+          >
+            {{ item.text.title }}
+          </div>
+        </transition-group>
+      </div>
+    </div>
+    <div class="fixed-container vh-100" :style="`--order-delay:${orderdelay}s;`">
+      <div class="content" :class="{ 'ready-slidein': state === 'ready' }">
+        <!--中央圖片&跑馬燈-->
+        <div class="marquee top text-s">
+          <p v-for="i of 6" :key="i" :id="i" :class="animationList">
+            / Art·Handicrafts·Practical /
+          </p>
+        </div>
+        <transition-group
+          :name="fadeoutDirection"
+          tag="div"
+          class="big-img"
+          :class="animationList"
+        >
+          <img
+            v-for="(item, index) of carouselImg"
+            :key="`img` + item.id"
+            :src="item.path"
+            v-show="groupNum == index"
+            alt="hero image"
+          />
+        </transition-group>
+        <div class="marquee bottom text-s">
+          <p v-for="i of 6" :key="i" :id="i" :class="animationList">
+            / Art·Handicrafts·Practical /
+          </p>
+        </div>
+      </div>
+      <div class="indicators" :class="animationList">
+        <!--指標器-->
+        <div
+          v-for="(item, index) of carouselContent"
+          :key="item.id"
+          class="item"
+          :class="{ curr: groupNum == index }"
+          @click="groupNum = index"
+        ></div>
+      </div>
+    </div>
+  </section>
+</template>
 <style lang="scss" scoped>
 @import "~@/assets/scss/_variables.scss";
 @import "~@/assets/scss/_mixins.scss";
 #main {
   background: var(--main-color); //#85B8CB;
   .spring-container {
+    display: flex;
+    flex-flow: row-reverse nowrap;
+    align-items: center;
+    @include small-pad-width-containFollowing{
+      flex-flow: column nowrap;
+    }
     .title {
-      position: absolute;
+      z-index: 201;
+      position: relative;
       height: 100%;
-      right: var(--Indentation);
-      padding-right: var(--text-l);
-      box-sizing: border-box;
+      width: var(--text-xl);
+      @include small-pad-width-containFollowing{
+        height: var(--text-xl);
+        width: 100%;
+        margin-top: 15vh;
+      }
       div {
         position: absolute;
         height: 100vh;
+        @include small-pad-width-containFollowing{
+          height: var(--text-xl);
+          width: 100%;
+        }
       }
     }
   }
   .fixed-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
     .content {
       background-color: var(--secondary-color);
       position: relative;
       width: 73.4375%;
       height: 87.037%;
-      transform: rotate(45deg) translateX(-17.6%) translateY(-20%);
+      transform: rotate(45deg) translate(-25%, -12%);
       @include small-pad-width{
         height: 70%;
+        transform: rotate(45deg) translate(-20%, -12%);
       }
       @include phone-width{
-        height: 40%;
+        height: 55%;
       }
       transition: transform var(--order-delay) ease-in-out;
-      &.slidein {
-        transform: rotate(45deg) translateX(-100%) translateY(-20%);
+      &.ready-slidein {
+        transform: rotate(45deg) translateX(-100%) translateY(-12%);
       }
       .marquee {
         position: absolute;
@@ -201,21 +219,16 @@ export default {
         height: 100%;
         // overflow: hidden;
         img {
-          // transform: translate(-2%, 3%) rotate(-45deg);
+          transform: rotate(-45deg) translate(20% ,20%) rotate(8deg);
           position: absolute;
           bottom: 0;
           right: 0;
-          max-width: 80vh;
-          max-height: 80vh;
-          width: 90vw;
-          height: 90vw;
+          max-width: 640px;
+          max-height: 640px;
+          width: 80vh;
           @include small-pad-width-containFollowing{
-            height: 50vh;
+            transform: rotate(-45deg) translate(20% ,4vh) rotate(8deg);
             width: 50vh;
-          }
-          @include small-pad-width-containFollowing{
-            height: 30vh;
-            width: 30vh;
           }
           // box-shadow: 0px 0px 20px rgba($color: #000000, $alpha: .8);
           filter: drop-shadow(
@@ -235,6 +248,9 @@ export default {
         border-radius: 50%;
         background-color: #ececec;
         margin: 62px 0;
+        @include small-pad-width-containFollowing{
+          margin: 0px 0;
+        }
         &:hover {
           cursor: pointer;
         }
