@@ -161,6 +161,7 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
+    z-index: 101;
     .content {
       background-color: var(--secondary-color);
       position: relative;
@@ -248,17 +249,17 @@ export default {
           @include pc-width{
             width: 100px;
             height: 8px;
-            margin: 62px 0;
+            margin: 62px 0px;
             border-radius: 2px;
             &:not(:first-child){
               margin-left: 8px;
             }
           }
-          @include small-pad-width-containFollowing{
+          @include pad-width-containFollowing{
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            margin: 0px 0;
+            margin: 24px 0px;
             &:not(:first-child){
               margin-left: 64px;
             }

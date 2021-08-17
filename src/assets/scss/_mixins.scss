@@ -10,6 +10,11 @@
     @content;
   }
 }
+@mixin pad-width-containFollowing() {
+  @media all and (max-width: $pcs-media) {
+    @content;
+  }
+}
 //小平板
 @mixin small-pad-width() {
   @media all and (min-width: $phone-media) and (max-width: $pads-media) {
