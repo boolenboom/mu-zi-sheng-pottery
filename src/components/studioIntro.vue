@@ -10,7 +10,7 @@ export default {
       // imgpath:[require('../assets/studioIntro/studio02@2x.jpg')],
       currBG: 0,
       mouseEventPermission: true,
-      show: false,
+      isShow: false,
       scrollDir: "down",
     };
   },
@@ -27,8 +27,8 @@ export default {
       let item = set.map(function (obj) {
         let top = (obj.pos.y - 1) * heightratio,
           left = (obj.pos.x - 1) * widthratio,
-          width = obj.size.width * widthratio + 0.1,
-          height = obj.size.height * heightratio + 0.1;
+          width = obj.size.width * widthratio,
+          height = obj.size.height * heightratio;
         return {
           id: obj.id,
           style: `--id:${obj.id};
@@ -40,7 +40,6 @@ export default {
           path: require(`../${path}/${obj.filename}`),
         };
       });
-      console.log('WTF', item);
       return item;
     },
     Subtitle: function () {
@@ -49,8 +48,8 @@ export default {
     animationList: function () {
       return this.offset !== -window.innerHeight ? "fadeout-opacity-enter" : "";
     },
-    timing: function () {
-      return this.viewon === 1 ? " slide" : "";
+    isReadySlide: function () {
+      return this.viewon === 1 ? "slide" : "";
     },
     animationSetting: function () {
       return `--order:${
@@ -58,8 +57,8 @@ export default {
           ? "calc(var(--id) - 1)"
           : "calc(5 - var(--id))"
       };
-              --duration:0.2s;
-              --image-delay:${this.scrollDir === "down" ? "0.8" : "0"}s;`;
+      --duration:0.2s;
+      --image-delay:${this.scrollDir === "down" ? "0.8" : "0"}s;`;
     },
   },
   methods: {
@@ -70,10 +69,10 @@ export default {
       if (!this.mouseEventPermission) return 0;
       this.changeBG(index);
       this.mouseEventPermission = false;
-      this.show = true;
+      this.isShow = true;
     },
     eventEnd() {
-      this.show = false;
+      this.isShow = false;
       this.mouseEventPermission = true;
     },
   },
@@ -89,7 +88,7 @@ export default {
   <section id="studioIntro">
     <div class="spring-container h-100">
       <div class="txt">
-        <div class="title text-l veritcal-write" :class="{ leftmove: show }">
+        <div class="title text-xl veritcal-write" :class="{ leftmove: isShow }">
           Studio
         </div>
         <!-- <div class="intro" :class="{ leftmove: !show }">
@@ -107,7 +106,7 @@ export default {
           tag="div"
           class="detailimg"
           name="fadeout-opacity"
-          :class="{ filterblur: !show }"
+          :class="{ filterblur: !isShow }"
         >
           <img
             v-for="(item, index) of IntroImg"
@@ -117,19 +116,18 @@ export default {
             alt=""
           />
         </transition-group>
-        <div v-show="show" class="back">
+        <div v-show="isShow" class="back">
           <div class="icon" @click="eventEnd()"></div>
         </div>
       </div>
     </div>
-    <div class="fixed-container vh-100" :class="{ show: show }">
+    <div class="fixed-container vh-100" :class="{ show: isShow }">
       <div class="comp">
         <div
-          class="Rect"
           v-for="(item, index) of IntroImg"
           :key="item.id"
           :style="item.style + animationSetting"
-          :class="[item.class, timing]"
+          :class="[item.class, isReadySlide, 'Rect']"
           @mouseenter="changeBG(index)"
           @click="detailshow(index)"
         >
@@ -164,6 +162,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/_variables.scss";
+@import "~@/assets/scss/_mixins.scss";
 #studioIntro {
   height: auto;
   background-color: var(--main-color);
@@ -177,8 +177,7 @@ export default {
         position: absolute;
         bottom: 0;
         z-index: 201;
-        left: 3%;
-        letter-spacing: 1.5rem;
+        line-height: 0.75;
         transition: transform 0.3s 0.1s ease;
       }
       .intro {
@@ -219,28 +218,13 @@ export default {
     transition: transform 1.2s cubic-bezier(0.61, -0.25, 0.26, 1);
     .comp {
       position: absolute;
-      width: 98.4375%;
-      height: 175%;
-      transform: translate(22.1%, -12.5%) rotate(45deg);
+      width: 175vh;
+      height: 175vh;
+      transform: rotate(45deg) translate(0.5%, -20%);
+      @include small-pad-width-containFollowing{
+        transform: rotate(45deg) translate(4.5%, -24.8%) ;
+      }
       z-index: 1;
-      [class*="Rect"] {
-        top: calc(var(--rect-top) * 1%);
-        left: calc(var(--rect-left) * 1%);
-        width: calc(var(--rect-width) * 1%);
-        height: calc(var(--rect-height) * 1%);
-        overflow: hidden;
-        img {
-          width: 100%;
-          height: 100%;
-          transform: rotate(-45deg)
-            scaleX(calc((1 + var(--rect-height) / var(--rect-width)) / 1.414))
-            scaleY(calc((1 + var(--rect-width) / var(--rect-height)) / 1.414));
-          transition: opacity 0.3s var(--image-delay);
-        }
-      }
-      [id*="img0"]:hover {
-        cursor: pointer;
-      }
       .subtitle {
         position: absolute;
         top: 40%;
@@ -257,6 +241,22 @@ export default {
       }
     }
   }
+  .Rect{
+        top: calc(var(--rect-top) * 1%);
+        left: calc(var(--rect-left) * 1%);
+        width: calc(var(--rect-width) * 1%);
+        height: calc(var(--rect-height) * 1%);
+        cursor: pointer;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          transform: rotate(-45deg)
+            scaleX(calc((1 + var(--rect-height) / var(--rect-width)) / 1.414))
+            scaleY(calc((1 + var(--rect-width) / var(--rect-height)) / 1.414));
+          transition: opacity 0.3s var(--image-delay);
+        }
+      }
   .fadeout-opacity-enter-active,
   .fadeout-opacity-leave-active {
     transition: opacity 0.3s;
@@ -275,18 +275,16 @@ export default {
     transform: translateX(-100%);
   }
   .up-down.slide {
-    height: 0% !important;
+    height: 0%;
   }
   .left-right.slide {
-    width: 0% !important;
+    width: 0%;
   }
   .up-down {
-    transition: height var(--duration)
-      calc(var(--order) * 0.9 * var(--duration)) ease;
+    transition: height var(--duration) calc(var(--order) * 0.9 * var(--duration)) ease;
   }
   .left-right {
-    transition: width var(--duration) calc(var(--order) * 0.9 * var(--duration))
-      ease;
+    transition: width var(--duration) calc(var(--order) * 0.9 * var(--duration)) ease;
   }
 }
 </style>

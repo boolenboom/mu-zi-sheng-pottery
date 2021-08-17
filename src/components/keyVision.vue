@@ -2,7 +2,7 @@
 const dataSet = require("../assets/data/attractSection/contentSet.json");
 console.log("attractSection:");
 console.log(dataSet);
-let timeNum = 5;
+let timeNum = 8;
 let classlist = {
   ready: "fadeactive fade",
   run: "fadeactive",
@@ -66,7 +66,7 @@ export default {
     },
   },
   mounted() {
-    this.timer = setInterval(this.countdown, 30000);
+    this.timer = setInterval(this.countdown, 1000);
     setTimeout(() => (this.state = "run"), 100);
   },
   beforeDestroy() {
@@ -102,19 +102,9 @@ export default {
             / Art·Handicrafts·Practical /
           </p>
         </div>
-        <transition-group
-          :name="fadeoutDirection"
-          tag="div"
-          class="big-img"
-          :class="animationList"
-        >
-          <img
-            v-for="(item, index) of carouselImg"
-            :key="`img` + item.id"
-            :src="item.path"
-            v-show="groupNum == index"
-            alt="hero image"
-          />
+        <transition-group :name="fadeoutDirection" tag="div" class="big-img" :class="animationList">
+          <img v-for="(item, index) of carouselImg" :key="`img` + item.id" :src="item.path" v-show="groupNum === index"
+            alt="hero image"/>
         </transition-group>
         <div class="marquee bottom text-s">
           <p v-for="i of 6" :key="i" :id="i" :class="animationList">
@@ -127,7 +117,7 @@ export default {
         <div
           v-for="(item, index) of carouselContent"
           :key="item.id"
-          class="item"
+          class="item responsive"
           :class="{ curr: groupNum == index }"
           @click="groupNum = index"
         ></div>
@@ -170,7 +160,7 @@ export default {
   .fixed-container {
     display: flex;
     flex-flow: column nowrap;
-    justify-content: space-around;
+    justify-content: space-between;
     .content {
       background-color: var(--secondary-color);
       position: relative;
@@ -192,8 +182,8 @@ export default {
         position: absolute;
         // font-size: 24px;
         width: 100%;
-        border-top: 1px solid #000;
-        border-bottom: 1px solid #000;
+        border-top: 1px solid var(--secondary-color);
+        border-bottom: 1px solid var(--secondary-color);
         padding: 8px 0;
         overflow-x: hidden;
         display: flex;
@@ -217,15 +207,19 @@ export default {
       .big-img {
         position: relative;
         height: 100%;
-        // overflow: hidden;
+        box-shadow: 0px 0px 20px 15px var(--shadow-color);
         img {
           transform: rotate(-45deg) translate(20% ,20%) rotate(8deg);
           position: absolute;
           bottom: 0;
           right: 0;
-          max-width: 640px;
-          max-height: 640px;
+          // max-width: 640px;
+          // max-height: 640px;
           width: 80vh;
+          @include pad-width{
+            transform: rotate(-45deg) translate(20% ,4vh) rotate(8deg);
+            width: 50vh;
+          }
           @include small-pad-width-containFollowing{
             transform: rotate(-45deg) translate(20% ,4vh) rotate(8deg);
             width: 50vh;
@@ -243,23 +237,33 @@ export default {
       justify-content: center;
       .item {
         z-index: 50;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background-color: #ececec;
-        margin: 62px 0;
-        @include small-pad-width-containFollowing{
-          margin: 0px 0;
-        }
+        background-color: var(--text-color);
         &:hover {
           cursor: pointer;
         }
-      }
-      .item:not(:first-child) {
-        margin-left: 64px;
-      }
-      .item.curr {
-        background-color: #939393;
+        &.curr{
+          background-color: var(--secondary-color);
+        }
+        &.responsive{
+          @include pc-width{
+            width: 100px;
+            height: 8px;
+            margin: 62px 0;
+            border-radius: 2px;
+            &:not(:first-child){
+              margin-left: 8px;
+            }
+          }
+          @include small-pad-width-containFollowing{
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            margin: 0px 0;
+            &:not(:first-child){
+              margin-left: 64px;
+            }
+          }
+        }
       }
     }
   }

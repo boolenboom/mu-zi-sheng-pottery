@@ -21,19 +21,27 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "~@/assets/scss/_variables.scss";
+@import "~@/assets/scss/_mixins.scss";
 #potteryList {
   z-index: 2;
   overflow: hidden;
   [class*="-07"] {
     width: 19.6%;
     height: 150%;
-    transform: translate(107%, -25%) rotate(45deg);
+    transform: translate(61%, -25%) rotate(45deg);
+    @include small-pad-width-containFollowing{
+      transform: translate(89%, -25%) rotate(45deg);
+    }
   }
   [class*="-08"] {
     right: 0;
     height: 160%;
     width: 19.6%;
-    transform: translate(114.5%, -25%) rotate(-45deg);
+    transform: translate(83.5%, -25%) rotate(-45deg);
+    @include small-pad-width-containFollowing{
+      transform: translate(90%, -25%) rotate(-45deg);
+    }
   }
   .full {
     position: absolute;
