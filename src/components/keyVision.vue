@@ -238,12 +238,12 @@ export default {
       justify-content: center;
       .item {
         z-index: 50;
-        background-color: var(--text-color);
+        background-color: var(--secondary-color);
         &:hover {
           cursor: pointer;
         }
         &.curr{
-          background-color: var(--secondary-color);
+          background-color: var(--text-color);
         }
         &.responsive{
           @include pc-width{

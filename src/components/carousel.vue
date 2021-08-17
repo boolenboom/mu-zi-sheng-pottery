@@ -118,7 +118,7 @@ export default {
   },
   mounted() {
     let setting = {
-      initoffset: -120,
+      initoffset: -50,
       min: 0,
       max: (this.quantity - 1) * 140,
       onecycle: 140,
@@ -136,16 +136,20 @@ export default {
     <div
       class="warpper"
       @mousedown.prevent.stop="controller($event)" @mousemove.prevent.stop="controller($event)" @mouseup.prevent.stop="controller($event)">
-      <div class="title text-l veritcal-write">{{ sectiontitle }}</div>
-      <a href="#" class="button text-base">All</a>
-      <ul class="contents" :data-offset="offset" :style="`--offset:${offset}%;`">
-        <li v-for="(item,index) of showImage" class="item" :key="`card${index}`" draggable="false">
-          <div class="pic">
-            <img :src="item.filePath" alt="這是精心製作的陶器">
-          </div>
-          <p class="itemname text-s">card {{ index + 1}}</p>
-        </li>
-      </ul>
+      <div class="carousel-text">
+        <div class="title text-xl veritcal-write">{{ sectiontitle }}</div>
+      </div>
+      <div class="carousel-contents">
+        <a href="#" class="button text-base">All</a>
+        <ul class="contents" :data-offset="offset" :style="`--offset:${offset}%;`">
+          <li v-for="(item,index) of showImage" class="item" :key="`card${index}`" draggable="false">
+            <div class="pic">
+              <img :src="item.filePath" alt="這是精心製作的陶器">
+            </div>
+            <p class="itemname text-s">card {{ index + 1}}</p>
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- <div class="ruler"></div> -->
   </div>
@@ -159,9 +163,22 @@ export default {
   z-index: 101;
   width: 100%;
   overflow-x: hidden;
+  .warpper {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    .carousel-text{
+      flex: 0 0 0;
+    }
+    .carousel-contents{
+      flex: 0 0 100%;
+      width: 100%;
+      margin-left: calc(var(--text-xl) * -0.75);
+    }
+  }
   .title {
     line-height: .75;
-    position: absolute;
+    letter-spacing: -20px;
   }
   .button {
     display: block;
@@ -172,11 +189,10 @@ export default {
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
-    margin-left: calc(-1 * (50% - 15%));
     .item {
       list-style-type: none;
       flex: 50% 0 0;
-      background-color: #000;
+      background-color: var(--shadow-color);
       padding: 16px;
       display: flex;
       flex-flow: column nowrap;
@@ -186,11 +202,10 @@ export default {
       transition: transform 0.3s cubic-bezier(0.1, 0.7, 0.5, 1);
       .pic {
         min-width: 192px;
-        max-height: 500px;
+        max-height: 600px;
         width: 100%;
         border-radius: 12px;
         overflow-y: hidden;
-        background-color: #000;
       }
       .itmename {
         width: 100%;
@@ -201,8 +216,5 @@ export default {
       }
     }
   }
-}
-.warpper {
-  width: 100%;
 }
 </style>
