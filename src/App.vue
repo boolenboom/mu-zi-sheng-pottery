@@ -91,6 +91,7 @@ export default {
   margin: 0;
   text-decoration: none;
   box-sizing: border-box;
+  color: var(--text-color);
 }
 *{
   @include pc-width {
@@ -120,8 +121,10 @@ export default {
 }
 :root {
   --BG-color: #fff;
-  --main-color: #200;
-  --secondary-color: #c28842;
+  --main-color: #786157;
+  --secondary-color: #ad9076;
+  --text-color: #fffff2;
+  --shadow-color: #655247;
   --Indentation: 4%;
 }
 
@@ -169,6 +172,7 @@ img {
 
 [class*="Rect"] {
   background-color: var(--secondary-color);
+  border-radius: 20px;
   position: absolute;
 }
 .text-xl {
