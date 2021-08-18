@@ -17,23 +17,21 @@ function scrollhandler() {
     },
     snap = function (val) {
       return Math.round(val / onecycle) * onecycle;
-    };
+    },
   // damp = function(result,val,middle){
   //     let coefficient = (middle - result)/(val + result);
   //     console.log(coefficient);
   //     return val;
-  // }
-  return {
-    mousedown: function (val) {
+  // },
+    start = function (val){
       on = true;
       startpoint = val;
     },
-    mousemove: function (val) {
+    doing = function (val){
       if (!on) return;
-      console.log("mousemove");
       currentoffset = (val - startpoint) * speed;
     },
-    mouseup: function (val) {
+    done = function (val){
       let temp = currentoffset;
       currentoffset = 0;
       on = false;
@@ -41,6 +39,28 @@ function scrollhandler() {
       offset = clamp(min, offset, max);
       offset = snap(offset);
       console.log("slide event end ,end point:", val);
+    };
+  return {
+    mousedown: function (val) {
+      start(val);
+    },
+    mousemove: function (val) {
+      doing(val);
+    },
+    mouseup: function (val) {
+      done(val);
+    },
+    touchstart: function (val){
+      start(val);
+    },
+    touchmove: function (val){
+      doing(val);
+    },
+    touchend: function (val){
+      done(val);
+    },
+    touchcancel: function(val){
+      done(val);
     },
     getStatus: function () {
       return [on, offset, startpoint, currentoffset, initoffset];
@@ -72,8 +92,11 @@ export default {
   },
   methods: {
     controller(e) {
-      // console.log(e,this.moveOffset);
-      this.UIcontroller[e.type](-e.x);
+      // let reg = new RegExp(/mouse/gm);
+      // let methodName = (e.type.match(reg)).toString();
+      let offsetX = e.type.match('mouse') ? -e.x : -e.changedTouches[0].clientX;
+      console.log(e);
+      this.UIcontroller[e.type](offsetX);
       this.offset = this.UIcontroller.getoffset();
     },
     fetchData() {
@@ -135,7 +158,9 @@ export default {
   <div class="carousel">
     <div
       class="warpper"
-      @mousedown.prevent.stop="controller($event)" @mousemove.prevent.stop="controller($event)" @mouseup.prevent.stop="controller($event)">
+      @mousedown.prevent.stop="controller($event)" @mousemove.prevent.stop="controller($event)" @mouseup.prevent.stop="controller($event)"
+      @touchstart.stop='controller($event)' @touchmove.stop='controller($event)' @touchend.stop='controller($event)'
+      @touchcancel.stop='controller($event)'>
       <div class="carousel-text">
         <div class="title text-xl veritcal-write">{{ sectiontitle }}</div>
       </div>
