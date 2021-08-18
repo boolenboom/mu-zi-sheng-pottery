@@ -1,8 +1,96 @@
+<script>
+const imgdata = require("../assets/data/studioIntro/contentSet.json"),
+  dataSet = [...imgdata.set];
+let path = "assets/studioIntro";
+console.log(dataSet);
+export default {
+  name: "studioIntro",
+  data() {
+    return {
+      // imgpath:[require('../assets/studioIntro/studio02@2x.jpg')],
+      currBG: 0,
+      mouseEventPermission: true,
+      isShow: false,
+      scrollDir: "down",
+    };
+  },
+  props: {
+    viewon: { type: Number, default: 1 },
+    offset: { type: Number },
+  },
+  computed: {
+    IntroImg: function () {
+      const global = dataSet.slice(0, 1)[0],
+        set = dataSet.slice(1),
+        widthratio = 100 / global.widthGrid,
+        heightratio = 100 / global.heightGrid;
+      let item = set.map(function (obj) {
+        let top = (obj.pos.y - 1) * heightratio,
+          left = (obj.pos.x - 1) * widthratio,
+          width = obj.size.width * widthratio,
+          height = obj.size.height * heightratio;
+        return {
+          id: obj.id,
+          style: `--id:${obj.id};
+                  --rect-top:${top};
+                  --rect-left:${left};
+                  --rect-width:${width};
+                  --rect-height:${height};`,
+          class: `${width > height ? "left-right" : "up-down"}`,
+          path: require(`../${path}/${obj.filename}`),
+        };
+      });
+      return item;
+    },
+    Subtitle: function () {
+      return dataSet.slice(1).map((e) => e.subtitle);
+    },
+    animationList: function () {
+      return this.offset !== -window.innerHeight ? "fadeout-opacity-enter" : "";
+    },
+    isReadySlide: function () {
+      return this.viewon === 1 ? "slide" : "";
+    },
+    animationSetting: function () {
+      return `--order:${
+        this.scrollDir === "down"
+          ? "calc(var(--id) - 1)"
+          : "calc(5 - var(--id))"
+      };
+      --duration:0.2s;
+      --image-delay:${this.scrollDir === "down" ? "0.8" : "0"}s;`;
+    },
+  },
+  methods: {
+    changeBG(index) {
+      if (this.mouseEventPermission) this.currBG = index;
+    },
+    detailshow(index) {
+      if (!this.mouseEventPermission) return 0;
+      this.changeBG(index);
+      this.mouseEventPermission = false;
+      this.isShow = true;
+    },
+    eventEnd() {
+      this.isShow = false;
+      this.mouseEventPermission = true;
+    },
+  },
+  watch: {
+    offset: function (newVal, oldVal) {
+      this.scrollDir = Math.abs(newVal) > Math.abs(oldVal) ? "down" : "up";
+    },
+  },
+};
+</script>
+
 <template>
   <section id="studioIntro">
-    <div class="spring-container">
+    <div class="spring-container h-100">
       <div class="txt">
-        <div class="title fz-xl veritcal-write" :class="{ leftmove: show }">Studio</div>
+        <div class="title text-xl veritcal-write" :class="{ leftmove: isShow }">
+          Studio
+        </div>
         <!-- <div class="intro" :class="{ leftmove: !show }">
           <h3>次標題</h3>
           <p>
@@ -18,7 +106,7 @@
           tag="div"
           class="detailimg"
           name="fadeout-opacity"
-          :class="{ filterblur: !show }"
+          :class="{ filterblur: !isShow }"
         >
           <img
             v-for="(item, index) of IntroImg"
@@ -28,19 +116,18 @@
             alt=""
           />
         </transition-group>
-        <div v-show="show" class="back">
+        <div v-show="isShow" class="back">
           <div class="icon" @click="eventEnd()"></div>
         </div>
       </div>
     </div>
-    <div class="fixed-container" :class="{ show: show }">
+    <div class="fixed-container vh-100" :class="{ show: isShow }">
       <div class="comp">
         <div
-          class="Rect"
           v-for="(item, index) of IntroImg"
           :key="item.id"
           :style="item.style + animationSetting"
-          :class="[item.class ,timing]"
+          :class="[item.class, isReadySlide, 'Rect']"
           @mouseenter="changeBG(index)"
           @click="detailshow(index)"
         >
@@ -54,12 +141,17 @@
         <!-- <div class='Rect-01'>
                     <img src="../assets/studioIntro/studio02@2x.jpg" alt="">
                 </div> -->
-        <transition-group tag="div" class="subtitle" name="fadeout-opacity" :class="animationList">
+        <transition-group
+          tag="div"
+          class="subtitle"
+          name="fadeout-opacity"
+          :class="animationList"
+        >
           <h2
             v-for="(item, index) of Subtitle"
             :key="index"
             v-show="index === currBG"
-            class="txt fz-m"
+            class="txt text-base"
           >
             {{ item }}
           </h2>
@@ -68,107 +160,24 @@
     </div>
   </section>
 </template>
-<script>
-const imgdata = require("../assets/data/studioIntro/contentSet.json"),
-  dataSet = [...imgdata.set];
-let path = "assets/studioIntro";
-console.log(dataSet);
-export default {
-  name: "studioIntro",
-  data() {
-    return {
-      // imgpath:[require('../assets/studioIntro/studio02@2x.jpg')],
-      currBG: 0,
-      mouseEventPermission: true,
-      show: false,
-      scrollDir:'down'
-    };
-  },
-  props: {
-    viewon: { type: Number, default: 1 },
-    offset: { type: Number }
-  },
-  computed: {
-    IntroImg: function () {
-      const global = dataSet.slice(0, 1)[0],
-        set = dataSet.slice(1),
-        widthratio = 100 / global.widthGrid,
-        heightratio = 100 / global.heightGrid;
-      let item = set.map(function (obj) {
-        //目前因資料獨立所以不做填空白的功能
-        let top = (obj.pos.y - 1) * heightratio,
-          left = (obj.pos.x - 1) * widthratio,
-          width = obj.size.width * widthratio,
-          height = obj.size.height * heightratio;
-        return {
-          id: obj.id,
-          style: `--id:${obj.id};
-                  top:${top}%;
-                  left:${left}%;
-                  width:${width}%;
-                  height:${height}%;`,
-					class:`${width > height ?'left-right' :'up-down'}`,
-          path: require(`../${path}/${obj.filename}`),
-        };
-      });
-      console.log(item);
-      return item;
-    },
-    Subtitle: function () {
-      return dataSet.slice(1).map((e) => e.subtitle);
-    },
-    animationList: function () {
-      return this.offset !== -window.innerHeight ? "fadeout-opacity-enter" : '';
-    },
-		timing:function(){
-			return this.viewon===1?' slide':'';
-		},
-    animationSetting: function(){
-      return `--order:${this.scrollDir === 'down' ? 'calc(var(--id) - 1)' : 'calc(5 - var(--id))'};
-              --duration:0.2s;
-              --image-delay:${this.scrollDir === 'down' ? '0.8' : '0'}s;`;
-    }
-  },
-  methods: {
-    changeBG(index) {
-      if (this.mouseEventPermission) this.currBG = index;
-    },
-    detailshow(index) {
-      if (!this.mouseEventPermission) return 0;
-      this.changeBG(index);
-      this.mouseEventPermission = false;
-      this.show = true;
-    },
-    eventEnd() {
-      this.show = false;
-      this.mouseEventPermission = true;
-    }
-  },
-  watch:{
-    offset:function(newVal,oldVal){
-      this.scrollDir = Math.abs(newVal) > Math.abs(oldVal) ? 'down' : 'up';
-    }
-  }
-};
-</script>
+
 <style lang="scss" scoped>
+@import "~@/assets/scss/_variables.scss";
+@import "~@/assets/scss/_mixins.scss";
 #studioIntro {
   height: auto;
-  background-color: #85b8cb;
+  background-color: var(--main-color);
   .spring-container {
-    position: absolute;
     display: flex;
     flex-direction: row;
-    height: 100%;
     // background-color: rgba($color: #364286, $alpha: .3);
     .txt {
-      width: var(--fz-xl);
+      width: var(--text-l);
       .title {
         position: absolute;
         bottom: 0;
         z-index: 201;
-        left: 3%;
-        letter-spacing: 1.5rem;
+        line-height: 0.75;
         transition: transform 0.3s 0.1s ease;
       }
       .intro {
@@ -209,72 +218,45 @@ export default {
     transition: transform 1.2s cubic-bezier(0.61, -0.25, 0.26, 1);
     .comp {
       position: absolute;
-      width: 98.4375%;
-      height: 175%;
-      transform: rotate(45deg) translate(7%, -24.35%);
-      // width: 78.75%;
-      // height: 140%;
-      // transform: rotate(45deg) translate(10%,-19.7%);  //layout ver.
+      width: 175vh;
+      height: 175vh;
+      transform: rotate(45deg) translate(0.5%, -20%);
+      @include small-pad-width-containFollowing{
+        transform: rotate(45deg) translate(4.5%, -24.8%) ;
+      }
       z-index: 1;
-      [class*="Rect"] {
-        background-color: var(--BG-color);
-        // outline: 1px solid #000;
-        overflow: hidden;
-        position: absolute;
-        img {
-          transform: rotate(-45deg);
-          transition: opacity 0.3s var(--image-delay);
-        }
-      }
-      [id*="img0"]:hover {
-        cursor: pointer;
-      }
-      #img01 {
-        position: relative;
-        top: 15%;
-        left: -5%;
-      }
-      #img02 {
-        position: relative;
-        top: -50%;
-        left: -30%;
-      }
-      #img03 {
-        position: relative;
-        top: -75%;
-        left: -20%;
-      }
-      #img04 {
-        position: relative;
-        top: -90%;
-        left: -20%;
-      }
-      #img05 {
-        position: relative;
-        top: -40%;
-        left: -30%;
-      }
       .subtitle {
         position: absolute;
         top: 40%;
         left: 20%;
         width: 20%;
         height: 20%;
-        // top: 25%;
-        // left: 25%;
-        // width: 25%;
-        // height: 25%; //layout ver.
         transition: opacity 0.3s;
         .txt {
           position: absolute;
           transform: translateY(-50%) rotate(-45deg);
           top: 50%;
           width: 100%;
-          // font-size: 56px;
         }
       }
     }
   }
+  .Rect{
+        top: calc(var(--rect-top) * 1%);
+        left: calc(var(--rect-left) * 1%);
+        width: calc(var(--rect-width) * 1%);
+        height: calc(var(--rect-height) * 1%);
+        cursor: pointer;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          transform: rotate(-45deg)
+            scaleX(calc((1 + var(--rect-height) / var(--rect-width)) / 1.414))
+            scaleY(calc((1 + var(--rect-width) / var(--rect-height)) / 1.414));
+          transition: opacity 0.3s var(--image-delay);
+        }
+      }
   .fadeout-opacity-enter-active,
   .fadeout-opacity-leave-active {
     transition: opacity 0.3s;
@@ -293,10 +275,10 @@ export default {
     transform: translateX(-100%);
   }
   .up-down.slide {
-    height: 0% !important;
+    height: 0%;
   }
-  .left-right.slide{
-    width: 0% !important;
+  .left-right.slide {
+    width: 0%;
   }
   .up-down {
     transition: height var(--duration) calc(var(--order) * 0.9 * var(--duration)) ease;

@@ -1,190 +1,231 @@
-<template>
-    <div class="carousel">
-        <div class="warpper" @mousedown.prevent="controller($event)" @mousemove.prevent="controller($event)" @mouseup.prevent="controller($event)">
-            <div class="title fz-xl veritcal-write">{{sectiontitle}}</div>
-            <ul class="contents" :data-offset='offset' :style="`--offset:${offset}%;`">
-                <li v-for="i of quantity" class="item" :key="i" draggable="false">
-                    <div class="pic">
-                        <!-- <img src="#" alt="" class="pic"> -->
-                    </div>
-                    <p class="itemname fz-s">Card name</p>
-                </li>
-            </ul>
-            <a href="#" class="button fz-m">All</a>
-        </div>
-        <!-- <div class="ruler"></div> -->
-    </div>
-</template>
-
 <script>
-// function debounce(func, wait = 100, immediate = true) {
-//         var timeout;
-//         return function() {
-//             var context = this, args = arguments;
-//             var later = function() {
-//                 timeout = null;
-//                 if (!immediate) func.apply(context, args);
-//             };
-//             var callNow = immediate && !timeout;
-//             clearTimeout(timeout);
-//             timeout = setTimeout(later, wait);
-//             if (callNow) func.apply(context, args);
-//         };
-//     };
-function createStatus(){
-    let on = false;
-    let speed = 0.8;
-    let startpoint = 0;
-    let offset = 0,currentoffset = 0,initoffset = 0;
-    let min = 0,max = 0;
-    let onecycle = 0;
-    let clamp = function(min,val,max){
-            return Math.min(max,Math.max(min,val));
-        },
-        snap = function(val){
-            return Math.round(val / onecycle ) * onecycle;
-        };
-        // damp = function(result,val,middle){
-        //     let coefficient = (middle - result)/(val + result);
-        //     console.log(coefficient);
-        //     return val;
-        // }
-    return {
-        mousedown:function(val){
-            on = true;
-            startpoint = val;
-        },
-        mousemove:function(val){
-            if(!on) return; 
-            console.log('mousemove');
-            currentoffset = (val - startpoint) * speed;
-        },
-        mouseup:function(val){
-            let temp = currentoffset;
-            currentoffset = 0;
-            on = false;
-            offset += temp;
-            offset = clamp(min,offset,max);
-            offset = snap(offset);
-            console.log('slide event end ,end point:',val);
-            console.log(this.getstate());
-        },
-        getstate:function(){
-            return [on,offset,startpoint,currentoffset,initoffset];
-        },
-        getoffset:function(){
-            return -(initoffset + offset + currentoffset);
-        },
-        initial:function(obj){
-            initoffset = obj.initoffset;
-            min = obj.min;
-            max = obj.max;
-            onecycle = obj.onecycle;
-        }
-    }
-}
+let path = "assets/pottery";
+
+let setting = require('../assets/pottery/list.json');
+function scrollhandler() {
+  let on = false;
+  let speed = 0.8;
+  let startpoint = 0;
+  let offset = 0,
+    currentoffset = 0,
+    initoffset = 0;
+  let min = 0,
+    max = 0;
+  let onecycle = 0;
+  let clamp = function (min, val, max) {
+      return Math.min(max, Math.max(min, val));
+    },
+    snap = function (val) {
+      return Math.round(val / onecycle) * onecycle;
+    };
+  // damp = function(result,val,middle){
+  //     let coefficient = (middle - result)/(val + result);
+  //     console.log(coefficient);
+  //     return val;
+  // }
+  return {
+    mousedown: function (val) {
+      on = true;
+      startpoint = val;
+    },
+    mousemove: function (val) {
+      if (!on) return;
+      console.log("mousemove");
+      currentoffset = (val - startpoint) * speed;
+    },
+    mouseup: function (val) {
+      let temp = currentoffset;
+      currentoffset = 0;
+      on = false;
+      offset += temp;
+      offset = clamp(min, offset, max);
+      offset = snap(offset);
+      console.log("slide event end ,end point:", val);
+    },
+    getStatus: function () {
+      return [on, offset, startpoint, currentoffset, initoffset];
+    },
+    getoffset: function () {
+      return -(initoffset + offset + currentoffset);
+    },
+    initial: function (obj) {
+      initoffset = obj.initoffset;
+      min = obj.min;
+      max = obj.max;
+      onecycle = obj.onecycle;
+    },
+  };
+};
 export default {
-    name:'carousel',
-    props:{
-        sectiontitle:{type:String,default:'Intro'},
-        quantity:{type:Number,default:3},
-        countdown:{type:Number,default:3}
+  name: "carousel",
+  props: {
+    sectiontitle: { type: String, default: "Intro" },
+    quantity: { type: Number, default: 3 },
+    countdown: { type: Number, default: 3 },
+  },
+  data() {
+    return {
+      UIcontroller: scrollhandler(),
+      offset: 0,
+      dataSrc: [],
+    };
+  },
+  methods: {
+    controller(e) {
+      // console.log(e,this.moveOffset);
+      this.UIcontroller[e.type](-e.x);
+      this.offset = this.UIcontroller.getoffset();
     },
-    data(){
-        return{
-            UIcontroller:createStatus(),
-            offset:0
-        }
+    fetchData() {
+      console.log(setting.__fileNumber);
+      
+      for(let i = 1; i < setting.__fileNumber + 1; i++){
+        this.dataSrc.push(`${i / 9 > 1 ? i : '0' + i}.jpg`);
+      };
+      console.log(this.dataSrc);
+      // let fetchPath = '../assets/pottery/list.json';
+      // console.log("ready fetch, path:", fetchPath);
+      // axios
+      //   .get(fetchPath)
+      //   .then(function (res) {
+      //     console.log("success", res.data.results);
+      //   })
+      //   .catch(function (err) {
+      //     console.log("fetch fail, error msg:", err);
+      //   });
     },
-    methods:{
-        controller(e){
-            // console.log(e,this.moveOffset);
-            this.UIcontroller[e.type](-e.x);
-            this.offset = this.UIcontroller.getoffset();
+  },
+  computed: {
+    showImage() {
+      let result = [];
+      let temp = [...this.dataSrc];
+      if (this.quantity > this.dataSrc.length) {
+        result = this.dataSrc;
+      }else{
+        for(let count = 1; count < this.quantity + 1; count++){
+          result.push(temp.splice(Math.floor(Math.random() * (setting.__fileNumber - count)),1));
         }
+      };
+      console.log('carousel img:',result);
+      return result.map(element => {
+        console.log(element);
+        let obj = {
+          filePath:require(`@/${path}/${setting.__fileNameFormat}${element}`),
+        };
+        return obj;
+      });
     },
-    mounted:function(){
-        let setting={
-            initoffset:-120,
-            min:0,
-            max:(this.quantity - 1) * 140,
-            onecycle:140
-        }
-        this.UIcontroller.initial(setting);
-        this.offset = this.UIcontroller.getoffset();
-        console.log('mounted');
-    }
+  },
+  mounted() {
+    let setting = {
+      initoffset: -50,
+      min: 0,
+      max: (this.quantity - 1) * 140,
+      onecycle: 140,
+    };
+    this.UIcontroller.initial(setting);
+    this.offset = this.UIcontroller.getoffset();
+    this.fetchData();
+    console.log("carousel mounted");
+  },
 };
 </script>
 
-<style lang="scss" scoped>
+<template>
+  <div class="carousel">
+    <div
+      class="warpper"
+      @mousedown.prevent.stop="controller($event)" @mousemove.prevent.stop="controller($event)" @mouseup.prevent.stop="controller($event)">
+      <div class="carousel-text">
+        <div class="title text-xl veritcal-write">{{ sectiontitle }}</div>
+      </div>
+      <div class="carousel-contents">
+        <a href="#" class="contents-moreButton text-base">All</a>
+        <ul class="carousel-contents-wrapper responsive-mt-base_reverse" :data-offset="offset" :style="`--offset:${offset}%;`">
+          <li v-for="(item,index) of showImage" class="contents-item" :key="`card${index}`" draggable="false">
+            <div class="contents-item-image">
+              <img :src="item.filePath" alt="這是精心製作的陶器">
+            </div>
+            <p class="contents-item-text text-base">card {{ index + 1}}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="ruler"></div> -->
+  </div>
+</template>
 
-.carousel{
-    position: relative;
-    z-index: 30;
+<style lang="scss" scoped>
+@import "~@/assets/scss/_variables.scss";
+@import "~@/assets/scss/_mixins.scss";
+.carousel {
+  position: relative;
+  top:50%;
+  transform: translateY(-50%);
+  z-index: 101;
+  width: 100%;
+  overflow-x: hidden;
+  .warpper {
     width: 100%;
-    // font-size: 1.5rem;
-    overflow-x: hidden;
-    .title{
-        top: 10%;
-        left: -2%;
-        // font-size: 10rem;
-        position: absolute;
+    display: flex;
+    flex-flow: row nowrap;
+    .carousel-text{
+      flex: 0 0 0;
     }
-    .button{
-        // font-size: 4rem;
-        position: absolute;
-        top: 10%;
-        right: 0;
+    .carousel-contents{
+      flex: 0 0 100%;
+      width: 100%;
+      margin-left: calc(var(--text-xl) * -0.75);
+      text-align: end;
     }
-    .contents{
-        margin-top: 10rem;
+  }
+  .title {
+    line-height: .75;
+    letter-spacing: -16px;
+    @include pad-width-containFollowing{
+      letter-spacing: initial;
+    }
+    font-variant-caps: petite-caps;
+  }
+  .contents-moreButton {
+    font-variant-caps: petite-caps;
+  }
+  .carousel-contents-wrapper {
+    // margin-top: calc(var(--text-base));
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: center;
+    .contents-item {
+      list-style-type: none;
+      flex: 50% 0 0;
+      background-color: var(--shadow-color);
+      padding: 16px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      justify-content: space-evenly;
+      transform: translateX(var(--offset));
+      transition: transform 0.3s cubic-bezier(0.1, 0.7, 0.5, 1);
+      .contents-item-image {
+        min-width: 192px;
+        max-height: 575px;
         width: 100%;
-        display: flex;
-        flex-flow: row nowrap;
-        // margin-left: clamp(0px, calc(20% + 5% - 16px + var(--offset)), calc(20% + 5% - 16px)) ;
-        margin-left: calc(-1 * (50% - 15%));
-        .item{
-            list-style-type: none;
-            flex:50% 0 0;
-            // height: calc(20vh + 300px);
-            outline: 1px solid #000;
-            padding: 16px;
-            display: flex;
-            flex-flow: column nowrap;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            transform: translateX(var(--offset));
-            transition: transform .3s cubic-bezier(.1,.7,.5,1);
-            .pic{
-                min-width: 192px;
-                width: 100%;
-                height: 600px;
-                border-radius: 12px;
-                background-color: var(--main-color);
-            }
-            .itmename{
-                width: 100%;
-                margin-top: 3rem;
-            }
-            &:not(:first-child){
-                margin-left: 20%;
-            }
+        @include pad-width-containFollowing{
+          height: 500px;
+          overflow-x: hidden;
+          overflow-y: visible;
         }
+        border-radius: 12px;
+        overflow-y: hidden;
+      }
+      .contents-item-text {
+        width: 100%;
+      }
+      &:not(:first-child) {
+        margin-left: 20%;
+      }
     }
-    .ruler{
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        width: 50%;
-        height: 80vh;
-        border: 1px solid #fff;
-    }
-}
-.warpper{
-    width: 100%;
+  }
 }
 </style>
