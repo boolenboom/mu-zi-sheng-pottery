@@ -140,13 +140,13 @@ export default {
         <div class="title text-xl veritcal-write">{{ sectiontitle }}</div>
       </div>
       <div class="carousel-contents">
-        <a href="#" class="button text-base">All</a>
-        <ul class="contents" :data-offset="offset" :style="`--offset:${offset}%;`">
-          <li v-for="(item,index) of showImage" class="item" :key="`card${index}`" draggable="false">
-            <div class="pic">
+        <a href="#" class="contents-moreButton text-base">All</a>
+        <ul class="carousel-contents-wrapper responsive-mt-base_reverse" :data-offset="offset" :style="`--offset:${offset}%;`">
+          <li v-for="(item,index) of showImage" class="contents-item" :key="`card${index}`" draggable="false">
+            <div class="contents-item-image">
               <img :src="item.filePath" alt="這是精心製作的陶器">
             </div>
-            <p class="itemname text-s">card {{ index + 1}}</p>
+            <p class="contents-item-text text-base">card {{ index + 1}}</p>
           </li>
         </ul>
       </div>
@@ -156,6 +156,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@import "~@/assets/scss/_variables.scss";
+@import "~@/assets/scss/_mixins.scss";
 .carousel {
   position: relative;
   top:50%;
@@ -174,22 +176,27 @@ export default {
       flex: 0 0 100%;
       width: 100%;
       margin-left: calc(var(--text-xl) * -0.75);
+      text-align: end;
     }
   }
   .title {
     line-height: .75;
-    letter-spacing: -20px;
+    letter-spacing: -16px;
+    @include pad-width-containFollowing{
+      letter-spacing: initial;
+    }
+    font-variant-caps: petite-caps;
   }
-  .button {
-    display: block;
-    text-align: end;
+  .contents-moreButton {
+    font-variant-caps: petite-caps;
   }
-  .contents {
+  .carousel-contents-wrapper {
     // margin-top: calc(var(--text-base));
     width: 100%;
     display: flex;
     flex-wrap: nowrap;
-    .item {
+    text-align: center;
+    .contents-item {
       list-style-type: none;
       flex: 50% 0 0;
       background-color: var(--shadow-color);
@@ -197,19 +204,23 @@ export default {
       display: flex;
       flex-flow: column nowrap;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
       transform: translateX(var(--offset));
       transition: transform 0.3s cubic-bezier(0.1, 0.7, 0.5, 1);
-      .pic {
+      .contents-item-image {
         min-width: 192px;
-        max-height: 600px;
+        max-height: 575px;
         width: 100%;
+        @include pad-width-containFollowing{
+          height: 500px;
+          overflow-x: hidden;
+          overflow-y: visible;
+        }
         border-radius: 12px;
         overflow-y: hidden;
       }
-      .itmename {
+      .contents-item-text {
         width: 100%;
-        margin-top: 3rem;
       }
       &:not(:first-child) {
         margin-left: 20%;

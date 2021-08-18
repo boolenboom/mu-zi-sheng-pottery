@@ -117,7 +117,7 @@ export default {
         <div
           v-for="(item, index) of carouselContent"
           :key="item.id"
-          class="item responsive"
+          class="item responsive-style"
           :class="{ curr: groupNum == index }"
           @click="groupNum = index"
         ></div>
@@ -245,7 +245,7 @@ export default {
         &.curr{
           background-color: var(--text-color);
         }
-        &.responsive{
+        &.responsive-style{
           @include pc-width{
             width: 100px;
             height: 8px;
