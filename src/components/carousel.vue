@@ -189,7 +189,6 @@ export default {
   transform: translateY(-50%);
   z-index: 101;
   width: 100%;
-  overflow-x: hidden;
   .warpper {
     width: 100%;
     display: flex;
@@ -223,15 +222,16 @@ export default {
     text-align: center;
     .contents-item {
       list-style-type: none;
-      flex: 50% 0 0;
       background-color: var(--shadow-color);
-      padding: 16px;
       display: flex;
       flex-flow: column nowrap;
       align-items: center;
       justify-content: space-evenly;
+      flex: 0 0 50%;
+      padding: 16px;
       transform: translateX(var(--offset));
       transition: transform 0.3s cubic-bezier(0.1, 0.7, 0.5, 1);
+      width: 50%;
       .contents-item-image {
         min-width: 192px;
         max-height: 575px;
@@ -239,9 +239,13 @@ export default {
         @include pad-width-containFollowing{
           height: 500px;
           overflow-x: hidden;
-          overflow-y: visible;
+          img{
+            height: 100%;
+            max-width: unset;
+            transform: translateX(-14%) translateY(100px);
+          }
         }
-        border-radius: 12px;
+        // border-radius: 12px;
         overflow-y: hidden;
       }
       .contents-item-text {
