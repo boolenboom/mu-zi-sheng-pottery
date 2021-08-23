@@ -4,7 +4,7 @@ import keyVision from "@/components/keyVision.vue";
 import studiointro from "@/components/studioIntro.vue";
 import potterylist from "@/components/potteryList.vue";
 
-let scrollratio = 0.2;
+// let scrollratio = 0.2;
 let clamp = function (val, min, max) {
     return Math.min(max, Math.max(val, min));
   },
@@ -12,6 +12,35 @@ let clamp = function (val, min, max) {
     if (window.innerHeight === cacheHeight) return cacheHeight;
     return window.innerHeight;
   };
+let scrollhandler = function(ratio){
+  let scrollratio = ratio || 1;
+  let startpoint = 0,foobar = 0;
+  let currentoffset = 0;
+  return{
+    wheel:function(delta, curr, viewH){
+      console.log(delta);
+      return curr - (Math.sign(delta) * viewH * scrollratio);
+    },
+    touchstart:function(start, curr){
+      startpoint = start;
+      currentoffset = curr;
+      return currentoffset;
+    },
+    touchmove:function(point){
+      let offset = currentoffset + (point - startpoint);
+      foobar = point;
+      return offset;
+    },
+    touchend:function(endpoint){
+      const endoffset = currentoffset + (endpoint - startpoint)*2;
+      console.log(foobar);
+      startpoint = 0;
+      currentoffset = 0;
+      foobar = 0;
+      return endoffset;
+    }
+  }
+}
 
 export default {
   name: "Home",
@@ -31,14 +60,23 @@ export default {
       pageoffset: 0,
       childNum: 0,
       viewheight: 0,
+      controller: scrollhandler(0.2),
+      isTouchscroll: false,
     };
   },
   methods: {
     scrollhandler(e) {
+      console.log(e);
       this.viewheight = checkCurrheight(this.viewheight);
-      let delta = e.deltaY,
+      let value = e.type.match('wheel') ? e.deltaY : e.changedTouches[0].clientY,
         viewH = this.viewheight;
-      this.pageoffset -= (delta / 100) * viewH * scrollratio;
+      if(e.type==='touchend'){
+        this.isTouchscroll=false;
+        console.log('shuntdown');
+      }else if(e.type.match('touch')){
+        this.isTouchscroll=true;
+      };
+      this.pageoffset = this.controller[e.type](value, this.pageoffset, viewH);
       this.pageoffset = clamp(this.pageoffset, -viewH * (this.childNum - 1), 0);
     },
     snap(e) {
@@ -77,7 +115,9 @@ export default {
   <div
     id="Home"
     class="home"
+    :class="{'no-transition' : isTouchscroll}"
     @wheel="scrollhandler($event)"
+    @touchstart='scrollhandler($event)' @touchmove='scrollhandler($event)' @touchend='scrollhandler($event)'
     @transitionend.self="snap($event)"
     :style="`transform:translateY(${pageoffset}px);`"
   >
@@ -91,7 +131,10 @@ export default {
 <style lang="scss">
 
 .home {
-  transition: transform 1s cubic-bezier(0.2, 0.4, 0.7, 0.9);
+  transition: transform 1s cubic-bezier(0.165, 0.84, 0.44, 1);
   background-color: var(--main-color);
+}
+.no-transition{
+  transition: none;
 }
 </style>
