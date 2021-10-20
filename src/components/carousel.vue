@@ -94,10 +94,24 @@ export default {
     controller(e) {
       // let reg = new RegExp(/mouse/gm);
       // let methodName = (e.type.match(reg)).toString();
-      let offsetX = e.type.match('mouse') ? -e.x : -e.changedTouches[0].clientX;
-      console.log(e);
-      this.UIcontroller[e.type](offsetX);
-      this.offset = this.UIcontroller.getoffset();
+      let vueObj = this;
+      requestAnimationFrame(function (){
+        let offsetX = e.type.match('mouse') ? -e.x : -e.changedTouches[0].clientX;
+        vueObj.UIcontroller[e.type](offsetX);
+        vueObj.offset = vueObj.UIcontroller.getoffset();
+      });
+    },
+    deviceReset(){
+      let vueObj = this;
+      requestAnimationFrame(function(){
+        let setting = {
+          initoffset: window.innerWidth > 360 ? -50 : 0,
+          min: 0,
+          max: window.innerWidth > 360 ? (vueObj.quantity - 1) * 140 : (vueObj.quantity - 1) * 105,
+          onecycle: window.innerWidth > 360 ? 140 : 105,
+        };
+        vueObj.UIcontroller.initial(setting);
+      })
     },
     fetchData() {
       console.log(setting.__fileNumber);
@@ -141,14 +155,15 @@ export default {
   },
   mounted() {
     let setting = {
-      initoffset: -50,
+      initoffset: window.innerWidth > 360 ? -50 : 0,
       min: 0,
-      max: (this.quantity - 1) * 140,
-      onecycle: 140,
+      max: window.innerWidth > 360 ? (this.quantity - 1) * 140 : (this.quantity - 1) * 105,
+      onecycle: window.innerWidth > 360 ? 140 : 105,
     };
     this.UIcontroller.initial(setting);
     this.offset = this.UIcontroller.getoffset();
     this.fetchData();
+    window.addEventListener('resize',this.deviceReset);
     console.log("carousel mounted");
   },
 };
@@ -228,6 +243,9 @@ export default {
       align-items: center;
       justify-content: space-evenly;
       flex: 0 0 50%;
+      @include phone-width{
+        flex: 0 0 100%;
+      }
       padding: 16px;
       transform: translateX(var(--offset));
       transition: transform 0.3s cubic-bezier(0.1, 0.7, 0.5, 1);
@@ -245,6 +263,13 @@ export default {
             transform: translateX(-14%) translateY(100px);
           }
         }
+        @include phone-width{
+          img{
+            height: 100%;
+            max-width: unset;
+            transform: translateX(-35%) translateY(20px);
+          }
+        }
         // border-radius: 12px;
         overflow-y: hidden;
       }
@@ -253,6 +278,9 @@ export default {
       }
       &:not(:first-child) {
         margin-left: 20%;
+        @include phone-width{
+          margin-left: 5%;
+        }
       }
     }
   }

@@ -163,10 +163,12 @@ img {
 }
 .fixed-container {
   position: relative;
-  margin: 0 auto;
   width: 177.778vh;
   @media all and (max-width: 177.77vh) {
-    margin: 0 calc((100% - 177.778vh) / 2);
+    margin: 0 calc(50% - 88.889vh);
+  }
+  @media all and (min-width: 177.77vh) {
+    margin: 0 auto;
   }
 }
 
