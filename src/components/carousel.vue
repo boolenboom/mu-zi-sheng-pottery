@@ -105,10 +105,10 @@ export default {
       let vueObj = this;
       requestAnimationFrame(function(){
         let setting = {
-          initoffset: window.innerWidth > 360 ? -50 : 0,
+          initoffset: window.innerWidth > 360 ? -50 : -20,
           min: 0,
-          max: window.innerWidth > 360 ? (vueObj.quantity - 1) * 140 : (vueObj.quantity - 1) * 105,
-          onecycle: window.innerWidth > 360 ? 140 : 105,
+          max: window.innerWidth > 360 ? (vueObj.quantity - 1) * 140 : (vueObj.quantity - 1) * 120,
+          onecycle: window.innerWidth > 360 ? 140 : 120,
         };
         vueObj.UIcontroller.initial(setting);
       })
@@ -155,10 +155,10 @@ export default {
   },
   mounted() {
     let setting = {
-      initoffset: window.innerWidth > 360 ? -50 : 0,
+      initoffset: window.innerWidth > 360 ? -50 : -20,
       min: 0,
-      max: window.innerWidth > 360 ? (this.quantity - 1) * 140 : (this.quantity - 1) * 105,
-      onecycle: window.innerWidth > 360 ? 140 : 105,
+      max: window.innerWidth > 360 ? (this.quantity - 1) * 140 : (this.quantity - 1) * 120,
+      onecycle: window.innerWidth > 360 ? 140 : 120,
     };
     this.UIcontroller.initial(setting);
     this.offset = this.UIcontroller.getoffset();
@@ -180,7 +180,7 @@ export default {
         <div class="title text-xl veritcal-write">{{ sectiontitle }}</div>
       </div>
       <div class="carousel-contents">
-        <a href="#" class="contents-moreButton text-base">All</a>
+        <router-link to="/works" class="contents-moreButton text-base">All</router-link>
         <ul class="carousel-contents-wrapper responsive-mt-base_reverse" :data-offset="offset" :style="`--offset:${offset}%;`">
           <li v-for="(item,index) of showImage" class="contents-item" :key="`card${index}`" draggable="false">
             <div class="contents-item-image">
@@ -278,9 +278,6 @@ export default {
       }
       &:not(:first-child) {
         margin-left: 20%;
-        @include phone-width{
-          margin-left: 5%;
-        }
       }
     }
   }

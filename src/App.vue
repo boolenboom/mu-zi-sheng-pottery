@@ -4,6 +4,7 @@ export default {
   data() {
     return {
       isActive: false,
+      responsiveRow: true,
       componentIndex: 1,
     };
   },
@@ -12,7 +13,17 @@ export default {
       console.log("updateIndex");
       this.componentIndex = val;
     },
+    responsiveHandler(){
+      let vueObj = this;
+      requestAnimationFrame(function(){
+        vueObj.responsiveRow = window.innerWidth > 768 ? true : false;
+      });
+    }
   },
+  mounted(){
+    this.responsiveRow = window.innerWidth > 768 ? true : false;
+    window.addEventListener('resize', this.responsiveHandler);
+  }
 };
 </script>
 
@@ -26,7 +37,7 @@ export default {
         {{ `${isActive ? "Close" : "MENU"}` }}
       </div>
       <menu :class="{ 'menu-hidden': !isActive }">
-        <div class="spring-container row">
+        <div class="spring-container" :class="{ 'row': responsiveRow }">
           <div class="option col-6">
             <ul>
               <li>
@@ -277,6 +288,9 @@ img {
         li {
           text-align: start;
           height: calc(6rem - 6px);
+          @include pad-width-containFollowing{
+            height: initial;
+          }
           &:not(:first-child) {
             margin-top: 5vh;
           }
@@ -289,6 +303,9 @@ img {
       right: 0px;
       padding-top: 30px;
       height: calc(100vh - 60px - 2rem - 18px);
+      @include pad-width-containFollowing{
+        height: initial;
+      }
       padding-bottom: 30px;
       box-sizing: border-box;
       text-align: end;

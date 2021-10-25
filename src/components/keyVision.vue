@@ -174,11 +174,14 @@ export default {
       }
       @include phone-width{
         height: 55%;
-        transform: translate(-10%, 0%) rotate(45deg);
+        transform: rotate(45deg) translate(-10%, 10%);
       }
       transition: transform var(--order-delay) ease-in-out;
       &.ready-slidein {
-        transform: rotate(45deg) translateX(-100%) translateY(-12%);
+        transform: rotate(45deg) translate(-100%, -12%);
+        @include phone-width{
+          transform: rotate(45deg) translate(-100%, 10%);
+        }
       }
       .marquee {
         position: absolute;
