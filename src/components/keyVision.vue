@@ -174,10 +174,14 @@ export default {
       }
       @include phone-width{
         height: 55%;
+        transform: rotate(45deg) translate(-10%, 10%);
       }
       transition: transform var(--order-delay) ease-in-out;
       &.ready-slidein {
-        transform: rotate(45deg) translateX(-100%) translateY(-12%);
+        transform: rotate(45deg) translate(-100%, -12%);
+        @include phone-width{
+          transform: rotate(45deg) translate(-100%, 10%);
+        }
       }
       .marquee {
         position: absolute;
@@ -221,9 +225,13 @@ export default {
             transform: rotate(-45deg) translate(20% ,4vh) rotate(8deg);
             width: 50vh;
           }
-          @include small-pad-width-containFollowing{
-            transform: rotate(-45deg) translate(20% ,4vh) rotate(8deg);
-            width: 50vh;
+          @include small-pad-width{
+            transform: rotate(-45deg) translate(30% ,6vh) rotate(8deg);
+            width: 90vw;
+          }
+          @include phone-width{
+            transform: rotate(-45deg) translate(25% ,-10vh) rotate(8deg);
+            width: 100vw;
           }
           // box-shadow: 0px 0px 20px rgba($color: #000000, $alpha: .8);
           filter: drop-shadow(
