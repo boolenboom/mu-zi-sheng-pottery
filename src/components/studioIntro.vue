@@ -221,8 +221,13 @@ export default {
       width: 175vh;
       height: 175vh;
       transform: rotate(45deg) translate(0.5%, -20%);
-      @include small-pad-width-containFollowing{
+      @include small-pad-width{
         transform: rotate(45deg) translate(4.5%, -24.8%) ;
+      }
+      @include phone-width{
+        width: 125vh;
+        height: 125vh;
+        transform: rotate(45deg) translate(25%, -24.8%) ;
       }
       z-index: 1;
       .subtitle {

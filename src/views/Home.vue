@@ -14,11 +14,10 @@ let clamp = function (val, min, max) {
   };
 let scrollhandler = function(ratio){
   let scrollratio = ratio || 1;
-  let startpoint = 0,foobar = 0;
+  let startpoint = 0;
   let currentoffset = 0;
   return{
     wheel:function(delta, curr, viewH){
-      console.log(delta);
       return curr - (Math.sign(delta) * viewH * scrollratio);
     },
     touchstart:function(start, curr){
@@ -28,15 +27,12 @@ let scrollhandler = function(ratio){
     },
     touchmove:function(point){
       let offset = currentoffset + (point - startpoint);
-      foobar = point;
       return offset;
     },
     touchend:function(endpoint){
       const endoffset = currentoffset + (endpoint - startpoint)*2;
-      console.log(foobar);
       startpoint = 0;
       currentoffset = 0;
-      foobar = 0;
       return endoffset;
     }
   }
@@ -66,7 +62,6 @@ export default {
   },
   methods: {
     scrollhandler(e) {
-      console.log(e);
       this.viewheight = checkCurrheight(this.viewheight);
       let value = e.type.match('wheel') ? e.deltaY : e.changedTouches[0].clientY,
         viewH = this.viewheight;

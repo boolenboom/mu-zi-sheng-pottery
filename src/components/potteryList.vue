@@ -33,6 +33,9 @@ export default {
     @include small-pad-width-containFollowing{
       transform: translate(89%, -25%) rotate(45deg);
     }
+    @include phone-width{
+      transform: translate(46%, -15%) rotate(45deg);
+    }
   }
   [class*="-08"] {
     right: 0;
@@ -41,6 +44,9 @@ export default {
     transform: translate(83.5%, -25%) rotate(-45deg);
     @include small-pad-width-containFollowing{
       transform: translate(90%, -25%) rotate(-45deg);
+    }
+    @include phone-width{
+      transform: translate(-30%, 20%) rotate(-45deg);
     }
   }
   .full {
